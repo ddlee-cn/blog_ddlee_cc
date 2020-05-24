@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>LSTM:Pytorch实现 - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BA8;&amp;#x8BBA;LSTM&amp;#x7F51;&amp;#x7EDC;&amp;#x7684;Pytorch&amp;#x5B9E;&amp;#x73B0;&amp;#xFF0C;&amp;#x517C;&amp;#x8BBA;Pytorch&amp;#x5E93;&amp;#x7684;&amp;#x4EE3;&amp;#x7801;&amp;#x7EC4;&amp;#x7EC7;&amp;#x65B9;&amp;#x5F0F;&amp;#x548C;&amp;#x67B6;&amp;#x678">
+<meta name="keywords" content="AI,Pytorch,Deep Learning,LSTM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LSTM:Pytorch实现">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/7b4533bb/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BA8;&amp;#x8BBA;LSTM&amp;#x7F51;&amp;#x7EDC;&amp;#x7684;Pytorch&amp;#x5B9E;&amp;#x73B0;&amp;#xFF0C;&amp;#x517C;&amp;#x8BBA;Pytorch&amp;#x5E93;&amp;#x7684;&amp;#x4EE3;&amp;#x7801;&amp;#x7EC4;&amp;#x7EC7;&amp;#x65B9;&amp;#x5F0F;&amp;#x548C;&amp;#x67B6;&amp;#x678">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/LSTM-Pytorch实现/LSTM3-SimpleRNN.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/LSTM-Pytorch实现/LSTM.jpg">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/LSTM-Pytorch实现/str.jpg">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.289Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LSTM:Pytorch实现">
+<meta name="twitter:description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BA8;&amp;#x8BBA;LSTM&amp;#x7F51;&amp;#x7EDC;&amp;#x7684;Pytorch&amp;#x5B9E;&amp;#x73B0;&amp;#xFF0C;&amp;#x517C;&amp;#x8BBA;Pytorch&amp;#x5E93;&amp;#x7684;&amp;#x4EE3;&amp;#x7801;&amp;#x7EC4;&amp;#x7EC7;&amp;#x65B9;&amp;#x5F0F;&amp;#x548C;&amp;#x67B6;&amp;#x678">
+<meta name="twitter:image" content="https://blog.ddlee.cc/user-imgs/LSTM-Pytorch实现/LSTM3-SimpleRNN.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            LSTM:Pytorch实现
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-05-28T17:06:44.000Z" itemprop="datePublished">5月 29 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分钟 读完 (约 1664 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x8BA8;&#x8BBA;LSTM&#x7F51;&#x7EDC;&#x7684;Pytorch&#x5B9E;&#x73B0;&#xFF0C;&#x517C;&#x8BBA;Pytorch&#x5E93;&#x7684;&#x4EE3;&#x7801;&#x7EC4;&#x7EC7;&#x65B9;&#x5F0F;&#x548C;&#x67B6;&#x6784;&#x8BBE;&#x8BA1;&#x3002;<br><a id="more"></a></p>
+<h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p>LSTM&#x662F;&#x4E00;&#x79CD;&#x5FAA;&#x73AF;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;&#xFF0C;&#x9002;&#x7528;&#x4E8E;&#x5BF9;&#x5E8F;&#x5217;&#x5316;&#x7684;&#x8F93;&#x5165;&#x5EFA;&#x6A21;&#x3002;Chris Olah&#x7684;&#x8FD9;&#x7BC7;<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">&#x6587;&#x7AE0;</a>&#x7EC6;&#x81F4;&#x5730;&#x89E3;&#x91CA;&#x4E86;&#x4E00;&#x4E2A;LSTM&#x5355;&#x5143;&#x7684;&#x8FD0;&#x4F5C;&#x65B9;&#x5F0F;&#xFF0C;&#x5EFA;&#x8BAE;&#x9605;&#x8BFB;&#x3002;</p>
+<h3 id="&#x4E24;&#x4E2A;&#x60F3;&#x6CD5;"><a href="#&#x4E24;&#x4E2A;&#x60F3;&#x6CD5;" class="headerlink" title="&#x4E24;&#x4E2A;&#x60F3;&#x6CD5;"></a>&#x4E24;&#x4E2A;&#x60F3;&#x6CD5;</h3><h4 id="Gate&#xFF1A;&#x4FE1;&#x606F;&#x6D41;&#x52A8;&#x7684;&#x95F8;&#x95E8;"><a href="#Gate&#xFF1A;&#x4FE1;&#x606F;&#x6D41;&#x52A8;&#x7684;&#x95F8;&#x95E8;" class="headerlink" title="Gate&#xFF1A;&#x4FE1;&#x606F;&#x6D41;&#x52A8;&#x7684;&#x95F8;&#x95E8;"></a>Gate&#xFF1A;&#x4FE1;&#x606F;&#x6D41;&#x52A8;&#x7684;&#x95F8;&#x95E8;</h4><p>$$i_t = sigmoid(W_{xi} x_t  +  W_{hi}h_{t-1} + b_i)$$<br>$$f_t = sigmoid(W_{xf} x_t  +  W_{hf}h_{t-1} + b_f)$$<br>$$o_t = sigmoid(W_{xo} x_t  +  W_{ho}h_{t-1} + b_o)$$<br>$x$ &#x8868;&#x793A;&#x8F93;&#x5165;&#xFF0C;$h$&#x8868;&#x793A;&#x9690;&#x85CF;&#x72B6;&#x6001;&#xFF0C;&#x7528;$sigmoid$&#x51FD;&#x6570;&#x5C06;&#x8F93;&#x5165;&#x4E8C;&#x8005;&#x7684;&#x4F20;&#x9012;&#x7ED3;&#x679C;&#x6620;&#x5C04;&#x5230;$&#xFF08;0,1)$&#x4E0A;&#xFF0C;&#x5206;&#x522B;&#x8D4B;&#x4E88;&#x8F93;&#x5165;&#x95E8;&#x3001;&#x9057;&#x5FD8;&#x95E8;&#x3001;&#x8F93;&#x51FA;&#x95E8;&#x7684;&#x542B;&#x4E49;&#xFF0C;&#x6765;&#x63A7;&#x5236;&#x4E0D;&#x540C;&#x795E;&#x7ECF;&#x5355;&#x5143;&#xFF08;&#x540C;&#x4E00;&#x795E;&#x7ECF;&#x5143;&#x4E0D;&#x540C;&#x65F6;&#x95F4;&#x70B9;&#x7684;&#x72B6;&#x6001;&#xFF09;&#x4E4B;&#x95F4;&#x4FE1;&#x606F;&#x6D41;&#x52A8;&#x3002;</p>
+<h4 id="Cell&#xFF1A;&#x8BB0;&#x5FC6;&#x6C60;"><a href="#Cell&#xFF1A;&#x8BB0;&#x5FC6;&#x6C60;" class="headerlink" title="Cell&#xFF1A;&#x8BB0;&#x5FC6;&#x6C60;"></a>Cell&#xFF1A;&#x8BB0;&#x5FC6;&#x6C60;</h4><p>$$c_t = f_t \odot c_{t - 1} + i_t \odot tanh(W_{xc} x_t  +  W_{hc}h_{t-1} + b_c)\<br>h_t = o_t \odot tanh(c_t)$$<br>$h$&#x8868;&#x793A;&#x9690;&#x85CF;&#x72B6;&#x6001;&#xFF0C;$C$&#x8868;&#x793A;&#x8BB0;&#x5FC6;&#x6C60;&#xFF0C;&#x901A;&#x8FC7;Gate&#xFF0C;&#x4E0A;&#x4E00;&#x5355;&#x5143;&#xFF08;&#x72B6;&#x6001;&#xFF09;&#x7684;&#x4FE1;&#x606F;&#x6709;&#x63A7;&#x5236;&#x5730;&#x9057;&#x5FD8;&#xFF0C;&#x5F53;&#x524D;&#x7684;&#x8F93;&#x5165;&#x6709;&#x63A7;&#x5236;&#x5730;&#x6D41;&#x5165;&#xFF0C;&#x8BB0;&#x5FC6;&#x6C60;&#x4E2D;&#x7684;&#x4FE1;&#x606F;&#x6709;&#x63A7;&#x5236;&#x5730;&#x6D41;&#x5165;&#x9690;&#x85CF;&#x72B6;&#x6001;&#x3002;</p>
+<h3 id="&#x4E0E;&#x666E;&#x901A;RNN&#x7684;&#x5BF9;&#x6BD4;"><a href="#&#x4E0E;&#x666E;&#x901A;RNN&#x7684;&#x5BF9;&#x6BD4;" class="headerlink" title="&#x4E0E;&#x666E;&#x901A;RNN&#x7684;&#x5BF9;&#x6BD4;"></a>&#x4E0E;&#x666E;&#x901A;RNN&#x7684;&#x5BF9;&#x6BD4;</h3><p><img src="/user-imgs/./LSTM-Pytorch&#x5B9E;&#x73B0;/LSTM3-SimpleRNN.png" alt="RNN"><br>&#x666E;&#x901A;RNN&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x81EA;&#x66F4;&#x65B0;&#x7684;&#x9690;&#x85CF;&#x72B6;&#x6001;&#x5355;&#x5143;&#x3002;</p>
+<p><img src="/user-imgs/./LSTM-Pytorch&#x5B9E;&#x73B0;/LSTM.jpg" alt="LSTM"><br>LSTM&#x589E;&#x52A0;&#x4E86;&#x8BB0;&#x5FC6;&#x6C60;Cell&#xFF0C;&#x5E76;&#x901A;&#x8FC7;&#x51E0;&#x4E2A;Gate&#x5C06;&#x4FE1;&#x606F;&#x6709;&#x63A7;&#x5236;&#x5730;&#x66F4;&#x65B0;&#x5728;&#x8BB0;&#x5FC6;&#x6C60;&#x4E2D;&#xFF0C;&#x5E76;&#x901A;&#x8FC7;&#x8BB0;&#x5FC6;&#x6C60;&#x4E2D;&#x7684;&#x4FE1;&#x606F;&#x6765;&#x51B3;&#x5B9A;&#x9690;&#x85CF;&#x72B6;&#x6001;&#x3002;</p>
+<h2 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h2><p>&#x4E0B;&#x9762;&#x662F;&#x624B;&#x52A8;&#x5B9E;&#x73B0;LSTM&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x7EE7;&#x627F;&#x4E86;&#x57FA;&#x7C7B;<code>nn.Module</code>&#x3002;</p>
+<pre><code class="python">import torch.nn as nn
+import torch
+from torch.autograd import Variable
+
+class LSTM(nn.Module):
+    def __init__(self, input_size, hidden_size, cell_size, output_size):
+        super(LSTM, self).__init__()
+        self.hidden_size = hidden_size
+        self.cell_size = cell_size
+        self.gate = nn.Linear(input_size + hidden_size, cell_size)
+        self.output = nn.Linear(hidden_size, output_size)
+        self.sigmoid = nn.Sigmoid()
+        self.tanh = nn.Tanh()
+        self.softmax = nn.LogSoftmax()
+
+    def forward(self, input, hidden, cell):
+        combined = torch.cat((input, hidden), 1)
+        f_gate = self.gate(combined)
+        i_gate = self.gate(combined)
+        o_gate = self.gate(combined)
+        f_gate = self.sigmoid(f_gate)
+        i_gate = self.sigmoid(i_gate)
+        o_gate = self.sigmoid(o_gate)
+        cell_helper = self.gate(combined)
+        cell_helper = self.tanh(cell_helper)
+        cell = torch.add(torch.mul(cell, f_gate), torch.mul(cell_helper, i_gate))
+        hidden = torch.mul(self.tanh(cell), o_gate)
+        output = self.output(hidden)
+        output = self.softmax(output)
+        return output, hidden, cell
+
+    def initHidden(self):
+        return Variable(torch.zeros(1, self.hidden_size))
+
+    def initCell(self):
+        return Variable(torch.zeros(1, self.cell_size))
+</code></pre>
+<p>&#x51E0;&#x4E2A;&#x5173;&#x952E;&#x70B9;&#xFF1A;</p>
+<ol>
+<li>Tensor&#x7684;&#x5927;&#x5C0F;</li>
+<li>&#x4FE1;&#x606F;&#x7684;&#x4F20;&#x9012;&#x987A;&#x5E8F;</li>
+</ol>
+<h2 id="Pytorch-Module"><a href="#Pytorch-Module" class="headerlink" title="Pytorch Module"></a>Pytorch Module</h2><p>Pytorch&#x5E93;&#x672C;&#x8EAB;&#x5BF9;LSTM&#x7684;&#x5B9E;&#x73B0;&#x5C01;&#x88C5;&#x4E86;&#x66F4;&#x591A;&#x529F;&#x80FD;&#xFF0C;&#x7C7B;&#x548C;&#x51FD;&#x6570;&#x7684;&#x7EC4;&#x7EC7;&#x4E5F;&#x975E;&#x5E38;&#x6709;&#x501F;&#x9274;&#x610F;&#x4E49;&#x3002;&#x6211;&#x5BF9;&#x5176;&#x5B9E;&#x73B0;&#x7684;&#x7406;&#x89E3;&#x57FA;&#x4E8E;&#x4EE5;&#x4E0B;&#x4E24;&#x70B9;&#x5C55;&#x5F00;&#xFF1A;</p>
+<ol>
+<li>&#x80DE;(cell)&#x3001;&#x5C42;(layer)&#x3001;&#x6808;(stacked layer)&#x7684;&#x5C42;&#x6B21;&#x5316;&#x89E3;&#x8026;&#xFF0C;&#x6BCF;&#x4E00;&#x5C42;&#x62BD;&#x8C61;&#x5904;&#x7406;&#x4E00;&#x90E8;&#x5206;&#x53C2;&#x6570;&#xFF08;&#x7ED3;&#x6784;&#xFF09;</li>
+<li>&#x51FD;&#x6570;&#x53E5;&#x67C4;&#x7684;&#x4F20;&#x9012;&#xFF1A;&#x5904;&#x7406;&#x597D;&#x53C2;&#x6570;&#x540E;&#x8FD4;&#x56DE;&#x51FD;&#x6570;&#x53E5;&#x67C4;<code>forward</code></li>
+</ol>
+<p>&#x4E0B;&#x9762;&#x5F00;&#x59CB;&#x6309;&#x56FE;&#x7D22;&#x9AA5;&#xFF0C;&#x6E90;&#x7801;&#x89C1;<a href="https://github.com/pytorch/pytorch/tree/master/torch" target="_blank" rel="noopener">GitHub</a>&#x3002;</p>
+<h4 id="LSTM&#x7C7B;"><a href="#LSTM&#x7C7B;" class="headerlink" title="LSTM&#x7C7B;"></a>LSTM&#x7C7B;</h4><p>&#x6587;&#x4EF6;&#xFF1A;<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/modules/rnn.py" target="_blank" rel="noopener">nn/modules/rnn.py</a></p>
+<pre><code class="Python"># nn/modules/rnn.py
+class RNNBase(Module):
+  def __init__(self, mode, input_size, output_size):
+      pass
+  def forward(self, input, hx=None):
+      if hx is None:
+          hx = torch.autograd.Variable()
+      if self.mode == &apos;LSTM&apos;:
+          hx = (hx, hx)
+      func = self._backend.RNN() #!!!
+      output, hidden = func(input, self.all_weights, hx) #!!!
+      return output, hidden
+
+class LSTM(RNNBase):
+    def __init__(self, *args, **kwargs):
+        super(LSTM, self).__init__(&apos;LSTM&apos;, *args, **kwargs)
+</code></pre>
+<ol>
+<li><code>LSTM</code>&#x7C7B;&#x53EA;&#x662F;<code>RNNBase</code>&#x7C7B;&#x7684;&#x4E00;&#x4E2A;&#x88C5;&#x9970;&#x5668;&#x3002;</li>
+<li>&#x5728;&#x57FA;&#x7C7B;<code>nn.Module</code>&#x4E2D;&#xFF0C;&#x628A;<code>__call__()</code>&#x5B9A;&#x4E49;&#x4E3A;&#x8C03;&#x7528;<code>forward()</code>&#x65B9;&#x6CD5;&#xFF0C;&#x56E0;&#x800C;&#x771F;&#x6B63;&#x7684;&#x529F;&#x80FD;&#x5B9E;&#x73B0;&#x5728;<code>_backend.RNN()</code>&#x4E2D;</li>
+</ol>
+<h4 id="AutogradRNN&#x51FD;&#x6570;"><a href="#AutogradRNN&#x51FD;&#x6570;" class="headerlink" title="AutogradRNN&#x51FD;&#x6570;"></a>AutogradRNN&#x51FD;&#x6570;</h4><p>&#x4E0B;&#x9762;&#x5BFB;&#x627E;<code>_backend.RNN</code>&#x3002;<br>&#x6587;&#x4EF6;&#xFF1A;<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/backends/thnn.py" target="_blank" rel="noopener">nn/backends/thnn.py</a></p>
+<pre><code class="python"># nn/backends/thnn.py
+def _initialize_backend():
+    from .._functions.rnn import RNN, LSTMCell
+</code></pre>
+<p>&#x539F;&#x6765;&#xFF0C;<code>_backend</code>&#x4E5F;&#x662F;&#x7D22;&#x5F15;&#x3002;</p>
+<p>&#x7EC8;&#x4E8E;&#x627E;&#x5230;<code>RNN()</code>&#x51FD;&#x6570;&#x3002;<br>&#x6587;&#x4EF6;&#xFF1A;<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/rnn.py" target="_blank" rel="noopener">nn/_functions/rnn.py</a></p>
+<pre><code class="python"># nn/_functions/rnn.py
+def RNN(*args, **kwargs):
+    def forward(input, *fargs, **fkwargs):
+        func = AutogradRNN(*args, **kwargs)
+        return func(input, *fargs, **fkwargs)
+    return forward
+
+def AutogradRNN(mode, input_size, hidden_size):
+    cell = LSTMCell
+    rec_factory = Recurrent
+    layer = (rec_factory(cell),)
+    func = StackedRNN(layer, num_layers)
+    def forward(input, weight, hidden):
+        nexth, output = func(input, hidden, weight)
+        return output, nexth
+    return forward
+</code></pre>
+<ol>
+<li><code>RNN()</code>&#x662F;&#x4E00;&#x4E2A;&#x88C5;&#x9970;&#x5668;&#xFF0C;&#x6839;&#x636E;&#x662F;&#x5426;&#x6709;<code>cudnn</code>&#x5E93;&#x51B3;&#x5B9A;&#x8C03;&#x7528;<code>AutogradRNN()</code>&#x8FD8;&#x662F;<code>CudnnRNN()</code>&#xFF0C;&#x8FD9;&#x91CC;&#x4EC5;&#x89C2;&#x5BDF;<code>AutogradRNN()</code></li>
+<li><code>AutogradRNN()</code>&#x9009;&#x7528;&#x4E86;<code>LSTMCell</code>&#xFF0C;&#x7528;<code>Recurrent()</code>&#x51FD;&#x6570;&#x5904;&#x7406;&#x4E86;<code>Cell</code>&#x6784;&#x6210;<code>Layer</code>&#xFF0C;&#x518D;&#x5C06;<code>Layer</code>&#x4F20;&#x5165;<code>StackedRNN()</code>&#x51FD;&#x6570;</li>
+<li><code>RNN()</code>&#x548C;<code>AutogradRNN()</code>&#x8FD4;&#x56DE;&#x7684;&#x90FD;&#x662F;&#x5176;<code>forward()</code>&#x51FD;&#x6570;&#x53E5;&#x67C4;</li>
+</ol>
+<p>&#x4E0B;&#x9762;&#x662F;<code>Recurrent()</code>&#x51FD;&#x6570;&#xFF1A;</p>
+<pre><code class="python">def Recurrent(inner):
+    def forward(input, hidden, weight):
+        output = []
+        steps = range(input.size(0) - 1, -1, -1)
+        for i in steps:
+            hidden = inner(input[i], hidden, *weight)
+            output.append(hidden[0])
+        return hidden, output
+    return forward
+</code></pre>
+<ol>
+<li><code>Recurrent()</code>&#x51FD;&#x6570;&#x5B9E;&#x73B0;&#x4E86;&#x201C;&#x9012;&#x5F52;&#x201D;&#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x6839;&#x636E;&#x8F93;&#x5165;&#x7684;&#x5927;&#x5C0F;&#x7EC4;&#x5408;<code>Cell</code>&#xFF0C;&#x5B8C;&#x6210;&#x4E86;&#x9690;&#x85CF;&#x72B6;&#x6001;&#x548C;&#x53C2;&#x6570;&#x7684;&#x8FED;&#x4EE3;&#x3002;</li>
+<li><code>Recurrent()</code>&#x51FD;&#x6570;&#x5C06;<code>Cell(inner)</code>&#x7EC4;&#x5408;&#x4E3A;<code>Layer</code>&#x3002;</li>
+</ol>
+<h4 id="StackedRNN-&#x51FD;&#x6570;"><a href="#StackedRNN-&#x51FD;&#x6570;" class="headerlink" title="StackedRNN()&#x51FD;&#x6570;"></a>StackedRNN()&#x51FD;&#x6570;</h4><pre><code class="python">def StackedRNN(inners, num_layers):
+    num_directions = len(inners)
+    total_layers = num_layers * num_directions
+    def forward(input, hidden, weight):
+        next_hidden = []
+        hidden = list(zip(*hidden))
+        for i in range(num_layers):
+          all_output = []
+          for j, inner in enumerate(inners):
+              hy, output = inner(input, hidden[l], weight[l])
+              next_hidden.append(hy)
+              all_output.append(output)
+          input = torch.cat(all_output, input.dim() - 1)
+        next_h, next_c = zip(*next_hidden)
+        next_hidden = (torch.cat(next_h, 0).view(total_layers, *next_h[0].size()),
+                  torch.cat(next_c, 0).view(total_layers, *next_c[0].size()))
+        return next_hidden, input
+    return forward
+</code></pre>
+<ol>
+<li><code>StackedRNN()</code>&#x51FD;&#x6570;&#x5C06;<code>Layer(inner)</code>&#x7EC4;&#x5408;&#x4E3A;&#x6808;</li>
+</ol>
+<p>&#x6700;&#x540E;&#x7684;&#x6700;&#x540E;&#xFF0C;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x7684;LSTM&#x5355;&#x5143;&#x5185;&#x7684;&#x8BA1;&#x7B97;&#x7531;<code>LSTMCell()</code>&#x51FD;&#x6570;&#x5B9E;&#x73B0;&#x3002;</p>
+<h4 id="LSTMCell-&#x51FD;&#x6570;"><a href="#LSTMCell-&#x51FD;&#x6570;" class="headerlink" title="LSTMCell()&#x51FD;&#x6570;"></a>LSTMCell()&#x51FD;&#x6570;</h4><pre><code class="python">def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None):
+    if input.is_cuda:
+        igates = F.linear(input, w_ih)
+        hgates = F.linear(hidden[0], w_hh)
+        state = fusedBackend.LSTMFused()
+        return state(igates, hgates, hidden[1]) if b_ih is None else state(igates, hgates, hidden[1], b_ih, b_hh)
+
+    hx, cx = hidden
+    gates = F.linear(input, w_ih, b_ih) + F.linear(hx, w_hh, b_hh)
+
+    ingate, forgetgate, cellgate, outgate = gates.chunk(4, 1)
+
+    ingate = F.sigmoid(ingate)
+    forgetgate = F.sigmoid(forgetgate)
+    cellgate = F.tanh(cellgate)
+    outgate = F.sigmoid(outgate)
+
+    cy = (forgetgate * cx) + (ingate * cellgate)
+    hy = outgate * F.tanh(cy)
+
+    return hy, cy
+</code></pre>
+<p>&#x89C2;&#x5BDF;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x5373;&#x662F;LSTM&#x7684;&#x57FA;&#x672C;&#x4FE1;&#x606F;&#x4F20;&#x9012;&#x516C;&#x5F0F;&#x3002;&#x81F3;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x65C5;&#x7A0B;&#x5B8C;&#x6210;&#x3002;</p>
+<h2 id="&#x5C0F;&#x7ED3;"><a href="#&#x5C0F;&#x7ED3;" class="headerlink" title="&#x5C0F;&#x7ED3;"></a>&#x5C0F;&#x7ED3;</h2><blockquote>
+<p>&#x6CA1;&#x6709;&#x4EC0;&#x4E48;&#x662F;&#x589E;&#x52A0;&#x4E00;&#x5C42;&#x62BD;&#x8C61;&#x4E0D;&#x80FD;&#x89E3;&#x51B3;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x80FD;&#xFF0C;&#x90A3;&#x5C31;&#x518D;&#x52A0;&#x4E00;&#x5C42;&#x3002;</p>
+</blockquote>
+<p>&#x91CD;&#x590D;&#x4E00;&#x4E0B;&#x6211;&#x5BF9;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x7684;&#x7406;&#x89E3;&#xFF1A;</p>
+<ol>
+<li>&#x80DE;(cell)&#x3001;&#x5C42;(layer)&#x3001;&#x6808;(stacked layer)&#x7684;&#x5C42;&#x6B21;&#x5316;&#x89E3;&#x8026;&#xFF0C;&#x6BCF;&#x4E00;&#x5C42;&#x62BD;&#x8C61;&#x5904;&#x7406;&#x4E00;&#x90E8;&#x5206;&#x53C2;&#x6570;&#xFF08;&#x7ED3;&#x6784;&#xFF09;</li>
+<li>&#x51FD;&#x6570;&#x53E5;&#x67C4;&#x7684;&#x4F20;&#x9012;&#xFF1A;&#x5904;&#x7406;&#x597D;&#x53C2;&#x6570;&#x540E;&#x8FD4;&#x56DE;&#x51FD;&#x6570;&#x53E5;&#x67C4;<code>forward</code></li>
+</ol>
+<p><img src="/user-imgs/LSTM-Pytorch&#x5B9E;&#x73B0;/str.jpg" alt="str"></p>
+<p>&#x5982;&#x6D0B;&#x8471;&#x4E00;&#x822C;&#xFF0C;&#x6211;&#x4EEC;&#x5265;&#x5230;&#x6700;&#x540E;&#xFF0C;&#x53D1;&#x73B0;&#x5904;&#x7406;&#x7684;&#x4FE1;&#x606F;&#x6B63;&#x662F;&#x8F93;&#x5165;&#x3001;&#x9690;&#x85CF;&#x72B6;&#x6001;&#x548C;LSTM&#x5355;&#x5143;&#x51E0;&#x4E2A;&#x63A7;&#x5236;&#x95E8;&#x7684;&#x53C2;&#x6570;&#x3002;&#x5728;&#x4E00;&#x5C42;&#x4E00;&#x5C42;&#x7684;&#x62BD;&#x8C61;&#x4E4B;&#x4E2D;&#xFF0C;Pytorch&#x5728;&#x4E0D;&#x540C;&#x7684;&#x5C42;&#x9762;&#x5904;&#x7406;&#x4E86;&#x4E0D;&#x540C;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x4FDD;&#x8BC1;&#x4E86;&#x6269;&#x5C55;&#x6027;&#x548C;&#x62BD;&#x8C61;&#x5C42;&#x4E4B;&#x95F4;&#x7684;&#x89E3;&#x8026;&#x3002;</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/AI/">#AI</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Pytorch/">#Pytorch</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Deep-Learning/">#Deep Learning</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/LSTM/">#LSTM</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/f021f857/">[论文笔记]On-the-fly Operation Batching in Dynamic Computation Graphs</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/40efeb6b/">Pandas速度优化</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/7b4533bb/';
+        this.page.identifier = 'posts/7b4533bb/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

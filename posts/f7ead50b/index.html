@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>机器学习工作习惯侧记 - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BB0;&amp;#x5F55;&amp;#x6211;&amp;#x4ECE;&amp;#x4E8B;&amp;#x673A;&amp;#x5668;&amp;#x89C6;&amp;#x89C9;&amp;#x5DE5;&amp;#x4F5C;&amp;#x79EF;&amp;#x7D2F;&amp;#x4E0B;&amp;#x6765;&amp;#x7684;&amp;#x4E00;&amp;#x70B9;&amp;#x4E60;&amp;#x60EF;&amp;#x548C;&amp;#x7ECF;&amp;#x9A8C;">
+<meta name="keywords" content="Deep Learning,Tutorial,Machine Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习工作习惯侧记">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/f7ead50b/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BB0;&amp;#x5F55;&amp;#x6211;&amp;#x4ECE;&amp;#x4E8B;&amp;#x673A;&amp;#x5668;&amp;#x89C6;&amp;#x89C9;&amp;#x5DE5;&amp;#x4F5C;&amp;#x79EF;&amp;#x7D2F;&amp;#x4E0B;&amp;#x6765;&amp;#x7684;&amp;#x4E00;&amp;#x70B9;&amp;#x4E60;&amp;#x60EF;&amp;#x548C;&amp;#x7ECF;&amp;#x9A8C;">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.293Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习工作习惯侧记">
+<meta name="twitter:description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BB0;&amp;#x5F55;&amp;#x6211;&amp;#x4ECE;&amp;#x4E8B;&amp;#x673A;&amp;#x5668;&amp;#x89C6;&amp;#x89C9;&amp;#x5DE5;&amp;#x4F5C;&amp;#x79EF;&amp;#x7D2F;&amp;#x4E0B;&amp;#x6765;&amp;#x7684;&amp;#x4E00;&amp;#x70B9;&amp;#x4E60;&amp;#x60EF;&amp;#x548C;&amp;#x7ECF;&amp;#x9A8C;">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            机器学习工作习惯侧记
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-07-07T17:03:05.000Z" itemprop="datePublished">7月 8 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Individual-Development/">Individual Development</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            10 分钟 读完 (约 1494 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x8BB0;&#x5F55;&#x6211;&#x4ECE;&#x4E8B;&#x673A;&#x5668;&#x89C6;&#x89C9;&#x5DE5;&#x4F5C;&#x79EF;&#x7D2F;&#x4E0B;&#x6765;&#x7684;&#x4E00;&#x70B9;&#x4E60;&#x60EF;&#x548C;&#x7ECF;&#x9A8C;&#x3002;</p>
+<a id="more"></a>
+<h3 id="&#x6587;&#x4EF6;&#x5939;&#x7BA1;&#x7406;"><a href="#&#x6587;&#x4EF6;&#x5939;&#x7BA1;&#x7406;" class="headerlink" title="&#x6587;&#x4EF6;&#x5939;&#x7BA1;&#x7406;"></a>&#x6587;&#x4EF6;&#x5939;&#x7BA1;&#x7406;</h3><p>&#x5728;&#x670D;&#x52A1;&#x5668;&#x7684;&#x6570;&#x636E;&#x76D8;&#x5EFA;&#x7ACB;<code>model</code>, <code>data</code>, <code>output</code>&#x4E09;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#xFF0C;<code>model</code>&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x9884;&#x8BAD;&#x7EC3;&#x6A21;&#x578B;&#x548C;Deployment-Ready&#x7684;&#x6A21;&#x578B;&#xFF0C;<code>data</code>&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x8BAD;&#x7EC3;&#x548C;&#x6D4B;&#x8BD5;&#x6240;&#x7528;&#x6570;&#x636E;&#xFF0C;<code>output</code>&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x8BAD;&#x7EC3;&#x65F6;&#x4EA7;&#x751F;&#x7684;checkpoints&#x548C;log&#x3002;</p>
+<p>&#x65B0;&#x5EFA;&#x9879;&#x76EE;&#x65F6;&#xFF0C;&#x5C06;&#x8FD9;&#x4E09;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#x901A;&#x8FC7;symlink&#x94FE;&#x63A5;&#x5230;&#x9879;&#x76EE;&#x7684;&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x3002;</p>
+<h3 id="&#x4F9D;&#x8D56;&#x7BA1;&#x7406;"><a href="#&#x4F9D;&#x8D56;&#x7BA1;&#x7406;" class="headerlink" title="&#x4F9D;&#x8D56;&#x7BA1;&#x7406;"></a>&#x4F9D;&#x8D56;&#x7BA1;&#x7406;</h3><p>&#x4F9D;&#x8D56;&#x7BA1;&#x7406;&#x4E3B;&#x8981;&#x4F9D;&#x9760;Python&#x5E93;Pipenv&#x3002;&#x5B83;&#x7ED3;&#x5408;&#x4E86;Pypi&#x5305;&#x7BA1;&#x7406;&#x548C;VirtualEnvs&#x7684;&#x73AF;&#x5883;&#x7BA1;&#x7406;&#xFF0C;&#x4E3A;&#x6BCF;&#x4E2A;&#x9879;&#x76EE;&#x5355;&#x72EC;&#x5EFA;&#x7ACB;Python&#x73AF;&#x5883;&#xFF0C;&#x5E76;&#x901A;&#x8FC7;PipFile&#x548C;PipFile.lock&#x5B9E;&#x73B0;&#x66F4;&#x65B0;&#x548C;&#x8FC1;&#x79FB;&#x3002;&#x5177;&#x4F53;&#x7684;workflow&#x4E3A;&#xFF1A;</p>
+<ol>
+<li>&#x5EFA;&#x7ACB;&#x9879;&#x76EE;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x5E76;&#x4F7F;&#x7528;<code>pipenv install</code>&#x547D;&#x4EE4;&#x521D;&#x59CB;&#x5316;&#x5176;&#x72EC;&#x7ACB;&#x7684;Python&#x73AF;&#x5883;</li>
+<li>&#x6309;&#x9700;&#x8981;&#x901A;&#x8FC7;<code>pipenv install package-name</code>&#x6765;&#x5B89;&#x88C5;&#x9700;&#x8981;&#x7684;&#x4F9D;&#x8D56;</li>
+<li>&#x4F7F;&#x7528;<code>pipenv run</code>&#x6216;&#x6FC0;&#x6D3B;<code>pipenv shell</code>&#x8FD0;&#x884C;&#x3001;Debug&#x76F8;&#x5E94;&#x7684;&#x9879;&#x76EE;&#x7A0B;&#x5E8F;</li>
+<li>&#x9700;&#x8981;&#x8FC1;&#x79FB;&#x73AF;&#x5883;&#x65F6;&#xFF0C;&#x5C06;<code>PipFile.lock</code>&#x62F7;&#x8D1D;&#x81F3;&#x65B0;&#x7684;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x901A;&#x8FC7;<code>pipenv install</code>&#x6765;&#x8FD8;&#x539F;Python&#x7684;&#x8FD0;&#x884C;&#x73AF;&#x5883;&#xFF1B;&#x901A;&#x8FC7;Git&#x7B49;&#x7248;&#x672C;&#x63A7;&#x5236;&#x5DE5;&#x5177;&#x6765;&#x8FD8;&#x539F;&#x4EE3;&#x7801;&#x3002;</li>
+</ol>
+<p>&#x66F4;&#x591A;&#x6709;&#x5173;&#x73AF;&#x5883;&#x642D;&#x5EFA;&#x548C;&#x7BA1;&#x7406;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x53C2;&#x89C1;&#x535A;&#x6587;<a href="https://blog.ddlee.cn/posts/2da92ac3/" target="_blank" rel="noopener">PyCharm+PipEnv&#x672C;&#x5730;Python&#x5F00;&#x53D1;&#x73AF;&#x5883;&#x914D;&#x7F6E;</a>&#x3002;</p>
+<h3 id="&#x9879;&#x76EE;&#x7EC4;&#x7EC7;"><a href="#&#x9879;&#x76EE;&#x7EC4;&#x7EC7;" class="headerlink" title="&#x9879;&#x76EE;&#x7EC4;&#x7EC7;"></a>&#x9879;&#x76EE;&#x7EC4;&#x7EC7;</h3><p>&#x5BF9;&#x4E8E;&#x67D0;&#x4E00;&#x9879;&#x76EE;&#xFF0C;&#x6211;&#x7684;&#x4E60;&#x60EF;&#x662F;&#x5C06;&#x5176;&#x5206;&#x4E3A;&#x4E09;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x5B50;&#x9879;&#x76EE;&#xFF1A;&#x8BAD;&#x7EC3;&#x3001;&#x90E8;&#x7F72;&#x3001;&#x8BC4;&#x6D4B;/&#x7ED3;&#x679C;&#x5206;&#x6790;&#x3002;</p>
+<p>&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x5355;&#x72EC;&#x4FDD;&#x5B58;&#x4E00;&#x4EFD;&#x4EE3;&#x7801;&#xFF0C;&#x8FD9;&#x4EFD;&#x4EE3;&#x7801;&#x4F1A;&#x7ECF;&#x5E38;&#x66F4;&#x65B0;&#xFF0C;&#x5E76;&#x505A;&#x597D;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7684;&#x7BA1;&#x7406;&#xFF0C;&#x4E00;&#x822C;&#x4E00;&#x6B21;&#x8BAD;&#x7EC3;&#x5373;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x548C;&#x4E00;&#x4EFD;log&#xFF0C;&#x8BB0;&#x5F55;&#x8FD9;&#x6B21;&#x8BAD;&#x7EC3;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x6240;&#x6709;&#x8D85;&#x53C2;&#x6570;&#xFF08;&#x53C2;&#x89C1;&#x6211;&#x5BF9;&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x6A21;&#x578B;&#x4E2D;&#x6570;&#x636E;&#x7684;<a href="http://zeronet-docs.readthedocs.io/zh/latest/overview.html#" target="_blank" rel="noopener">&#x5206;&#x7C7B;</a>&#xFF09;&#x3002;</p>
+<p>&#x90E8;&#x7F72;&#x6240;&#x7528;&#x4EE3;&#x7801;&#x4E5F;&#x4F1A;&#x5236;&#x5B9A;&#x4E00;&#x4EFD;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#xFF0C;&#x8DDF;&#x8BAD;&#x7EC3;&#x4EE3;&#x7801;&#x4FDD;&#x6301;&#x540C;&#x6B65;&#xFF08;&#x5C24;&#x5176;&#x662F;&#x7F51;&#x7EDC;&#x7ED3;&#x6784;&#xFF09;&#xFF0C;&#x4E3B;&#x8981;&#x533A;&#x522B;&#x662F;&#x7F51;&#x7EDC;&#x4E2D;loss&#x5C42;&#x7B49;&#x7684;&#x53BB;&#x9664;&#xFF0C;&#x751F;&#x6210;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x6240;&#x7528;&#x6846;&#x67B6;&#x652F;&#x6301;&#x7684;&#x5B9E;&#x4F8B;&#x5316;&#x683C;&#x5F0F;&#xFF08;&#x5982;deploy.prototxt&#x6587;&#x4EF6;&#xFF09;&#x3002;</p>
+<p>&#x8BC4;&#x6D4B;&#x90E8;&#x5206;&#x5355;&#x72EC;&#x4F7F;&#x7528;&#x4E00;&#x4EFD;&#x4EE3;&#x7801;&#xFF0C;&#x8F93;&#x5165;&#x6D4B;&#x8BD5;&#x6570;&#x636E;&#x548C;&#x90E8;&#x7F72;&#x4EE3;&#x7801;&#x5F97;&#x5230;&#x7684;&#x5B9E;&#x4F8B;&#x5316;&#x6A21;&#x578B;&#xFF0C;&#x6267;&#x884C;&#x63A8;&#x65AD;&#x5E76;&#x5F97;&#x5230;&#x7ED3;&#x679C;&#xFF0C;&#x6839;&#x636E;&#x7ED3;&#x679C;&#x6587;&#x4EF6;&#x518D;&#x4EE5;&#x6570;&#x636E;ground truth&#x4F5C;&#x8BC4;&#x6D4B;&#x3002;&#x4E5F;&#x53EF;&#x4EE5;&#x5305;&#x62EC;&#x5BF9;&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#x7684;&#x5206;&#x6790;&#x811A;&#x672C;&#xFF08;&#x5982;bad case&#xFF0C;&#x753B;PR&#x66F2;&#x7EBF;&#x7B49;&#xFF09;&#x3002;</p>
+<p>&#x8FD9;&#x6837;&#x7684;&#x8BBE;&#x8BA1;&#xFF0C;&#x5173;&#x952E;&#x4E4B;&#x5904;&#x6709;&#x4E24;&#x70B9;&#xFF0C;&#x4E00;&#x662F;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4FDD;&#x8BC1;&#x8BAD;&#x7EC3;&#x548C;&#x90E8;&#x7F72;&#x6A21;&#x578B;&#x7684;&#x4E00;&#x81F4;&#x6027;&#xFF0C;&#x4E8C;&#x662F;&#x5B9E;&#x4F8B;&#x5316;&#x6A21;&#x578B;&#x548C;&#x4FDD;&#x5B58;&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#x8BA9;&#x4E09;&#x4E2A;&#x5B50;&#x9879;&#x76EE;&#x4E4B;&#x95F4;&#x7684;&#x4EA4;&#x4E92;&#x4EC5;&#x4EE5;&#x6587;&#x4EF6;&#x5F62;&#x5F0F;&#x4F20;&#x9012;&#xFF0C;&#x518D;&#x914D;&#x5408;&#x6700;&#x65E9;&#x6587;&#x4EF6;&#x5939;&#x7BA1;&#x7406;&#x548C;&#x4F9D;&#x8D56;&#x7BA1;&#x7406;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x4E09;&#x4E2A;&#x5B50;&#x9879;&#x76EE;&#x5B8C;&#x5168;&#x53EF;&#x4EE5;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x673A;&#x5668;&#x548C;&#x73AF;&#x5883;&#x4E0B;&#x540C;&#x6B65;&#x64CD;&#x4F5C;&#x3002;</p>
+<h3 id="&#x6570;&#x636E;&#x7BA1;&#x7406;"><a href="#&#x6570;&#x636E;&#x7BA1;&#x7406;" class="headerlink" title="&#x6570;&#x636E;&#x7BA1;&#x7406;"></a>&#x6570;&#x636E;&#x7BA1;&#x7406;</h3><p>&#x5BF9;&#x4E8E;&#x6570;&#x636E;&#xFF0C;&#x6211;&#x6709;&#x5982;&#x4E0B;&#x5212;&#x5206;&#xFF1A;</p>
+<ol>
+<li>&#x539F;&#x59CB;&#x56FE;&#x7247;&#x6570;&#x636E;&#x548C;&#x6807;&#x6CE8;&#xFF0C;&#x901A;&#x5E38;&#x53EA;&#x8BFB;&#xFF0C;&#x6309;&#x7167;&#x6807;&#x6CE8;&#x89C4;&#x8303;&#xFF0C;&#x8DDF;&#x6807;&#x6CE8;&#x7EC4;&#x8FDB;&#x884C;&#x4EA4;&#x4E92;</li>
+<li>&#x8BAD;&#x7EC3;/&#x8BC4;&#x6D4B;&#x96C6;&#x5217;&#x8868;&#xFF0C;&#x8FD9;&#x4E00;&#x90E8;&#x5206;&#x5355;&#x72EC;&#x4FDD;&#x5B58;&#xFF0C;&#x5E76;&#x4FDD;&#x6301;&#x7075;&#x6D3B;&#x6027;&#xFF0C;&#x4EE5;&#x968F;&#x7740;&#x65B0;&#x6570;&#x636E;&#x7684;&#x52A0;&#x5165;&#x548C;&#x7CDF;&#x7CD5;&#x6570;&#x636E;&#x7684;&#x6E05;&#x7406;&#x7B49;&#x4E0D;&#x65AD;&#x66F4;&#x65B0;</li>
+<li>&#x6846;&#x67B6;&#x6240;&#x7528;&#x4E8C;&#x8FDB;&#x5236;&#x683C;&#x5F0F;&#xFF0C;&#x5982;caffe&#x7684;lmdb&#x7B49;&#xFF0C;&#x53EF;&#x4EE5;&#x7531;&#x8BAD;&#x7EC3;&#x9879;&#x76EE;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#xFF0C;&#x5E38;&#x7531;&#x539F;&#x59CB;&#x56FE;&#x7247;&#x6570;&#x636E;&#x548C;&#x5217;&#x8868;&#x6587;&#x4EF6;&#x751F;&#x6210;</li>
+<li>&#x8BC4;&#x6D4B;&#x6570;&#x636E;&#x53CA;&#x7ED3;&#x679C;&#xFF0C;&#x8BC4;&#x6D4B;&#x6570;&#x636E;&#x53EF;&#x7531;&#x539F;&#x59CB;&#x6570;&#x636E;&#x548C;&#x8BC4;&#x6D4B;&#x96C6;&#x5217;&#x8868;&#x5236;&#x4F5C;&#xFF0C;&#x7528;&#x4E8E;&#x8BC4;&#x6D4B;&#x9879;&#x76EE;&#xFF0C;&#x7ED3;&#x679C;&#x6587;&#x4EF6;&#x4E5F;&#x4EE5;&#x7EA6;&#x5B9A;&#x683C;&#x5F0F;&#x4FDD;&#x5B58;</li>
+</ol>
+<h3 id="&#x6846;&#x67B6;&#x7EF4;&#x62A4;"><a href="#&#x6846;&#x67B6;&#x7EF4;&#x62A4;" class="headerlink" title="&#x6846;&#x67B6;&#x7EF4;&#x62A4;"></a>&#x6846;&#x67B6;&#x7EF4;&#x62A4;</h3><p>&#x81EA;&#x5DF1;&#x7EF4;&#x62A4;&#x4E24;&#x5957;&#x6240;&#x7528;&#x6846;&#x67B6;&#x7684;&#x6E90;&#x7801;&#xFF0C;&#x4E00;&#x4EFD;&#x7528;&#x4E8E;&#x7A33;&#x5B9A;&#x7248;&#x672C;&#x7F16;&#x8BD1;&#xFF0C;&#x53E6;&#x4E00;&#x4EFD;&#x7528;&#x4E8E;&#x65B0;&#x7279;&#x6027;&#x7684;&#x5F00;&#x53D1;&#x3002;&#x65B0;&#x7279;&#x6027;&#x6D4B;&#x8BD5;&#x901A;&#x8FC7;&#x540E;&#xFF0C;&#x62F7;&#x8D1D;&#x81F3;&#x7A33;&#x5B9A;&#x7248;&#x672C;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x3002;&#x5BF9;&#x4E8E;&#x65B0;&#x7279;&#x6027;&#x7248;&#x672C;&#xFF0C;&#x53EF;&#x5355;&#x72EC;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x524D;&#x7AEF;&#x73AF;&#x5883;&#xFF08;Python&#x73AF;&#x5883;&#xFF09;&#xFF0C;&#x7528;&#x52A8;&#x6001;&#x94FE;&#x63A5;&#x7684;&#x65B9;&#x5F0F;&#x5FEB;&#x901F;&#x8C03;&#x7528;&#x548C;&#x6D4B;&#x8BD5;&#x3002;</p>
+<h3 id="&#x5B9E;&#x7528;&#x5DE5;&#x5177;&#x63A8;&#x8350;"><a href="#&#x5B9E;&#x7528;&#x5DE5;&#x5177;&#x63A8;&#x8350;" class="headerlink" title="&#x5B9E;&#x7528;&#x5DE5;&#x5177;&#x63A8;&#x8350;"></a>&#x5B9E;&#x7528;&#x5DE5;&#x5177;&#x63A8;&#x8350;</h3><h4 id="tmux"><a href="#tmux" class="headerlink" title="tmux"></a>tmux</h4><p>tmux&#x7684;&#x5F15;&#x5165;&#x6709;&#x4E24;&#x4E2A;&#x91CD;&#x8981;&#x4F5C;&#x7528;&#xFF1A;</p>
+<ol>
+<li>&#x7A97;&#x53E3;&#x5212;&#x5206;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x4E00;&#x4E2A;&#x7EC8;&#x7AEF;&#x7A97;&#x53E3;&#x91CC;&#x540C;&#x65F6;&#x8FDB;&#x884C;&#x591A;&#x4E2A;&#x4EFB;&#x52A1;</li>
+<li>session&#x7BA1;&#x7406;&#xFF0C;&#x4E0D;&#x540C;session&#x6267;&#x884C;&#x4E0D;&#x540C;&#x7684;&#x9879;&#x76EE;&#xFF0C;&#x4E14;&#x5728;SSH&#x9000;&#x51FA;&#x767B;&#x9646;&#x540E;&#xFF0C;session&#x5185;&#x4EFB;&#x52A1;&#x4F9D;&#x7136;&#x8FDB;&#x884C;</li>
+</ol>
+<p>&#x6211;&#x901A;&#x5E38;&#x4F1A;&#x5C06;&#x7EC8;&#x7AEF;&#x5206;&#x4E3A;4&#x4E2A;Panel&#xFF0C;&#x5DE6;&#x4E0A;&#x7528;&#x4E8E;&#x6267;&#x884C;&#x8BAD;&#x7EC3;&#x7A0B;&#x5E8F;&#x548C;&#x6253;&#x5370;log&#xFF0C;&#x53F3;&#x4E0A;&#x7528;&#x4E8E;&#x76D1;&#x6D4B;GPU&#x8FD0;&#x884C;&#x60C5;&#x51B5;&#xFF0C;&#x5DE6;&#x4E0B;&#x7528;&#x4E8E;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x548C;&#x5C11;&#x91CF;&#x4EE3;&#x7801;&#x7F16;&#x8F91;&#xFF0C;&#x53F3;&#x4E0B;&#x7528;&#x4E8E;&#x76D1;&#x6D4B;CPU&#x8FD0;&#x884C;&#x60C5;&#x51B5;&#x3002;</p>
+<h4 id="gpustat-nvidia-smi-htop"><a href="#gpustat-nvidia-smi-htop" class="headerlink" title="gpustat/nvidia-smi/htop"></a>gpustat/nvidia-smi/htop</h4><p>&#x914D;&#x5408;<code>watch</code>&#x547D;&#x4EE4;&#xFF0C;&#x5B9E;&#x65F6;&#x68C0;&#x6D4B;&#x6D4B;GPU&#x548C;CPU&#x7684;&#x8FD0;&#x884C;&#x60C5;&#x51B5;</p>
+<h4 id="sshfs"><a href="#sshfs" class="headerlink" title="sshfs"></a>sshfs</h4><p>&#x6302;&#x8F7D;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x6709;&#x4E24;&#x4E2A;&#x7528;&#x9014;&#xFF1A;</p>
+<ol>
+<li>&#x539F;&#x59CB;&#x6570;&#x636E;&#x6302;&#x8F7D;&#x5230;&#x5DE5;&#x4F5C;&#x670D;&#x52A1;&#x5668;&#x4E0A;</li>
+<li>&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x4EE3;&#x7801;&#x6302;&#x8F7D;&#x5230;&#x672C;&#x5730;&#xFF0C;&#x5229;&#x7528;&#x672C;&#x5730;&#x7684;&#x6587;&#x672C;&#x7F16;&#x8F91;&#x5668;&#x66F4;&#x65B0;</li>
+</ol>
+<p>&#x6B64;&#x5916;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5EFA;&#x7ACB;FTP&#xFF0C;&#x7528;FileZilla&#x5C06;&#x672C;&#x5730;&#x548C;&#x670D;&#x52A1;&#x5668;&#x4EE3;&#x7801;&#x8FDB;&#x884C;&#x540C;&#x6B65;&#x3002;&#xFF08;&#x67D0;&#x4E9B;IDE&#x5B9E;&#x9645;&#x4E0A;&#x7EE7;&#x627F;&#x4E86;&#x8FD9;&#x4E00;&#x529F;&#x80FD;&#xFF0C;&#x53C2;&#x89C1;&#x535A;&#x6587;<a href="https://blog.ddlee.cn/posts/2da92ac3/" target="_blank" rel="noopener">PyCharm+PipEnv&#x672C;&#x5730;Python&#x5F00;&#x53D1;&#x73AF;&#x5883;&#x914D;&#x7F6E;</a>&#xFF09;</p>
+<h4 id="GitKraken"><a href="#GitKraken" class="headerlink" title="GitKraken"></a>GitKraken</h4><p>Git&#x7684;&#x53EF;&#x89C6;&#x5316;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x76F8;&#x6BD4;&#x547D;&#x4EE4;&#x884C;&#x5DE5;&#x5177;&#x66F4;&#x4E3A;&#x76F4;&#x89C2;&#xFF0C;&#x7528;&#x4E8E;&#x7BA1;&#x7406;&#x4EE3;&#x7801;</p>
+<h4 id="meld"><a href="#meld" class="headerlink" title="meld"></a>meld</h4><p>&#x6587;&#x4EF6;&#x6BD4;&#x8F83;&#x5DE5;&#x5177;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x89C2;&#x65B9;&#x4FBF;&#x5730;&#x6BD4;&#x8F83;&#x4EE3;&#x7801;&#x95F4;&#x7684;&#x6539;&#x52A8;&#x548C;&#x53D8;&#x5316;&#xFF0C;&#x67D0;&#x4E9B;&#x6587;&#x672C;&#x7F16;&#x8F91;&#x5668;&#x548C;IDE&#x96C6;&#x6210;&#x4E86;&#x8FD9;&#x4E00;&#x529F;&#x80FD;&#xFF0C;&#x4F46;&#x4E0D;&#x591F;&#x5F3A;&#x5927;</p>
+<h4 id="Netron-Netscope-TensorBoard"><a href="#Netron-Netscope-TensorBoard" class="headerlink" title="Netron/Netscope/TensorBoard"></a>Netron/Netscope/TensorBoard</h4><p>&#x7F51;&#x7EDC;&#x7ED3;&#x6784;&#x53EF;&#x89C6;&#x5316;&#x5DE5;&#x5177;</p>
+<h4 id="vim-emacs-nano"><a href="#vim-emacs-nano" class="headerlink" title="vim/emacs/nano"></a>vim/emacs/nano</h4><p>&#x547D;&#x4EE4;&#x884C;&#x6587;&#x672C;&#x7F16;&#x8F91;&#x5DE5;&#x5177;&#xFF0C;&#x6211;&#x81EA;&#x5DF1;&#x4E0D;&#x591F;&#x719F;&#x7EC3;&#xFF0C;&#x4EC5;&#x7528;&#x6765;&#x505A;&#x5C11;&#x91CF;&#x7684;&#x4EE3;&#x7801;&#x4FEE;&#x6539;</p>
+<h4 id="Evernote-Git"><a href="#Evernote-Git" class="headerlink" title="Evernote/Git"></a>Evernote/Git</h4><p>&#x7528;&#x4E8E;&#x8BB0;&#x5F55;&#x5DE5;&#x4F5C;&#x65E5;&#x5FD7;&#x3001;&#x6570;&#x636E;&#x5B58;&#x653E;&#x3001;&#x8BAD;&#x7EC3;&#x6A21;&#x578B;&#x3001;&#x4EE3;&#x7801;&#x4FEE;&#x6539;&#x7B49;&#x7B49;&#x5907;&#x5FD8;</p>
+<h4 id="Spotify-Pithos"><a href="#Spotify-Pithos" class="headerlink" title="Spotify/Pithos"></a>Spotify/Pithos</h4><p>&#x7528;&#x4E8E;&#x653E;&#x677E;&#x548C;&#x4FDD;&#x6301;&#x4E13;&#x6CE8;&#xFF0C;&#x540E;&#x8005;&#x662F;Pandora&#x7684;Linux&#x7B2C;&#x4E09;&#x65B9;&#x5BA2;&#x6237;&#x7AEF;</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Deep-Learning/">#Deep Learning</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Tutorial/">#Tutorial</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Machine-Learning/">#Machine Learning</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/cea44253/">《西部世界》狂想曲（含剧透）</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/ad2d3bed/">论文阅读心得</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/f7ead50b/';
+        this.page.identifier = 'posts/f7ead50b/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

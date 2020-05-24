@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>FlintOS轻体验 - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="FlintOS&amp;#x662F;Chromium OS&amp;#x7684;&amp;#x672C;&amp;#x5730;&amp;#x5316;&amp;#x9879;&amp;#x76EE;&amp;#xFF0C;&amp;#x652F;&amp;#x6301;&amp;#x672C;&amp;#x5730;&amp;#x8D26;&amp;#x53F7;&amp;#xFF0C;&amp;#x53EF;&amp;#x4EE5;&amp;#x5728;&amp;#x5EC9;&amp;#x4EF7;&amp;#x7684;&amp;#x786C;&amp;#x4EF">
+<meta name="keywords" content="Chrome OS,Software,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FlintOS轻体验">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/4213a4c1/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="FlintOS&amp;#x662F;Chromium OS&amp;#x7684;&amp;#x672C;&amp;#x5730;&amp;#x5316;&amp;#x9879;&amp;#x76EE;&amp;#xFF0C;&amp;#x652F;&amp;#x6301;&amp;#x672C;&amp;#x5730;&amp;#x8D26;&amp;#x53F7;&amp;#xFF0C;&amp;#x53EF;&amp;#x4EE5;&amp;#x5728;&amp;#x5EC9;&amp;#x4EF7;&amp;#x7684;&amp;#x786C;&amp;#x4EF">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/FlintOS轻体验/desktop.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/FlintOS轻体验/apps.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/FlintOS轻体验/webstore.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/FlintOS轻体验/files.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/FlintOS轻体验/ssh.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/FlintOS轻体验/texts.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/FlintOS轻体验/crosh.png">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.289Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FlintOS轻体验">
+<meta name="twitter:description" content="FlintOS&amp;#x662F;Chromium OS&amp;#x7684;&amp;#x672C;&amp;#x5730;&amp;#x5316;&amp;#x9879;&amp;#x76EE;&amp;#xFF0C;&amp;#x652F;&amp;#x6301;&amp;#x672C;&amp;#x5730;&amp;#x8D26;&amp;#x53F7;&amp;#xFF0C;&amp;#x53EF;&amp;#x4EE5;&amp;#x5728;&amp;#x5EC9;&amp;#x4EF7;&amp;#x7684;&amp;#x786C;&amp;#x4EF">
+<meta name="twitter:image" content="https://blog.ddlee.cc/user-imgs/FlintOS轻体验/desktop.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            FlintOS轻体验
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-01-09T17:36:06.000Z" itemprop="datePublished">1月 10 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Linux/">Linux</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            6 分钟 读完 (约 847 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x5443;&#xFF0C;&#x6211;&#x5728;<a href="https://ddlee.cn/index_ver2016.html" target="_blank" rel="noopener">2016&#x7248;&#x7684;&#x4E2A;&#x4EBA;&#x4E3B;&#x9875;</a>&#x91CC;&#x66FE;&#x8868;&#x8FBE;&#x81EA;&#x5DF1;&#x7279;&#x522B;&#x60F3;&#x62E5;&#x6709;&#x4E00;&#x53F0;Chromebook&#xFF0C;&#x53EF;&#x7EC8;&#x4E8E;&#x8FD8;&#x662F;&#x5C48;&#x670D;&#x5728;&#x4E86;&#x7F51;&#x7EDC;&#x73AF;&#x5883;&#x9762;&#x524D;&#x3002;</p>
+<p>&#x79BB;&#x4E86;&#x6211;&#x7684;&#x8DEF;&#x7531;&#x5668;&#xFF0C;&#x6211;&#x7684;Chromebook&#x51E0;&#x4E4E;&#x5C31;&#x662F;&#x4E2A;&#x5E9F;&#x7269;&#x4E86;&#x3002;</p>
+<p>&#x4E0D;&#x8FC7;&#xFF0C;FlintOS&#x7684;&#x51FA;&#x73B0;&#x8BA9;&#x6211;&#x91CD;&#x62FE;&#x4E86;&#x8FD9;&#x4E2A;&#x60F3;&#x6CD5;&#xFF0C;&#x6211;&#x53EF;&#x80FD;&#x8FD8;&#x662F;&#x9700;&#x8981;&#x4E00;&#x53F0;&#x8F7B;&#x4FBF;&#x7684;&#x4E0A;&#x7F51;&#x672C;&#x3002;</p>
+<p>FlintOS&#x662F;Chromium OS&#x7684;&#x4E2D;&#x6587;&#x672C;&#x5730;&#x5316;&#x9879;&#x76EE;&#xFF0C;&#x800C;&#x540E;&#x8005;&#x6B63;&#x662F;Chromebook&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#xFF0C;&#x5728;&#x7F8E;&#x56FD;&#x7684;&#x4F4E;&#x7AEF;&#x7B14;&#x8BB0;&#x672C;&#x5E02;&#x573A;&#x548C;&#x6559;&#x80B2;&#x5E02;&#x573A;&#x5360;&#x6709;&#x5F88;&#x5927;&#x7684;&#x4EFD;&#x989D;&#x3002;</p>
+<p>&#x53EA;&#x4E0D;&#x8FC7;&#x5728;&#x5927;&#x9646;&#x5475;&#x5475;&#x3002;</p>
+<p>&#x8A00;&#x5F52;&#x6B63;&#x4F20;&#xFF0C;FlintOS&#x80CC;&#x540E;&#x7684;&#x516C;&#x53F8;&#x662F;&#x6210;&#x7ACB;&#x4E0D;&#x4E45;&#x7684;&#x71E7;&#x70BB;&#x79D1;&#x6280;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;&#x4ED6;&#x4EEC;&#x7684;<a href="https://flintos.com" target="_blank" rel="noopener">&#x5B98;&#x7F51;</a>&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x8FD9;&#x4E2A;<a href="https://flintos.com/faq/" target="_blank" rel="noopener">&#x9875;&#x9762;</a>&#x4E86;&#x89E3;&#x66F4;&#x591A;FlintOS&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x672C;&#x7BC7;&#x4E2D;&#x7684;&#x7248;&#x672C;&#x662F;&#x5728;<a href="https://flintos.com/community/topic/flint-os-for-pc-dev-3-1-%e5%8f%91%e5%b8%83%e9%80%9a%e7%9f%a5/" target="_blank" rel="noopener">&#x8BBA;&#x575B;</a>&#x7684;DEV3.2&#x4E2D;&#x56FD;&#x7248;&#x3002;</p>
+<h2 id="&#x5B89;&#x88C5;"><a href="#&#x5B89;&#x88C5;" class="headerlink" title="&#x5B89;&#x88C5;"></a>&#x5B89;&#x88C5;</h2><p>DEV3.2&#x4E2D;&#x56FD;&#x7248;&#x7684;&#x6700;&#x5927;&#x4EAE;&#x70B9;&#x662F;&#x652F;&#x6301;&#x672C;&#x5730;&#x8D26;&#x6237;&#x3002;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5728;&#x5927;&#x9646;&#x7684;&#x7F51;&#x7EDC;&#x73AF;&#x5883;&#x4E0B;&#x4E5F;&#x6709;&#x4F7F;&#x7528;&#x7684;&#x53EF;&#x80FD;&#x6027;&#x3002;&#x800C;&#x4E14;&#xFF0C;&#x8FD9;&#x4E2A;&#x7248;&#x672C;&#x5185;&#x7F6E;&#x4E86;&#x53EF;&#x4F9B;&#x79D1;&#x5B66;&#x4E0A;&#x7F51;&#x7684;&#x670D;&#x52A1;&#xFF0C;&#x6D4B;&#x8BD5;&#x53EF;&#x7528;&#x3002;&#x53E6;&#x5916;&#xFF0C;FlintOS settings&#x91CC;&#x9762;&#x4E5F;&#x5305;&#x62EC;&#x4E86;&#x5B89;&#x88C5;Flash&#x7684;&#x5FEB;&#x6377;&#x65B9;&#x5F0F;&#x3002;</p>
+<p>&#x76EE;&#x524D;&#x5EFA;&#x8BAE;&#x662F;&#x5728;U&#x76D8;&#x4E0A;&#x4F53;&#x9A8C;&#xFF0C;&#x5B89;&#x88C5;&#x6559;&#x7A0B;&#x5728;<a href="https://flintos.com/instructions-pc" target="_blank" rel="noopener">&#x8FD9;&#x91CC;</a>&#x3002;</p>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x5B89;&#x88C5;&#x53CC;&#x542F;&#x52A8;&#x548C;&#x786C;&#x76D8;&#x72EC;&#x5360;&#x5B89;&#x88C5;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x793E;&#x533A;&#x7684;<a href="https://flintos.com/community/forum/flint-os-for-pc/" target="_blank" rel="noopener">&#x7F6E;&#x9876;&#x5E16;</a>&#x3002;</p>
+<h2 id="&#x754C;&#x9762;UI"><a href="#&#x754C;&#x9762;UI" class="headerlink" title="&#x754C;&#x9762;UI"></a>&#x754C;&#x9762;UI</h2><p>&#x684C;&#x9762;&#x548C;&#x53F3;&#x4E0B;&#x89D2;&#x7684;&#x901A;&#x77E5;&#x680F;&#xFF0C;&#x9075;&#x4ECE;&#x4E86;Material Design&#xFF0C;&#x770B;&#x7740;&#x8212;&#x670D;&#x3002;</p>
+<p><img src="/user-imgs/FlintOS&#x8F7B;&#x4F53;&#x9A8C;/desktop.png" alt="desktop"></p>
+<p>APP Launcher&#xFF0C;&#x8DDF;Gnome&#x7684;&#x98CE;&#x683C;&#x5F88;&#x50CF;&#x3002;&#x641C;&#x7D22;&#x680F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;Google&#x641C;&#x7D22;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x641C;&#x7D22;&#x6587;&#x4EF6;&#x548C;APP&#x3002;&#x5B9E;&#x9645;&#x4E0A;&#x5927;&#x90E8;&#x5206;APP&#x53EF;&#x4EE5;&#x5F53;&#x505A;&#x4EA4;&#x4E92;&#x903B;&#x8F91;&#x7EA7;&#x522B;&#x66F4;&#x9AD8;&#x7684;&#x4E66;&#x7B7E;&#xFF0C;&#x6253;&#x5F00;&#x5373;&#x662F;&#x65B0;&#x5EFA;&#x76F8;&#x5E94;&#x7F51;&#x7AD9;&#x7684;&#x6807;&#x7B7E;&#x9875;&#xFF08;&#x5982;YouTube&#xFF09;&#x3002;</p>
+<p><img src="/user-imgs/FlintOS&#x8F7B;&#x4F53;&#x9A8C;/apps.png" alt="desktop"></p>
+<p>&#x8FD9;&#x4E2A;&#x662F;Chrome Web Store&#xFF0C;&#x8DDF;&#x4F5C;&#x4E3A;&#x6D4F;&#x89C8;&#x5668;&#x7684;Chrome&#x5B8C;&#x5168;&#x4E00;&#x81F4;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x8FD9;&#x4E2A;&#x5E73;&#x53F0;&#x4E0A;&#x53EF;&#x6CA1;&#x6709;homebrew&#x4E5F;&#x6CA1;&#x6709;dpkg&#x3002;</p>
+<p><img src="/user-imgs/FlintOS&#x8F7B;&#x4F53;&#x9A8C;/webstore.png" alt="desktop"></p>
+<p>&#x6587;&#x4EF6;&#x7BA1;&#x7406;&#x5E94;&#x7528;&#xFF0C;&#x8DDF;Google Drive&#x6DF1;&#x5EA6;&#x96C6;&#x6210;&#x3002;</p>
+<p><img src="/user-imgs/FlintOS&#x8F7B;&#x4F53;&#x9A8C;/files.png" alt="desktop"></p>
+<h2 id="&#x7F16;&#x7A0B;&#x76F8;&#x5173;"><a href="#&#x7F16;&#x7A0B;&#x76F8;&#x5173;" class="headerlink" title="&#x7F16;&#x7A0B;&#x76F8;&#x5173;"></a>&#x7F16;&#x7A0B;&#x76F8;&#x5173;</h2><p>&#x6211;&#x4E5F;&#x5C1D;&#x8BD5;&#x63A2;&#x7D22;&#x7528;&#x4E8E;&#x5F00;&#x53D1;&#x7684;&#x53EF;&#x80FD;&#x6027;&#xFF0C;&#x7531;&#x4E8E;ssh&#x7684;&#x5B58;&#x5728;&#xFF0C;&#x53EF;&#x64CD;&#x4F5C;&#x6027;&#x8FD8;&#x662F;&#x5F88;&#x9AD8;&#x7684;&#x3002;</p>
+<p><img src="/user-imgs/FlintOS&#x8F7B;&#x4F53;&#x9A8C;/ssh.png" alt="desktop"></p>
+<p>Texts&#x662F;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x8F7B;&#x4EAE;&#x7684;&#x6587;&#x672C;&#x7F16;&#x8F91;&#x5668;&#x3002;&#x5F53;&#x7136;&#x4E5F;&#x6709;&#x4EFF;atom&#x7684;&#x4ED8;&#x8D39;APP&#x3002;</p>
+<p><img src="/user-imgs/FlintOS&#x8F7B;&#x4F53;&#x9A8C;/texts.png" alt="desktop"></p>
+<p>crosh&#xFF08;&#x901A;&#x8FC7;Crtl+Shift+T&#x6253;&#x5F00;&#xFF09;&#x662F;&#x5185;&#x7F6E;&#x7684;shell&#xFF0C;&#x529F;&#x80FD;&#x4E0A;&#x8FD8;&#x6709;&#x5F85;&#x63A2;&#x7D22;&#xFF0C;&#x56FE;&#x4E3A;&#x8FD0;&#x884C;top&#x7684;&#x6548;&#x679C;&#x3002;</p>
+<p><img src="/user-imgs/FlintOS&#x8F7B;&#x4F53;&#x9A8C;/crosh.png" alt="desktop"></p>
+<h2 id="&#x5C0F;&#x7ED3;"><a href="#&#x5C0F;&#x7ED3;" class="headerlink" title="&#x5C0F;&#x7ED3;"></a>&#x5C0F;&#x7ED3;</h2><p>Chromium OS&#x7684;&#x7406;&#x5FF5;&#x662F;web&#x4E3A;&#x738B;&#xFF0C;&#x6D4F;&#x89C8;&#x5668;&#x5373;&#x4E00;&#x5207;&#x3002;&#x8FD9;&#x79CD;&#x7406;&#x5FF5;&#x914D;&#x5408;Google&#x76F8;&#x5F53;&#x5B8C;&#x6574;&#x7684;&#x751F;&#x6001;&#x4F7F;&#x5F97;Chromebook&#x5728;&#x5EC9;&#x4EF7;&#x672C;&#x5E02;&#x573A;&#x51E0;&#x4E4E;&#x662F;&#x7EDF;&#x6CBB;&#x5730;&#x4F4D;&#x3002;&#x53BB;&#x5E74;&#x7684;MS build&#x4E0A;&#xFF0C;&#x5FAE;&#x8F6F;&#x4E5F;&#x53D1;&#x5E03;&#x4E86;&#x5BF9;&#x6807;&#x7684;Windows&#x7248;&#x672C;&#xFF0C;demo&#x7528;&#x7684;&#x573A;&#x666F;&#x5C31;&#x662F;&#x8001;&#x5E08;&#x4E3A;&#x6BCF;&#x4E2A;&#x5B66;&#x751F;&#x914D;&#x5907;PC&#x3002;</p>
+<p>&#x76F8;&#x6BD4;&#x4E4B;&#x4E0B;&#xFF0C;&#x5927;&#x9646;&#x7684;&#x8FD9;&#x4E2A;&#x5E02;&#x573A;&#x8FD8;&#x662F;&#x7A7A;&#x767D;&#xFF08;&#x6216;&#x8BB8;&#x4E0D;&#x4E00;&#x5B9A;&#x6709;&#xFF0C;&#x6BD5;&#x7ADF;&#x6559;&#x80B2;&#x65B9;&#x9762;&#x5E76;&#x4E0D;&#x666E;&#x53CA;&#xFF09;&#x3002;&#x770B;&#x5230;&#x6709;&#x628A;&#x8FD9;&#x79CD;&#x7406;&#x5FF5;&#x672C;&#x5730;&#x5316;&#x7684;&#x516C;&#x53F8;&#x51FA;&#x73B0;&#x8FD8;&#x662F;&#x5F88;&#x60CA;&#x8273;&#xFF0C;&#x5728;&#x6B64;&#x9ED8;&#x9ED8;&#x795D;&#x798F;&#x4ED6;&#x4EEC;&#x3002;</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Chrome-OS/">#Chrome OS</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Software/">#Software</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Linux/">#Linux</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/c9816b0a/">[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/f8991abd/">[论文笔记](DenseNet)Densely Connected Convolutional Networks</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/4213a4c1/';
+        this.page.identifier = 'posts/4213a4c1/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

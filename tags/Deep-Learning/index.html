@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>标签: Deep Learning - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="萧爽楼">
+<meta property="og:url" content="https://blog.ddlee.cc/tags/Deep-Learning/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+<meta property="og:locale" content="zh-cn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="萧爽楼">
+<meta name="twitter:description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section section-heading">
+    <div class="container">
+        <div class="content">
+            <h5>#Deep Learning</h5>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/684dd540/" itemprop="url">有关深度学习的一些想法和困惑</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-09-06T13:35:33.000Z" itemprop="datePublished">9月 6 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            19 分钟 读完 (约 2851 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        &#x76EE;&#x524D;&#x770B;&#x6765;&#xFF0C;&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x6A21;&#x578B;&#x5728;&#x667A;&#x80FD;&#x65B9;&#x9762;&#x53D6;&#x5F97;&#x7684;&#x8FDB;&#x5C55;&#x53EA;&#x662F;&#x5728;&#x65F6;&#x95F4;&#x548C;&#x89C4;&#x6A21;&#x5C3A;&#x5EA6;&#x4E0A;&#x5BF9;&#x67D0;&#x4E9B;&#x4EBA;&#x7C7B;&#x57FA;&#x672C;&#x80FD;&#x529B;&#x7684;&#x5EF6;&#x4F38;&#x3002;&#x7531;&#x4E8E;&#x8BA9;&#x6E21;&#x4E86;&#x4E00;&#x90E8;&#x5206;&#x5BF9;&#x6A21;&#x578B;&#x7684;&#x63A7;&#x5236;&#x6743;&#x548C;&#x89E3;&#x91CA;&#x6027;&#xFF0C;&#x5728;&#x5145;&#x5206;&#x5229;&#x7528;&#x6570;&#x636E;&#x548C;&#x7B97;&#x529B;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x9762;&#x4E34;&#x7740;&#x590D;&#x73B0;&#x56F0;&#x96BE;&#x3001;&#x4E0D;&#x4FBF;&#x63A8;&#x5E7F;&#x7B49;&#x95EE;&#x9898;&#x3002;
+        <p class="article-more-link">
+            <a href="/posts/684dd540/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/f7ead50b/" itemprop="url">机器学习工作习惯侧记</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-07-07T17:03:05.000Z" itemprop="datePublished">7月 8 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Individual-Development/">Individual Development</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            10 分钟 读完 (约 1494 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x672C;&#x6587;&#x8BB0;&#x5F55;&#x6211;&#x4ECE;&#x4E8B;&#x673A;&#x5668;&#x89C6;&#x89C9;&#x5DE5;&#x4F5C;&#x79EF;&#x7D2F;&#x4E0B;&#x6765;&#x7684;&#x4E00;&#x70B9;&#x4E60;&#x60EF;&#x548C;&#x7ECF;&#x9A8C;&#x3002;</p>
+        <p class="article-more-link">
+            <a href="/posts/f7ead50b/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/ad2d3bed/" itemprop="url">论文阅读心得</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-07-05T13:19:57.000Z" itemprop="datePublished">7月 5 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Papers/">Papers</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分钟 读完 (约 694 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x672C;&#x535A;&#x5BA2;&#x8BB0;&#x5F55;&#x4E86;&#x4E0D;&#x5C11;&#x6211;&#x5728;&#x8BFB;&#x6587;&#x7AE0;&#x65F6;&#x6240;&#x4F5C;&#x7684;&#x7B14;&#x8BB0;&#xFF0C;&#x4F46;&#x8D28;&#x91CF;&#x666E;&#x904D;&#x4E0D;&#x9AD8;&#xFF0C;&#x672C;&#x6587;&#x662F;&#x6211;&#x5BF9;&#x79D1;&#x6280;&#x7C7B;&#x8BBA;&#x6587;&#x9605;&#x8BFB;&#x548C;&#x8BB0;&#x7B14;&#x8BB0;&#x4E60;&#x60EF;&#x7684;&#x53CD;&#x601D;&#xFF0C;&#x4E5F;&#x662F;&#x5BF9;&#x81EA;&#x5DF1;&#x65E5;&#x540E;&#x7B14;&#x8BB0;&#x7684;&#x8981;&#x6C42;&#x3002;</p>
+        <p class="article-more-link">
+            <a href="/posts/ad2d3bed/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/7845fb62/" itemprop="url">目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-03-04T16:18:16.000Z" itemprop="datePublished">3月 5 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            12 分钟 读完 (约 1757 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        &#x76EE;&#x6807;&#x68C0;&#x6D4B;&#x5E38;&#x7528;&#x7684;&#x8BC4;&#x6D4B;&#x6307;&#x6807;&#x548C;&#x8BC4;&#x6D4B;&#x6570;&#x636E;&#x96C6;&#x4ECB;&#x7ECD;&#x3002;
+        <p class="article-more-link">
+            <a href="/posts/7845fb62/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/ddc5b1bd/" itemprop="url">[源码笔记]keras源码分析之Model</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-30T15:19:42.000Z" itemprop="datePublished">7月 30 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分钟 读完 (约 1086 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x672C;&#x7BC7;&#x662F;keras&#x6E90;&#x7801;&#x7B14;&#x8BB0;&#x7CFB;&#x5217;&#x7684;&#x7B2C;&#x4E09;&#x7BC7;&#x3002;&#x5728;&#x524D;&#x4E24;&#x7BC7;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5206;&#x6790;&#x4E86;keras&#x5BF9;Tensor&#x548C;Layer&#x7B49;&#x6982;&#x5FF5;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x5E76;&#x8BF4;&#x660E;&#x4E86;&#x5B83;&#x4EEC;&#x662F;&#x5982;&#x4F55;&#x4F5C;&#x7528;&#x522B;&#x5F04;&#x4E2A;&#x6784;&#x6210;&#x6709;&#x5411;&#x65E0;&#x73AF;&#x56FE;&#x7684;&#x3002;&#x672C;&#x7BC7;&#x7740;&#x773C;&#x4E8E;&#x591A;&#x5C42;&#x7F51;&#x7EDC;&#x6A21;&#x578B;&#x5C42;&#x9762;&#x7684;&#x62BD;&#x8C61;&#xFF0C;&#x5373;&#x4E0E;&#x7528;&#x6237;&#x8DDD;&#x79BB;&#x6700;&#x8FD1;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x6E90;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x662F;<a href="https://github.com/fchollet/keras/blob/master/keras/engine/training.py" target="_blank" rel="noopener">/keras/engine/training.py</a>&#x548C;<a href="https://github.com/fchollet/keras/blob/master/keras/models.py" target="_blank" rel="noopener">/keras/model.py</a>&#xFF0C;&#x8981;&#x89C2;&#x5BDF;&#x7684;&#x7C7B;&#x662F;<code>Model</code>&#x548C;<code>Sequential</code>&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/posts/ddc5b1bd/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/ba61101c/" itemprop="url">[源码笔记]keras源码分析之Container</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-25T14:08:44.000Z" itemprop="datePublished">7月 25 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分钟 读完 (约 1047 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x672C;&#x7BC7;&#x7EE7;&#x7EED;&#x8BA8;&#x8BBA;keras&#x7684;&#x6E90;&#x7801;&#x7ED3;&#x6784;&#x3002;</p>
+<p><a href="https://blog.ddlee.cn/posts/4943e1b8/" target="_blank" rel="noopener">&#x7B2C;&#x4E00;&#x7BC7;&#x6E90;&#x7801;&#x7B14;&#x8BB0;</a>&#x4E2D;&#x6211;&#x4EEC;&#x89C2;&#x5BDF;&#x4E86;<code>Layer</code>, <code>Tensor</code>&#x548C;<code>Node</code>&#x662F;&#x5982;&#x4F55;&#x8026;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x7684;&#xFF0C;&#x800C;&#x672C;&#x7BC7;&#x7684;&#x91CD;&#x70B9;&#x662F;&#x89C2;&#x5BDF;&#x591A;&#x5C42;&#x7F51;&#x7EDC;&#x6784;&#x6210;&#x7684;&#x6709;&#x5411;&#x65E0;&#x73AF;&#x56FE;&#xFF08;DAG&#xFF09;&#x3002;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x7684;&#x6587;&#x4EF6;&#x4E3A;<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="noopener">keras/engine/topology.py</a>&#xFF0C; &#x8981;&#x89C2;&#x5BDF;&#x7684;&#x7C7B;&#x662F;<code>Container</code>&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/posts/ba61101c/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/cd6f40b8/" itemprop="url">深度学习中的权重衰减</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-22T15:51:13.000Z" itemprop="datePublished">7月 22 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            18 分钟 读完 (约 2745 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x6743;&#x91CD;&#x8870;&#x51CF;&#xFF08;weight dacay&#xFF09;&#xFF0C;&#x5373;L^2&#x8303;&#x6570;&#x60E9;&#x7F5A;&#xFF0C;&#x662F;&#x6700;&#x5E38;&#x89C1;&#x7684;&#x6B63;&#x5219;&#x5316;&#x6280;&#x672F;&#x4E4B;&#x4E00;&#x3002;&#x672C;&#x6587;&#x5C06;&#x4ECB;&#x7ECD;&#x5B83;&#x662F;&#x5982;&#x4F55;&#x8D77;&#x4F5C;&#x7528;&#x7684;&#x3002;&#x4E3B;&#x8981;&#x6750;&#x6599;&#x6765;&#x81EA;<a href="https://deeplearningbook.org" target="_blank" rel="noopener">The Deep Learning Book</a>&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/posts/cd6f40b8/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/4943e1b8/" itemprop="url">[源码笔记]keras源码分析之Layer、Tensor和Node</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-15T12:04:54.000Z" itemprop="datePublished">7月 15 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            9 分钟 读完 (约 1295 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>Keras&#x67B6;&#x6784;&#x7684;&#x4E3B;&#x8981;&#x903B;&#x8F91;&#x5B9E;&#x73B0;&#x5728;<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="noopener">/keras/engine/topology.py</a>&#x4E2D;&#xFF0C;&#x4E3B;&#x8981;&#x6709;&#x4E24;&#x4E2A;&#x57FA;&#x7C7B;<code>Node()</code>&#x548C;<code>Layer()</code>&#xFF0C;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x51FD;&#x6570;<code>Input()</code>&#x3002;&#x5177;&#x4F53;&#x5730;&#xFF0C;</p>
+<ul>
+<li><code>Layer()</code>&#x662F;&#x4E00;&#x4E2A;&#x8BA1;&#x7B97;&#x5C42;&#x7684;&#x62BD;&#x8C61;&#xFF0C;&#x5B8C;&#x6210;&#x7F51;&#x7EDC;&#x4E2D;&#x5BF9;Tensor&#x7684;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#xFF1B;</li>
+<li><code>Node()</code>&#x63CF;&#x8FF0;&#x4E24;&#x4E2A;&#x5C42;&#x4E4B;&#x95F4;&#x8FDE;&#x63A5;&#x5173;&#x7CFB;&#x7684;&#x62BD;&#x8C61;&#xFF0C;&#x914D;&#x5408;<code>Layer()</code>&#x6784;&#x5EFA;DAG&#xFF1B;</li>
+<li><code>Input()</code>&#x5B9E;&#x4F8B;&#x5316;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;<code>Layer</code>(<code>InputLayer</code>)&#xFF0C;&#x5C06;<code>backend</code>&#xFF08;TensorFlow&#x6216;Theano&#xFF09;&#x5EFA;&#x7ACB;&#x7684;Tensor&#x5BF9;&#x8C61;&#x8F6C;&#x5316;&#x4E3A;Keras Tensor&#x5BF9;&#x8C61;&#x3002;</li>
+</ul>
+        <p class="article-more-link">
+            <a href="/posts/4943e1b8/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/55919299/" itemprop="url">Tensorflow最佳实践：试验管理</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-11T12:53:27.000Z" itemprop="datePublished">7月 11 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            10 分钟 读完 (约 1477 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x8BB0;&#x5F55;&#x4F7F;&#x7528;TensorFlow&#x8BAD;&#x7EC3;&#x6A21;&#x578B;&#x4E2D;&#x4E0E;&#x8BD5;&#x9A8C;&#x7BA1;&#x7406;&#x76F8;&#x5173;&#x7684;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;&#xFF0C;&#x4E3B;&#x8981;&#x5305;&#x62EC;&#x6A21;&#x578B;&#x8BAD;&#x7EC3;&#x7684;&#x5927;&#x81F4;&#x4EE3;&#x7801;&#x6846;&#x67B6;&#x3001;&#x6A21;&#x578B;&#x7684;&#x4FDD;&#x5B58;&#x4E0E;&#x6062;&#x590D;&#x3001;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x7684;&#x76D1;&#x6D4B;&#x3001;&#x968F;&#x673A;&#x6027;&#x7684;&#x63A7;&#x5236;&#x7B49;&#x3002;&#x4E3B;&#x8981;&#x6750;&#x6599;&#x6765;&#x81EA;<a href="https://web.stanford.edu/class/cs20si/index.html" target="_blank" rel="noopener">CS 20SI: Tensorflow for Deep Learning Research</a>&#x3002;</p>
+        <p class="article-more-link">
+            <a href="/posts/55919299/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/9f894922/" itemprop="url">深度学习和分布式表示</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-06-01T14:52:16.000Z" itemprop="datePublished">6月 1 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分钟 读完 (约 1645 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        &#x4ECE;&#x7ECF;&#x9A8C;&#x4E2D;&#x603B;&#x7ED3;&#x539F;&#x5219;&#xFF0C;&#x7528;&#x539F;&#x5219;&#x751F;&#x6210;&#x5957;&#x8DEF;&#xFF0C;&#x6B63;&#x662F;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x5904;&#x7406;&#x548C;&#x89E3;&#x51B3;&#x65B0;&#x95EE;&#x9898;&#x7684;&#x9014;&#x5F84;&#x3002;&#x901A;&#x8FC7;&#x89E3;&#x8026;&#x5F97;&#x5230;&#x7684;&#x4FE1;&#x606F;&#x6765;&#x6D88;&#x9664;&#x672A;&#x77E5;&#x548C;&#x4E0D;&#x786E;&#x5B9A;&#x6027;&#xFF0C;&#x662F;&#x6211;&#x4EEC;&#x667A;&#x80FD;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x3002;&#x6211;&#x4EEC;&#x773C;&#x4E2D;&#x7684;&#x4E16;&#x754C;&#xFF0C;&#x53EA;&#x662F;&#x9002;&#x5408;&#x6211;&#x4EEC;&#x7684;&#x4E00;&#x79CD;&#x8868;&#x793A;&#x800C;&#x5DF2;&#x3002;&#x4E5F;&#x8BB8;&#xFF0C;&#x771F;&#x6B63;&#x7684;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x5230;&#x6765;&#x90A3;&#x4E00;&#x523B;&#xFF0C;&#x4F1A;&#x662F;&#x6211;&#x4EEC;&#x521B;&#x9020;&#x7684;&#x673A;&#x5668;&#x201C;&#x7406;&#x89E3;&#x201D;&#x4E86;&#x81EA;&#x5DF1;&#x7684;&#x8868;&#x793A;&#x7CFB;&#x7EDF;&#x4E4B;&#x65F6;&#x2014;&#x2014;&#x6211;&#x4EEC;&#x6240;&#x5173;&#x6CE8;&#x7684;&#x53EF;&#x89E3;&#x91CA;&#x6027;&#xFF0C;&#x4E5F;&#x5C31;&#x65E0;&#x5173;&#x7D27;&#x8981;&#x4E86;&#x3002;
+        <p class="article-more-link">
+            <a href="/posts/9f894922/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/7b4533bb/" itemprop="url">LSTM:Pytorch实现</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-05-28T17:06:44.000Z" itemprop="datePublished">5月 29 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分钟 读完 (约 1664 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x672C;&#x6587;&#x8BA8;&#x8BBA;LSTM&#x7F51;&#x7EDC;&#x7684;Pytorch&#x5B9E;&#x73B0;&#xFF0C;&#x517C;&#x8BBA;Pytorch&#x5E93;&#x7684;&#x4EE3;&#x7801;&#x7EC4;&#x7EC7;&#x65B9;&#x5F0F;&#x548C;&#x67B6;&#x6784;&#x8BBE;&#x8BA1;&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/posts/7b4533bb/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/posts/5556c57b/" itemprop="url">Dropout-Pytorch实现</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-05-17T11:30:44.000Z" itemprop="datePublished">5月 17 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            6 分钟 读完 (约 868 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>Dropout&#x6280;&#x672F;&#x662F;Srivastava&#x7B49;&#x4EBA;&#x5728;2012&#x5E74;&#x63D0;&#x51FA;&#x7684;&#x6280;&#x672F;&#xFF0C;&#x73B0;&#x5728;&#x5DF2;&#x7136;&#x6210;&#x4E3A;&#x5404;&#x79CD;&#x6DF1;&#x5EA6;&#x6A21;&#x578B;&#x7684;&#x6807;&#x914D;&#x3002;&#x5176;&#x4E2D;&#x5FC3;&#x601D;&#x60F3;&#x662F;&#x968F;&#x673A;&#x5730;&#x51BB;&#x7ED3;&#x4E00;&#x90E8;&#x5206;&#x6A21;&#x578B;&#x53C2;&#x6570;&#xFF0C;&#x7528;&#x4E8E;&#x63D0;&#x9AD8;&#x6A21;&#x578B;&#x7684;&#x6CDB;&#x5316;&#x6027;&#x80FD;&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/posts/5556c57b/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

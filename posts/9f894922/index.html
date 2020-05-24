@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>深度学习和分布式表示 - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x4ECE;&amp;#x7ECF;&amp;#x9A8C;&amp;#x4E2D;&amp;#x603B;&amp;#x7ED3;&amp;#x539F;&amp;#x5219;&amp;#xFF0C;&amp;#x7528;&amp;#x539F;&amp;#x5219;&amp;#x751F;&amp;#x6210;&amp;#x5957;&amp;#x8DEF;&amp;#xFF0C;&amp;#x6B63;&amp;#x662F;&amp;#x6211;&amp;#x4EEC;&amp;#x81EA;&amp;#x5DF1;&amp;#x5904;&amp;#x7406;">
+<meta name="keywords" content="AI,Deep Learning,Machine Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习和分布式表示">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/9f894922/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x4ECE;&amp;#x7ECF;&amp;#x9A8C;&amp;#x4E2D;&amp;#x603B;&amp;#x7ED3;&amp;#x539F;&amp;#x5219;&amp;#xFF0C;&amp;#x7528;&amp;#x539F;&amp;#x5219;&amp;#x751F;&amp;#x6210;&amp;#x5957;&amp;#x8DEF;&amp;#xFF0C;&amp;#x6B63;&amp;#x662F;&amp;#x6211;&amp;#x4EEC;&amp;#x81EA;&amp;#x5DF1;&amp;#x5904;&amp;#x7406;">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/深度学习和分布式表示/distributed.webp">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/深度学习和分布式表示/non-dist.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/深度学习和分布式表示/dist.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/深度学习和分布式表示/generative.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/深度学习和分布式表示/filters.jpg">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.293Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习和分布式表示">
+<meta name="twitter:description" content="&amp;#x4ECE;&amp;#x7ECF;&amp;#x9A8C;&amp;#x4E2D;&amp;#x603B;&amp;#x7ED3;&amp;#x539F;&amp;#x5219;&amp;#xFF0C;&amp;#x7528;&amp;#x539F;&amp;#x5219;&amp;#x751F;&amp;#x6210;&amp;#x5957;&amp;#x8DEF;&amp;#xFF0C;&amp;#x6B63;&amp;#x662F;&amp;#x6211;&amp;#x4EEC;&amp;#x81EA;&amp;#x5DF1;&amp;#x5904;&amp;#x7406;">
+<meta name="twitter:image" content="https://blog.ddlee.cc/user-imgs/深度学习和分布式表示/distributed.webp">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            深度学习和分布式表示
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-06-01T14:52:16.000Z" itemprop="datePublished">6月 1 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分钟 读完 (约 1645 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x7684;&#x4E24;&#x4E2A;&#x4E3B;&#x8981;&#x53C2;&#x8003;&#x8D44;&#x6599;&#xFF1A;</p>
+<ol>
+<li>Yoshua Bengio&#x5728;2016&#x5E74;&#x4E5D;&#x6708;<a href="https://www.bayareadlschool.org/" target="_blank" rel="noopener">Deep Learning School</a>&#x7684;&#x6F14;&#x8BB2;Foundations and Challenges of Deep Learning&#x3002;<a href="https://www.youtube.com/watch?v=11rsu_WwZTc" target="_blank" rel="noopener">YouTube</a></li>
+<li><a href="http://www.deeplearningbook.org/" target="_blank" rel="noopener">Deep Learning</a>, Goodfellow et al, Section 15.4</li>
+</ol>
+<h3 id="&#x4ECE;&#x673A;&#x5668;&#x5B66;&#x4E60;&#x5230;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;"><a href="#&#x4ECE;&#x673A;&#x5668;&#x5B66;&#x4E60;&#x5230;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;" class="headerlink" title="&#x4ECE;&#x673A;&#x5668;&#x5B66;&#x4E60;&#x5230;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;"></a>&#x4ECE;&#x673A;&#x5668;&#x5B66;&#x4E60;&#x5230;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;</h3><p>&#x5728;&#x6F14;&#x8BB2;&#x4E2D;&#xFF0C;Bengio&#x63D0;&#x5230;&#x4ECE;&#x673A;&#x5668;&#x5B66;&#x4E60;&#x5230;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6709;&#x4E94;&#x4E2A;&#x5173;&#x952E;&#x7684;&#x98DE;&#x8DC3;&#xFF1A;</p>
+<ol>
+<li>Lots of data</li>
+<li>Very flexible models</li>
+<li>Enough computing power</li>
+<li>Powerful priors that can defeat the curse of dimensionality</li>
+<li>Computationally efficient inference</li>
+</ol>
+<p>&#x7B2C;&#x4E00;&#x70B9;&#x5DF2;&#x7ECF;&#x53D1;&#x751F;&#xFF0C;&#x5230;&#x5904;&#x90FD;&#x63D0;&#x5927;&#x6570;&#x636E;&#xFF0C;&#x5230;&#x5904;&#x90FD;&#x5728;&#x62DB;&#x6570;&#x636E;&#x5206;&#x6790;&#x5E08;&#x3002;<br>&#x6211;&#x5728;&#x8BFB;&#x9AD8;&#x4E2D;&#x65F6;&#xFF0C;&#x5C31;&#x66FE;&#x9884;&#x611F;&#x6570;&#x636E;&#x5C06;&#x662F;&#x65B0;&#x65F6;&#x4EE3;&#x7684;&#x77F3;&#x6CB9;&#x548C;&#x7164;&#x70AD;&#xFF0C;&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x6B63;&#x662F;&#x4EBA;&#x7C7B;&#x793E;&#x4F1A;&#x7ECF;&#x9A8C;&#x7684;&#x603B;&#x7ED3;&#xFF0C;&#x6570;&#x636E;&#x5E26;&#x6765;&#x7684;&#x77E5;&#x8BC6;&#x548C;&#x89C1;&#x89E3;&#x5C06;&#x5728;&#x9A71;&#x52A8;&#x793E;&#x4F1A;&#x8FDB;&#x6B65;&#x4E2D;&#x53D1;&#x6325;&#x8D8A;&#x6765;&#x8D8A;&#x91CD;&#x8981;&#x7684;&#x4F5C;&#x7528;&#xFF0C;&#x800C;&#x81EA;&#x5DF1;&#x8981;&#x7ACB;&#x5FD7;&#x6210;&#x4E3A;&#x65B0;&#x65F6;&#x4EE3;&#x7684;&#x77FF;&#x5DE5;&#x3002;</p>
+<p>&#x7B2C;&#x4E8C;&#x70B9;&#x5728;&#x6211;&#x770B;&#x6765;&#x6709;&#x4E24;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x4E00;&#x662F;&#x6838;&#x6280;&#x5DE7;&#xFF0C;&#x901A;&#x8FC7;&#x6838;&#x51FD;&#x6570;&#x5BF9;&#x5206;&#x5E03;&#x7A7A;&#x95F4;&#x7684;&#x8F6C;&#x6362;&#xFF0C;&#x8D4B;&#x4E88;&#x4E86;&#x6A21;&#x578B;&#x66F4;&#x5F3A;&#x5927;&#x7684;&#x8868;&#x8FF0;&#x80FD;&#x529B;&#xFF1B;&#x4E8C;&#x662F;&#x6DF1;&#x5EA6;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;&#xFF0C;&#x591A;&#x5C42;&#x7684;&#x6846;&#x67B6;&#x548C;&#x975E;&#x7EBF;&#x6027;&#x7684;&#x5F15;&#x5165;&#x4F7F;&#x5F97;&#x6A21;&#x578B;&#x7406;&#x8BBA;&#x4E0A;&#x53EF;&#x4EE5;&#x62DF;&#x5408;&#x4EFB;&#x610F;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x7B2C;&#x4E09;&#x70B9;&#xFF0C;&#x501F;&#x4E91;&#x8BA1;&#x7B97;&#x7684;&#x6D6A;&#x6F6E;&#xFF0C;&#x8BA1;&#x7B97;&#x529B;&#x4E0D;&#x518D;&#x662F;&#x4E00;&#x9879;&#x8D44;&#x4EA7;&#x800C;&#x662F;&#x4E00;&#x9879;&#x53EF;&#x4F9B;&#x6D88;&#x8D39;&#x7684;&#x670D;&#x52A1;&#xFF0C;&#x6211;&#x4EEC;&#x5B66;&#x751F;&#x4E5F;&#x53EF;&#x4EE5;&#x5EC9;&#x4EF7;&#x5730;&#x63A5;&#x89E6;&#x5230;&#x6839;&#x672C;&#x8D1F;&#x62C5;&#x4E0D;&#x8D77;&#x7684;&#x8BA1;&#x7B97;&#x529B;&#x8D44;&#x6E90;&#x3002;&#x800C;GPU&#x7B49;&#x82AF;&#x7247;&#x6280;&#x672F;&#x7684;&#x8FDB;&#x6B65;&#x4E5F;&#x4E3A;AI&#x7684;&#x6D69;&#x6D69;&#x5F81;&#x7A0B;&#x6DFB;&#x7816;&#x52A0;&#x74E6;&#x3002;</p>
+<p>&#x7B2C;&#x4E94;&#x70B9;&#xFF0C;&#x8FD1;&#x671F;&#x53D1;&#x5E03;&#x7684;Tensorflow Lite&#x548C;Caffe2&#x7B49;&#x5DE5;&#x5177;&#x4E5F;&#x6709;&#x52A9;&#x4E8E;&#x8D8A;&#x6765;&#x8D8A;&#x591A;&#x5730;&#x5C06;&#x8BA1;&#x7B97;&#x4EFB;&#x52A1;&#x5206;&#x914D;&#x5728;&#x7EC8;&#x7AEF;&#x4E0A;&#x8FDB;&#x884C;&#xFF0C;&#x800C;&#x975E;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x53D1;&#x9001;&#x4E0E;&#x63A5;&#x6536;&#x5668;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x7B2C;&#x56DB;&#x70B9;&#xFF0C;&#x4E5F;&#x662F;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x4E2D;&#x5FC3;&#x8BDD;&#x9898;&#xFF1A;&#x501F;&#x52A9;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x7684;&#x5F3A;&#x5927;&#x80FD;&#x529B;&#xFF0C;&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x6B63;&#x5C1D;&#x8BD5;&#x89E3;&#x51B3;&#x7EF4;&#x5EA6;&#x5E26;&#x6765;&#x7684;&#x707E;&#x96BE;&#x3002;</p>
+<h3 id="&#x6CA1;&#x6709;&#x514D;&#x8D39;&#x7684;&#x5348;&#x9910;"><a href="#&#x6CA1;&#x6709;&#x514D;&#x8D39;&#x7684;&#x5348;&#x9910;" class="headerlink" title="&#x6CA1;&#x6709;&#x514D;&#x8D39;&#x7684;&#x5348;&#x9910;"></a>&#x6CA1;&#x6709;&#x514D;&#x8D39;&#x7684;&#x5348;&#x9910;</h3><p>&#x7B80;&#x5355;&#x8BF4;&#xFF0C;&#x6CA1;&#x6709;&#x514D;&#x8D39;&#x7684;&#x5348;&#x9910;&#x5B9A;&#x7406;&#x6307;&#x51FA;&#x627E;&#x4E0D;&#x5230;&#x4E00;&#x4E2A;&#x5728;&#x4EFB;&#x4F55;&#x95EE;&#x9898;&#x4E0A;&#x90FD;&#x8868;&#x73B0;&#x6700;&#x4F18;&#x7684;&#x6A21;&#x578B;/&#x7B97;&#x6CD5;&#x3002;&#x4E0D;&#x540C;&#x7684;&#x6A21;&#x578B;&#x90FD;&#x6709;&#x5176;&#x64C5;&#x957F;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x8FD9;&#x7531;&#x8BE5;&#x6A21;&#x578B;&#x5EFA;&#x7ACB;&#x65F6;&#x5F15;&#x5165;&#x7684;&#x5148;&#x9A8C;&#x77E5;&#x8BC6;&#x51B3;&#x5B9A;&#x3002;</p>
+<p>&#x90A3;&#x4E48;&#xFF0C;&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x52A0;&#x5165;&#x7684;&#x5148;&#x9A8C;&#x77E5;&#x8BC6;&#x662F;&#x4EC0;&#x4E48;&#xFF1F;</p>
+<p>Bengio&#x7528;&#x7684;&#x8BCD;&#x662F;Compositionality&#xFF0C;&#x5373;&#x590D;&#x5408;&#x6027;&#xFF0C;<em>&#x67D0;&#x4E00;&#x6982;&#x5FF5;&#x4E4B;&#x610F;&#x4E49;&#x7531;&#x5176;&#x7EC4;&#x6210;&#x90E8;&#x5206;&#x7684;&#x610F;&#x4E49;&#x4EE5;&#x53CA;&#x7EC4;&#x5408;&#x89C4;&#x5219;&#x51B3;&#x5B9A;</em>&#x3002;&#x590D;&#x5408;&#x6027;&#x7684;&#x539F;&#x5219;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x9AD8;&#x6548;&#x5730;&#x63CF;&#x8FF0;&#x6211;&#x4EEC;&#x7684;&#x4E16;&#x754C;&#xFF0C;&#x800C;&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x6A21;&#x578B;&#x4E2D;&#x9690;&#x85CF;&#x7684;&#x5C42;&#x6B63;&#x662F;&#x53BB;&#x5B66;&#x4E60;&#x5176;&#x7EC4;&#x6210;&#x90E8;&#x5206;&#xFF0C;&#x7F51;&#x7EDC;&#x7684;&#x7ED3;&#x6784;&#x5219;&#x4EE3;&#x8868;&#x4E86;&#x7EC4;&#x5408;&#x89C4;&#x5219;&#x3002;&#x8FD9;&#x6B63;&#x662F;&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x6A21;&#x578B;&#x6F5C;&#x5728;&#x7684;&#x4FE1;&#x5FF5;&#x3002;</p>
+<h3 id="&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x5E26;&#x6765;&#x7684;&#x6307;&#x6570;&#x589E;&#x76CA;"><a href="#&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x5E26;&#x6765;&#x7684;&#x6307;&#x6570;&#x589E;&#x76CA;" class="headerlink" title="&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x5E26;&#x6765;&#x7684;&#x6307;&#x6570;&#x589E;&#x76CA;"></a>&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x5E26;&#x6765;&#x7684;&#x6307;&#x6570;&#x589E;&#x76CA;</h3><p>&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;(Distributed Representation)&#x662F;&#x8FDE;&#x63A5;&#x4E3B;&#x4E49;&#x7684;&#x6838;&#x5FC3;&#x6982;&#x5FF5;&#xFF0C;&#x4E0E;&#x590D;&#x5408;&#x6027;&#x7684;&#x539F;&#x7406;&#x76F8;&#x5408;&#x3002;&#x6574;&#x4F53;&#x7531;&#x7EC4;&#x6210;&#x5B83;&#x7684;&#x4E2A;&#x4F53;&#x53CA;&#x5176;&#x7EC4;&#x5408;&#x6765;&#x8868;&#x793A;&#x3002;&#x8BF7;&#x770B;&#x4E0B;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<p><img src="/user-imgs/&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x548C;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;/distributed.webp" alt="Distributed"></p>
+<p>&#x63CF;&#x8FF0;&#x4E00;&#x4E2A;&#x5F62;&#x72B6;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x5176;&#x5206;&#x89E3;&#x4E3A;&#x4E0D;&#x540C;&#x7684;&#x7279;&#x5F81;&#x6765;&#x8868;&#x8FF0;&#x3002;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x662F;&#x4E00;&#x79CD;&#x89E3;&#x8026;&#xFF0C;&#x5B83;&#x8BD5;&#x56FE;&#x590D;&#x6742;&#x7684;&#x6982;&#x5FF5;&#x5206;&#x79BB;&#x6210;&#x72EC;&#x7ACB;&#x7684;&#x90E8;&#x5206;&#x3002;&#x800C;&#x8FD9;&#x4E5F;&#x5F15;&#x51FA;&#x4E86;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x5E26;&#x6765;&#x7684;&#x7F3A;&#x70B9;&#xFF1A;&#x9690;&#x85CF;&#x5C42;&#x5B66;&#x5230;&#x7684;&#x5206;&#x89E3;&#x7279;&#x5F81;&#x96BE;&#x4EE5;&#x5F97;&#x5230;&#x663E;&#x5F0F;&#x7684;&#x89E3;&#x91CA;&#x3002;</p>
+<p>&#x4F20;&#x7EDF;&#x7684;&#x673A;&#x5668;&#x5B66;&#x4E60;&#x7B97;&#x6CD5;&#xFF0C;&#x5982;K-Means&#x805A;&#x7C7B;&#x3001;&#x51B3;&#x7B56;&#x6811;&#x7B49;&#xFF0C;&#x5927;&#x591A;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x975E;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#xFF0C;&#x5373;&#x7528;&#x7279;&#x5B9A;&#x7684;&#x53C2;&#x6570;&#x53BB;&#x63CF;&#x8FF0;&#x7279;&#x5B9A;&#x7684;&#x533A;&#x57DF;&#x3002;&#x5982;K-Means&#x805A;&#x7C7B;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x5212;&#x5206;&#x591A;&#x5C11;&#x533A;&#x57DF;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x6709;&#x591A;&#x5C11;&#x4E2A;&#x4E2D;&#x5FC3;&#x70B9;&#x3002;&#x56E0;&#x800C;&#xFF0C;&#x8FD9;&#x7C7B;&#x7B97;&#x6CD5;&#x7684;&#x7279;&#x70B9;&#x662F;&#xFF0C;&#x968F;&#x7740;&#x53C2;&#x6570;&#x4E2A;&#x6570;&#x7684;&#x63D0;&#x5347;&#xFF0C;&#x5176;&#x80FD;&#x63CF;&#x8FF0;&#x7684;&#x6982;&#x5FF5;&#x7EBF;&#x6027;&#x589E;&#x957F;&#x3002;</p>
+<p><img src="/user-imgs/&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x548C;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;/non-dist.png" alt="non-dist"><br>&#x4F7F;&#x7528;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x7684;&#x6DF1;&#x5EA6;&#x7F51;&#x7EDC;&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x4EAB;&#x53D7;&#x5230;&#x6307;&#x6570;&#x7EA7;&#x7684;&#x589E;&#x76CA;&#xFF0C;&#x5373;&#xFF0C;&#x968F;&#x7740;&#x53C2;&#x6570;&#x4E2A;&#x6570;&#x7684;&#x63D0;&#x5347;&#xFF0C;&#x5176;&#x8868;&#x8FF0;&#x80FD;&#x529B;&#x662F;&#x6307;&#x6570;&#x7EA7;&#x7684;&#x589E;&#x957F;&#x3002;&#x5177;&#x6709;$k$&#x4E2A;&#x503C;&#x7684;$n$&#x4E2A;&#x7279;&#x5F81;&#xFF0C;&#x53EF;&#x4EE5;&#x63CF;&#x8FF0;${k}^{n}$&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x6982;&#x5FF5;&#x3002;</p>
+<p><img src="/user-imgs/&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x548C;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;/dist.png" alt="dist"></p>
+<h3 id="&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x5728;&#x6CDB;&#x5316;&#x4E0A;&#x7684;&#x4F18;&#x52BF;"><a href="#&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x5728;&#x6CDB;&#x5316;&#x4E0A;&#x7684;&#x4F18;&#x52BF;" class="headerlink" title="&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x5728;&#x6CDB;&#x5316;&#x4E0A;&#x7684;&#x4F18;&#x52BF;"></a>&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x5728;&#x6CDB;&#x5316;&#x4E0A;&#x7684;&#x4F18;&#x52BF;</h3><p>&#x5206;&#x5E03;&#x5F0F;&#x7684;&#x60F3;&#x6CD5;&#x8FD8;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x989D;&#x5916;&#x7684;&#x6CDB;&#x5316;&#x4F18;&#x52BF;&#x3002;&#x901A;&#x8FC7;&#x91CD;&#x65B0;&#x7EC4;&#x5408;&#x5728;&#x539F;&#x6709;&#x6570;&#x636E;&#x4E2D;&#x62BD;&#x79BB;&#x51FA;&#x6765;&#x7684;&#x7279;&#x5F81;&#xFF0C;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x5F97;&#x5230;&#x539F;&#x6709;&#x6570;&#x636E;&#x4E2D;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x5B9E;&#x4F8B;&#x3002;&#x5728;Radford et al.&#x7684;&#x5DE5;&#x4F5C;&#x4E2D;&#xFF0C;&#x751F;&#x6210;&#x6A21;&#x578B;&#x533A;&#x4E60;&#x5F97;&#x4E86;&#x6027;&#x522B;&#xFF0C;&#x5E76;&#x80FD;&#x4ECE;&#x201C;&#x6234;&#x773C;&#x955C;&#x7684;&#x7537;&#x4EBA;&#x201D;-&#x201C;&#x7537;&#x4EBA;&#x201D;+&#x201C;&#x5973;&#x4EBA;&#x201D;=&#x201C;&#x6234;&#x773C;&#x955C;&#x7684;&#x5973;&#x4EBA;&#x201D;&#x8FD9;&#x6837;&#x7684;&#x62BD;&#x8C61;&#x6982;&#x5FF5;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x751F;&#x6210;&#x5B9E;&#x4F8B;&#x3002;</p>
+<p><img src="/user-imgs/&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x548C;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;/generative.png" alt="generative"></p>
+<h3 id="&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x4E0E;&#x5DFB;&#x79EF;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;"><a href="#&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x4E0E;&#x5DFB;&#x79EF;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;" class="headerlink" title="&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x4E0E;&#x5DFB;&#x79EF;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;"></a>&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x4E0E;&#x5DFB;&#x79EF;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;</h3><p>&#x5DFB;&#x79EF;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;&#x4E0D;&#x540C;&#x7684;&#x6EE4;&#x6CE2;&#x5668;&#x4E60;&#x5F97;&#x7684;&#x7279;&#x5F81;&#x53EF;&#x4EE5;&#x4E3A;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;&#x7684;&#x6982;&#x5FF5;&#x5206;&#x89E3;&#x8FD9;&#x4E00;&#x7279;&#x6027;&#x63D0;&#x4F9B;&#x4E00;&#x4E9B;&#x4F8B;&#x5B50;&#x3002;&#x4E0B;&#x56FE;&#x662F;VGG16&#x4E0D;&#x540C;&#x6EE4;&#x6CE2;&#x5668;&#x5F97;&#x5230;&#x7ED3;&#x679C;&#x7684;&#x53EF;&#x89C6;&#x5316;&#x8868;&#x793A;&#xFF0C;<br>&#x51FA;&#x81EA;Francois Chollet&#x7684;&#x535A;&#x6587;<a href="https://blog.keras.io/how-convolutional-neural-networks-see-the-world.html" target="_blank" rel="noopener">How convolutional neural networks see the world</a></p>
+<p><img src="/user-imgs/&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x548C;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;/filters.jpg" alt="filters"></p>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x6D45;&#x5C42;&#x7684;&#x6EE4;&#x6CE2;&#x5668;&#x5B66;&#x5230;&#x7684;&#x662F;&#x7B80;&#x5355;&#x7684;&#x989C;&#x8272;&#x3001;&#x7EBF;&#x6761;&#x8D70;&#x5411;&#x7B49;&#x7279;&#x5F81;&#xFF0C;&#x8F83;&#x6DF1;&#x7684;&#x6EE4;&#x6CE2;&#x5668;&#x5B66;&#x5230;&#x590D;&#x6742;&#x7684;&#x7EB9;&#x7406;&#x3002;</p>
+<h3 id="&#x91CF;&#x5B50;&#x8BA1;&#x7B97;&#x673A;&#x4E0E;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;"><a href="#&#x91CF;&#x5B50;&#x8BA1;&#x7B97;&#x673A;&#x4E0E;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;" class="headerlink" title="&#x91CF;&#x5B50;&#x8BA1;&#x7B97;&#x673A;&#x4E0E;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;"></a>&#x91CF;&#x5B50;&#x8BA1;&#x7B97;&#x673A;&#x4E0E;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#x793A;</h3><p>&#x5728;&#x6211;&#x770B;&#x6765;&#xFF0C;&#x91CF;&#x5B50;&#x8BA1;&#x7B97;&#x673A;&#x7684;&#x6FC0;&#x52A8;&#x4EBA;&#x5FC3;&#x4E4B;&#x5904;&#x4E5F;&#x5728;&#x4E8E;&#x5176;&#x8868;&#x793A;&#x80FD;&#x529B;&#x3002;&#x4E00;&#x4E2A;&#x91CF;&#x5B50;&#x6001;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x539F;&#x5148;&#x4E24;&#x4E2A;&#x9759;&#x6001;&#x8868;&#x793A;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x539F;&#x5148;&#x9700;&#x8981;8&#x4E2A;&#x5355;&#x4F4D;&#x9759;&#x6001;&#x5B58;&#x50A8;&#x8868;&#x793A;&#x7684;&#x4FE1;&#x606F;&#x53EA;&#x9700;&#x8981;3&#x4E2A;&#x91CF;&#x5B50;&#x6001;&#x5355;&#x4F4D;&#x5373;&#x53EF;&#x8868;&#x793A;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;&#x6307;&#x6570;&#x7EA7;&#x7684;&#x589E;&#x76CA;&#x3002;&#x5728;&#x8FD9;&#x4E00;&#x70B9;&#x4E0A;&#xFF0C;&#x8BA1;&#x7B97;&#x6A21;&#x578B;&#x548C;&#x6982;&#x5FF5;&#x6A21;&#x578B;&#x5DF2;&#x7136;&#x6B8A;&#x9014;&#x540C;&#x5F52;&#x3002;</p>
+<h3 id="&#x5C0F;&#x7ED3;"><a href="#&#x5C0F;&#x7ED3;" class="headerlink" title="&#x5C0F;&#x7ED3;"></a>&#x5C0F;&#x7ED3;</h3><p>&#x4ECE;&#x7ECF;&#x9A8C;&#x4E2D;&#x603B;&#x7ED3;&#x539F;&#x5219;&#xFF0C;&#x7528;&#x539F;&#x5219;&#x751F;&#x6210;&#x5957;&#x8DEF;&#xFF0C;&#x6B63;&#x662F;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x5904;&#x7406;&#x548C;&#x89E3;&#x51B3;&#x65B0;&#x95EE;&#x9898;&#x7684;&#x9014;&#x5F84;&#x3002;&#x901A;&#x8FC7;&#x89E3;&#x8026;&#x5F97;&#x5230;&#x7684;&#x4FE1;&#x606F;&#x6765;&#x6D88;&#x9664;&#x672A;&#x77E5;&#x548C;&#x4E0D;&#x786E;&#x5B9A;&#x6027;&#xFF0C;&#x662F;&#x6211;&#x4EEC;&#x667A;&#x80FD;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x3002;&#x6211;&#x4EEC;&#x773C;&#x4E2D;&#x7684;&#x4E16;&#x754C;&#xFF0C;&#x53EA;&#x662F;&#x9002;&#x5408;&#x6211;&#x4EEC;&#x7684;&#x4E00;&#x79CD;&#x8868;&#x793A;&#x800C;&#x5DF2;&#x3002;&#x4E5F;&#x8BB8;&#xFF0C;&#x771F;&#x6B63;&#x7684;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x5230;&#x6765;&#x90A3;&#x4E00;&#x523B;&#xFF0C;&#x4F1A;&#x662F;&#x6211;&#x4EEC;&#x521B;&#x9020;&#x7684;&#x673A;&#x5668;&#x201C;&#x7406;&#x89E3;&#x201D;&#x4E86;&#x81EA;&#x5DF1;&#x7684;&#x8868;&#x793A;&#x7CFB;&#x7EDF;&#x4E4B;&#x65F6;&#x2014;&#x2014;&#x6211;&#x4EEC;&#x6240;&#x5173;&#x6CE8;&#x7684;&#x53EF;&#x89E3;&#x91CA;&#x6027;&#xFF0C;&#x4E5F;&#x5C31;&#x65E0;&#x5173;&#x7D27;&#x8981;&#x4E86;&#x3002;</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/AI/">#AI</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Deep-Learning/">#Deep Learning</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Machine-Learning/">#Machine Learning</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/46620023/">[论文笔记]An Analysis of Deep Neural Network Models for Practical Applications</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/f021f857/">[论文笔记]On-the-fly Operation Batching in Dynamic Computation Graphs</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/9f894922/';
+        this.page.identifier = 'posts/9f894922/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

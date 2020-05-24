@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>个性化你的Ubuntu-2：GNOME安装与工具 - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x5982;&amp;#x4F55;&amp;#x5B89;&amp;#x88C5;Gnome&amp;#x684C;&amp;#x9762;&amp;#x73AF;&amp;#x5883;&amp;#x3002;">
+<meta name="keywords" content="Digital Life,Linux,Gnome">
+<meta property="og:type" content="article">
+<meta property="og:title" content="个性化你的Ubuntu-2：GNOME安装与工具">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/938c3141/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x5982;&amp;#x4F55;&amp;#x5B89;&amp;#x88C5;Gnome&amp;#x684C;&amp;#x9762;&amp;#x73AF;&amp;#x5883;&amp;#x3002;">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/Ubuntu-2/gnome-login1.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/Ubuntu-2/gnome-login2.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/Ubuntu-2/gnome-tweak-tool_004.jpg">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/Ubuntu-2/Selection_019.jpg">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.291Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="个性化你的Ubuntu-2：GNOME安装与工具">
+<meta name="twitter:description" content="&amp;#x5982;&amp;#x4F55;&amp;#x5B89;&amp;#x88C5;Gnome&amp;#x684C;&amp;#x9762;&amp;#x73AF;&amp;#x5883;&amp;#x3002;">
+<meta name="twitter:image" content="https://blog.ddlee.cc/user-imgs/Ubuntu-2/gnome-login1.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            个性化你的Ubuntu-2：GNOME安装与工具
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2016-06-02T14:19:50.000Z" itemprop="datePublished">6月 2 2016</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Linux/">Linux</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            6 分钟 读完 (约 869 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h3 id="GNOME&#x5B89;&#x88C5;"><a href="#GNOME&#x5B89;&#x88C5;" class="headerlink" title="GNOME&#x5B89;&#x88C5;"></a>GNOME&#x5B89;&#x88C5;</h3><p>&#x4ECE;&#x4E0A;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;GNOME&#x662F;&#x4E00;&#x7CFB;&#x5217;&#x8F6F;&#x4EF6;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x5B89;&#x88C5;&#x65F6;&#x53EF;&#x4EE5;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x53D6;&#x820D;&#x3002;&#x5BF9;&#x4E8E;Ubuntu&#x7528;&#x6237;&#x6765;&#x8BF4;&#xFF0C;&#x53EF;&#x4EE5;&#x6709;&#x4EE5;&#x4E0B;&#x4E24;&#x7C7B;&#x4F53;&#x9A8C;GNOME&#x7684;&#x65B9;&#x5F0F;&#x3002;&#xFF08;&#x53C2;&#x8003;&#xFF1A;<a href="https://wiki.ubuntuusers.de/GNOME_Installation/" target="_blank" rel="noopener">GNOME installation</a>&#xFF09;</p>
+<h4 id="1-Ubuntu-GNOME&#xFF08;&#x7CFB;&#x7EDF;&#xFF09;"><a href="#1-Ubuntu-GNOME&#xFF08;&#x7CFB;&#x7EDF;&#xFF09;" class="headerlink" title="1.Ubuntu GNOME&#xFF08;&#x7CFB;&#x7EDF;&#xFF09;"></a>1.Ubuntu GNOME&#xFF08;&#x7CFB;&#x7EDF;&#xFF09;</h4><p>Ubuntu GNOME&#x662F;Ubuntu&#x7684;&#x4E00;&#x4E2A;&#x53D1;&#x884C;&#x7248;&#x672C;&#xFF08;&#x4E5F;&#x79F0;Ubuntu variants&#xFF09;&#xFF0C;&#x5C31;&#x50CF;Ubuntu&#x548C;Fedora&#x7B49;&#x90FD;&#x662F;GNU/Linux&#x7684;&#x53D1;&#x884C;&#x7248;&#x90A3;&#x6837;&#x3002;Ubuntu GNOME&#x4E0D;&#x4EC5;&#x5305;&#x542B;&#x4E86;Ubuntu&#x7684;&#x6838;&#x5FC3;&#x90E8;&#x5206;&#x3001;GNOME&#x7684;&#x6838;&#x5FC3;&#x90E8;&#x5206;&#xFF0C;&#x8FD8;&#x6709;&#x4E00;&#x7CFB;&#x5217;&#x7684;&#x6807;&#x51C6;&#x5E94;&#x7528;&#x3002;</p>
+<h5 id="Install-from-DVD"><a href="#Install-from-DVD" class="headerlink" title="Install from DVD"></a>Install from DVD</h5><p>&#x5982;&#x679C;&#x53EF;&#x4EE5;&#x63A5;&#x53D7;&#x91CD;&#x65B0;&#x5B89;&#x88C5;&#x7CFB;&#x7EDF;&#xFF0C;&#x8BF7;&#x5230;&#x8FD9;&#x91CC;<a href="http://ubuntugnome.org/download/" target="_blank" rel="noopener">&#x4E0B;&#x8F7D;</a>Ubuntu GNOME&#x3002;</p>
+<h5 id="Install-with-current-system"><a href="#Install-with-current-system" class="headerlink" title="Install with current system"></a>Install with current system</h5><p>&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5B89;&#x88C5;metapackage&#xFF0C;&#x8FD9;&#x6837;&#x5728;&#x5B89;&#x88C5;GNOME&#x684C;&#x9762;&#x73AF;&#x5883;&#x65F6;&#xFF0C;&#x4F60;&#x7684;&#x7CFB;&#x7EDF;&#x4E2D;&#x672A;&#x5B89;&#x88C5;&#x7684;&#x6807;&#x51C6;&#x5E94;&#x7528;&#x4E5F;&#x4F1A;&#x88AB;&#x540C;&#x65F6;&#x5B89;&#x88C5;&#x3002;</p>
+<p><code>sudo apt-get install ubuntu-gnome-desktop</code></p>
+<h4 id="2-GNOME&#xFF08;&#x4EC5;&#x684C;&#x9762;&#x73AF;&#x5883;&#xFF09;"><a href="#2-GNOME&#xFF08;&#x4EC5;&#x684C;&#x9762;&#x73AF;&#x5883;&#xFF09;" class="headerlink" title="2.GNOME&#xFF08;&#x4EC5;&#x684C;&#x9762;&#x73AF;&#x5883;&#xFF09;"></a>2.GNOME&#xFF08;&#x4EC5;&#x684C;&#x9762;&#x73AF;&#x5883;&#xFF09;</h4><h5 id="The-&#x201C;real&#x201D;-GNOME"><a href="#The-&#x201C;real&#x201D;-GNOME" class="headerlink" title="The &#x201C;real&#x201D; GNOME"></a>The &#x201C;real&#x201D; GNOME</h5><p>&#x6807;&#x51C6;&#x7684;GNOME&#x684C;&#x9762;&#x73AF;&#x5883;&#xFF0C;&#x6CA1;&#x6709;Ubuntu&#x7684;&#x7279;&#x6027;&#xFF08;&#x5C3D;&#x7BA1;&#x6211;&#x533A;&#x5206;&#x4E0D;&#x51FA;&#x54EA;&#x4E9B;&#x662F;Ubuntu&#x63D0;&#x4F9B;&#x7684;&#xFF09;&#xFF0C;&#x4E5F;&#x4E0D;&#x5B89;&#x88C5;&#x9644;&#x52A0;&#x7684;&#x6807;&#x51C6;&#x5E94;&#x7528;&#xFF1A;</p>
+<p><code>sudo apt-get install gnome</code></p>
+<h5 id="The-minimux-GNOME"><a href="#The-minimux-GNOME" class="headerlink" title="The minimux GNOME"></a>The minimux GNOME</h5><p>GNOME&#x7684;&#x6838;&#x5FC3;&#x90E8;&#x5206;&#xFF0C;&#x4E0D;&#x5B89;&#x88C5;&#x9644;&#x52A0;&#x7684;&#x6807;&#x51C6;&#x5E94;&#x7528;&#xFF1A;</p>
+<p><code>sudo apt-get install gnome-core</code></p>
+<h5 id="GNOME-shell"><a href="#GNOME-shell" class="headerlink" title="GNOME shell"></a>GNOME shell</h5><p>&#x4EC5;&#x5B89;&#x88C5;GNOME&#x7684;&#x56FE;&#x5F62;&#x754C;&#x9762;&#xFF1A;<br><code>sudo apt-get install gnome-shell</code></p>
+<p>&#x4F60;&#x8FD8;&#x9700;&#x8981;&#xFF1A;<br><code>sudo apt-get install gnome-session</code></p>
+<h4 id="&#x6CE8;&#x610F;"><a href="#&#x6CE8;&#x610F;" class="headerlink" title="&#x6CE8;&#x610F;"></a>&#x6CE8;&#x610F;</h4><p>&#x5728;&#x540C;&#x4E00;&#x7CFB;&#x7EDF;&#x4E0A;&#x5B89;&#x88C5;&#x4E0D;&#x540C;&#x7684;&#x684C;&#x9762;&#x73AF;&#x5883;&#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x4E00;&#x4E9B;&#x610F;&#x6599;&#x4E0D;&#x5230;&#x7684;&#x95EE;&#x9898;&#xFF08;&#x5982;&#x9501;&#x5C4F;&#x754C;&#x9762;&#x4E22;&#x5931;&#xFF09;&#xFF0C;&#x6700;&#x63A8;&#x8350;&#x7684;&#x65B9;&#x6848;&#x8FD8;&#x662F;&#x91CD;&#x65B0;&#x5B89;&#x88C5;Ubuntu GNOME&#xFF0C;&#x5176;&#x6B21;&#xFF0C;&#x53EF;&#x4EE5;&#x5B89;&#x88C5;<code>ubuntu-gnome-desktop</code>&#x3002;</p>
+<h4 id="&#x4F7F;&#x7528;&#x65B0;&#x7684;&#x684C;&#x9762;&#x73AF;&#x5883;"><a href="#&#x4F7F;&#x7528;&#x65B0;&#x7684;&#x684C;&#x9762;&#x73AF;&#x5883;" class="headerlink" title="&#x4F7F;&#x7528;&#x65B0;&#x7684;&#x684C;&#x9762;&#x73AF;&#x5883;"></a>&#x4F7F;&#x7528;&#x65B0;&#x7684;&#x684C;&#x9762;&#x73AF;&#x5883;</h4><p>&#x5B89;&#x88C5;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x91CD;&#x542F;&#xFF0C;&#x53EF;&#x5728;&#x767B;&#x5F55;&#x754C;&#x9762;&#x9009;&#x62E9;&#x684C;&#x9762;&#x73AF;&#x5883;&#x3002;</p>
+<p><img src="/user-imgs/Ubuntu-2/gnome-login1.png" alt="login1"></p>
+<p><img src="/user-imgs/Ubuntu-2/gnome-login2.png" alt="login2"></p>
+<h3 id="GNOME&#x914D;&#x7F6E;&#x5DE5;&#x5177;&#xFF1A;gnome-tweak-tool"><a href="#GNOME&#x914D;&#x7F6E;&#x5DE5;&#x5177;&#xFF1A;gnome-tweak-tool" class="headerlink" title="GNOME&#x914D;&#x7F6E;&#x5DE5;&#x5177;&#xFF1A;gnome-tweak-tool"></a>GNOME&#x914D;&#x7F6E;&#x5DE5;&#x5177;&#xFF1A;gnome-tweak-tool</h3><p>&#x60F3;&#x8981;&#x5145;&#x5206;&#x4E2A;&#x6027;&#x5316;GNOME&#x684C;&#x9762;&#x73AF;&#x5883;&#xFF0C;&#x6269;&#x5C55;GNOME&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x4F60;&#x8FD8;&#x9700;&#x8981;&#x5B89;&#x88C5;GNOME&#x7684;&#x914D;&#x7F6E;&#x5DE5;&#x5177;&#xFF1A;gnome tweak tool</p>
+<p><code>sudo apt-get install gnome-tweak-tool</code></p>
+<p><img src="/user-imgs/Ubuntu-2/gnome-tweak-tool_004.jpg" alt="&#x56FE;&#x7247;&#xFF1A;gnome tweak tool&#x63D0;&#x4F9B;&#x7684;&#x529F;&#x80FD;"></p>
+<p>&#x5229;&#x7528;gnome tweak tool&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x7BA1;&#x7406;&#x684C;&#x9762;&#x4E3B;&#x9898;&#x3001;&#x8C03;&#x6574;&#x7A97;&#x53E3;&#x7279;&#x6027;&#x3001;&#x8C03;&#x6574;&#x663E;&#x793A;&#x5B57;&#x4F53;&#x3001;&#x52A0;&#x8F7D;GNOME&#x6269;&#x5C55;&#x3001;&#x7BA1;&#x7406;&#x5F00;&#x673A;&#x81EA;&#x542F;&#x7A0B;&#x5E8F;&#x7B49;&#x7B49;&#x3002;</p>
+<h3 id="&#x6269;&#x5C55;&#x63D2;&#x4EF6;"><a href="#&#x6269;&#x5C55;&#x63D2;&#x4EF6;" class="headerlink" title="&#x6269;&#x5C55;&#x63D2;&#x4EF6;"></a>&#x6269;&#x5C55;&#x63D2;&#x4EF6;</h3><p>&#x5728;Ubuntu&#x4E0A;&#xFF0C;&#x8981;&#x8C03;&#x6574;&#x684C;&#x9762;&#x4E3B;&#x9898;&#xFF0C;&#x53EF;&#x6CA1;&#x6709;Windows&#x4E0A;&#x9F20;&#x6807;&#x53F3;&#x51FB;&#x4E00;&#x4E0B;&#x90A3;&#x4E48;&#x7B80;&#x5355;&#x3002;<br>&#x4F60;&#x8981;&#x5148;&#x5B89;&#x88C5;&#x4E0A;&#x9762;&#x7684;tweak tool&#xFF0C;&#x7136;&#x540E;&#x6709;&#x4EBA;&#x544A;&#x8BC9;&#x4F60;&#x9700;&#x8981;User theme&#x6269;&#x5C55;&#x63D2;&#x4EF6;&#xFF0C;&#x800C;&#x4F60;&#x8DD1;&#x5230;<code>extensions.gnome.org</code>&#xFF0C;&#x9047;&#x5230;&#x7684;&#x5374;&#x662F;&#x8FD9;&#x4E2A;&#xFF1A;<br><img src="/user-imgs/Ubuntu-2/Selection_019.jpg" alt="&#x9519;&#x8BEF;"></p>
+<p>&#x6211;&#x660E;&#x660E;&#x88C5;&#x4E86;GNOME&#x7684;&#x554A;&#xFF01;</p>
+<p>&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#xFF0C;<code>extensions.gnome.org</code>&#x9700;&#x8981;&#x4E0E;&#x6D4F;&#x89C8;&#x5668;&#x901A;&#x4FE1;&#xFF0C;&#x8C03;&#x7528;click-to-play&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5B89;&#x88C5;GNOMNE shell intergration&#x8FD9;&#x4E2A;&#x63D2;&#x4EF6;&#x3002;</p>
+<h4 id="Chrome&#x7528;&#x6237;"><a href="#Chrome&#x7528;&#x6237;" class="headerlink" title="Chrome&#x7528;&#x6237;"></a>Chrome&#x7528;&#x6237;</h4><h5 id="&#x5229;&#x7528;PPA"><a href="#&#x5229;&#x7528;PPA" class="headerlink" title="&#x5229;&#x7528;PPA"></a>&#x5229;&#x7528;PPA</h5><pre><code>sudo add-apt-repository ppa:ne0sight/chrome-gnome-shell
+sudo apt-get update
+sudo apt-get install chrome-gnome-shell
+</code></pre><h5 id="&#x901A;&#x8FC7;Chrome-Web-Store-GNOME-Shell-integration"><a href="#&#x901A;&#x8FC7;Chrome-Web-Store-GNOME-Shell-integration" class="headerlink" title="&#x901A;&#x8FC7;Chrome Web Store:GNOME Shell integration"></a>&#x901A;&#x8FC7;Chrome Web Store:<a href="https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep" target="_blank" rel="noopener">GNOME Shell integration</a></h5><p>&#x53EF;&#x80FD;&#x9700;&#x8981;&#x901A;&#x8FC7;CMake&#x5B89;&#x88C5;native connector,&#x8BF7;&#x53C2;&#x8003;&#x8FD9;&#x4E00;<a href="https://wiki.gnome.org/Projects/GnomeShellIntegrationForChrome/Installation" target="_blank" rel="noopener">&#x9875;&#x9762;</a>&#x3002;</p>
+<h4 id="FireFox&#x7528;&#x6237;"><a href="#FireFox&#x7528;&#x6237;" class="headerlink" title="FireFox&#x7528;&#x6237;"></a>FireFox&#x7528;&#x6237;</h4><p>&#x4F7F;&#x7528;FireFox&#x8BBF;&#x95EE;<code>extensions.gnome.org</code>&#x65F6;&#x4F1A;&#x6709;&#x8FD0;&#x884C;GNOME shell integration&#x7684;&#x901A;&#x77E5;&#xFF0C;&#x5141;&#x8BB8;&#x8FD0;&#x884C;&#x540E;&#x5237;&#x65B0;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x66F4;&#x591A;&#x4FE1;&#x606F;&#xFF0C;&#x8BF7;&#x53C2;&#x8003;&#x8FD9;&#x4E00;<a href="https://extensions.gnome.org/about/#no-detection" target="_blank" rel="noopener">&#x9875;&#x9762;</a></p>
+<p>&#x5B89;&#x88C5;&#x597D;<code>tweak-tool</code>&#x540E;&#xFF0C;&#x795D;&#x8D3A;&#x4F60;&#x5DF2;&#x7ECF;&#x6253;&#x5F00;&#x4E86;&#x65B0;&#x4E16;&#x754C;&#x7684;&#x5927;&#x95E8;&#x3002;&#x4E0B;&#x7BC7;&#x6587;&#x7AE0;&#x662F;&#x5173;&#x4E8E;&#x6269;&#x5C55;&#x63D2;&#x4EF6;&#x7684;&#x63A8;&#x8350;&#xFF0C;&#x6B22;&#x8FCE;&#x7EE7;&#x7EED;&#x9605;&#x8BFB;&#x3002;</p>
+<p>@<a href="http://ddlee.cn" target="_blank" rel="noopener">ddlee</a></p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Digital-Life/">#Digital Life</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Linux/">#Linux</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Gnome/">#Gnome</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/f74f7d22/">个性化你的Ubuntu-3：主题，插件以及桌面小工具</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/c0bafe01/">个性化你的Ubuntu-1：GNOME桌面环境</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/938c3141/';
+        this.page.identifier = 'posts/938c3141/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

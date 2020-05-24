@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>[源码笔记]keras源码分析之Container - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x672C;&amp;#x7BC7;&amp;#x7EE7;&amp;#x7EED;&amp;#x8BA8;&amp;#x8BBA;keras&amp;#x7684;&amp;#x6E90;&amp;#x7801;&amp;#x7ED3;&amp;#x6784;&amp;#x3002; &amp;#x7B2C;&amp;#x4E00;&amp;#x7BC7;&amp;#x6E90;&amp;#x7801;&amp;#x7B14;&amp;#x8BB0;&amp;#x4E2D;&amp;#x6211;&amp;#x4EEC;&amp;#x89C2;&amp;#x5BDF;&amp;#">
+<meta name="keywords" content="Programming,AI,Deep Learning,Keras">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[源码笔记]keras源码分析之Container">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/ba61101c/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x672C;&amp;#x7BC7;&amp;#x7EE7;&amp;#x7EED;&amp;#x8BA8;&amp;#x8BBA;keras&amp;#x7684;&amp;#x6E90;&amp;#x7801;&amp;#x7ED3;&amp;#x6784;&amp;#x3002; &amp;#x7B2C;&amp;#x4E00;&amp;#x7BC7;&amp;#x6E90;&amp;#x7801;&amp;#x7B14;&amp;#x8BB0;&amp;#x4E2D;&amp;#x6211;&amp;#x4EEC;&amp;#x89C2;&amp;#x5BDF;&amp;#">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.294Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[源码笔记]keras源码分析之Container">
+<meta name="twitter:description" content="&amp;#x672C;&amp;#x7BC7;&amp;#x7EE7;&amp;#x7EED;&amp;#x8BA8;&amp;#x8BBA;keras&amp;#x7684;&amp;#x6E90;&amp;#x7801;&amp;#x7ED3;&amp;#x6784;&amp;#x3002; &amp;#x7B2C;&amp;#x4E00;&amp;#x7BC7;&amp;#x6E90;&amp;#x7801;&amp;#x7B14;&amp;#x8BB0;&amp;#x4E2D;&amp;#x6211;&amp;#x4EEC;&amp;#x89C2;&amp;#x5BDF;&amp;#">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            [源码笔记]keras源码分析之Container
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-25T14:08:44.000Z" itemprop="datePublished">7月 25 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分钟 读完 (约 1047 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x7BC7;&#x7EE7;&#x7EED;&#x8BA8;&#x8BBA;keras&#x7684;&#x6E90;&#x7801;&#x7ED3;&#x6784;&#x3002;</p>
+<p><a href="https://blog.ddlee.cn/posts/4943e1b8/" target="_blank" rel="noopener">&#x7B2C;&#x4E00;&#x7BC7;&#x6E90;&#x7801;&#x7B14;&#x8BB0;</a>&#x4E2D;&#x6211;&#x4EEC;&#x89C2;&#x5BDF;&#x4E86;<code>Layer</code>, <code>Tensor</code>&#x548C;<code>Node</code>&#x662F;&#x5982;&#x4F55;&#x8026;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x7684;&#xFF0C;&#x800C;&#x672C;&#x7BC7;&#x7684;&#x91CD;&#x70B9;&#x662F;&#x89C2;&#x5BDF;&#x591A;&#x5C42;&#x7F51;&#x7EDC;&#x6784;&#x6210;&#x7684;&#x6709;&#x5411;&#x65E0;&#x73AF;&#x56FE;&#xFF08;DAG&#xFF09;&#x3002;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x7684;&#x6587;&#x4EF6;&#x4E3A;<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="noopener">keras/engine/topology.py</a>&#xFF0C; &#x8981;&#x89C2;&#x5BDF;&#x7684;&#x7C7B;&#x662F;<code>Container</code>&#x3002;<br><a id="more"></a></p>
+<h3 id="Container&#x5BF9;&#x8C61;&#xFF1A;DAG&#x7684;&#x62D3;&#x6251;&#x539F;&#x578B;"><a href="#Container&#x5BF9;&#x8C61;&#xFF1A;DAG&#x7684;&#x62D3;&#x6251;&#x539F;&#x578B;" class="headerlink" title="Container&#x5BF9;&#x8C61;&#xFF1A;DAG&#x7684;&#x62D3;&#x6251;&#x539F;&#x578B;"></a><code>Container</code>&#x5BF9;&#x8C61;&#xFF1A;DAG&#x7684;&#x62D3;&#x6251;&#x539F;&#x578B;</h3><p>&#x5728;&#x7B2C;&#x4E00;&#x7BC7;&#x4E2D;&#x6211;&#x4EEC;&#x63D0;&#x5230;&#xFF0C;Keras Tensor&#x4E2D;&#x589E;&#x5F3A;&#x7684;<code>\_keras_history</code>&#x5C5E;&#x6027;&#x4F7F;&#x5F97;&#x6211;&#x4EEC;&#x4EC5;&#x901A;&#x8FC7;&#x8F93;&#x5165;&#x548C;&#x8F93;&#x51FA;&#x7684;Tensor&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x6784;&#x5EFA;&#x51FA;&#x6574;&#x5F20;&#x8BA1;&#x7B97;&#x56FE;&#x3002;&#x800C;<code>Container</code>&#x5BF9;&#x8C61;&#x6B63;&#x662F;&#x5B9E;&#x73B0;&#x4E86;&#x8FD9;&#x6837;&#x7684;&#x8FC7;&#x7A0B;&#x3002;</p>
+<h4 id="&#x8BA1;&#x7B97;&#x56FE;&#x7684;&#x6784;&#x5EFA;"><a href="#&#x8BA1;&#x7B97;&#x56FE;&#x7684;&#x6784;&#x5EFA;" class="headerlink" title="&#x8BA1;&#x7B97;&#x56FE;&#x7684;&#x6784;&#x5EFA;"></a>&#x8BA1;&#x7B97;&#x56FE;&#x7684;&#x6784;&#x5EFA;</h4><p>DAG&#x8BA1;&#x7B97;&#x56FE;&#x7684;&#x6784;&#x5EFA;&#x5728;<code>Container</code>&#x5BF9;&#x8C61;&#x5B9E;&#x4F8B;&#x5316;&#x65F6;&#x5B8C;&#x6210;&#xFF0C;&#x4E3B;&#x8981;&#x5305;&#x62EC;&#x5982;&#x4E0B;&#x51E0;&#x4E2A;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<p>1&#xFF09; &#x8BB0;&#x5F55;<code>Container</code>&#x7684;&#x9996;&#x5C3E;&#x8FDE;&#x63A5;&#x4FE1;&#x606F;</p>
+<pre><code class="python">def __init__(self, inputs, outputs, name=None):
+  for x in self.outputs:
+      layer, node_index, tensor_index = x._keras_history
+      self.output_layers.append(layer)
+      self.output_layers_node_indices.append(node_index)
+      self.output_layers_tensor_indices.append(tensor_index)
+
+  for x in self.inputs:
+      layer, node_index, tensor_index = x._keras_history
+      self.input_layers.append(layer)
+      self.input_layers_node_indices.append(node_index)
+      self.input_layers_tensor_indices.append(tensor_index)
+</code></pre>
+<p>2&#xFF09; &#x4ECE;<code>output_tensors</code>&#x5F00;&#x59CB;&#x53CD;&#x5411;&#x9012;&#x5F52;&#x6784;&#x5EFA;&#x8BA1;&#x7B97;&#x56FE;&#xFF0C;&#x91C7;&#x7528;&#x5E7F;&#x5EA6;&#x4F18;&#x5148;&#x7684;&#x51C6;&#x5219;&#xFF0C;&#x672C;&#x6B65;&#x7684;&#x5173;&#x952E;&#x662F;&#x6784;&#x5EFA;<code>nodes_in_decreasing_depth</code>&#x8FD9;&#x4E00;&#x961F;&#x5217;&#xFF0C;&#x8FD9;&#x4E9B;<code>Node</code>&#x5305;&#x542B;&#x7684;&#x8FDE;&#x63A5;&#x4FE1;&#x606F;&#x548C;&#x6DF1;&#x5EA6;&#x4FE1;&#x606F;&#x5C06;&#x662F;&#x540E;&#x7EED;&#x6B63;&#x5411;&#x4F20;&#x64AD;&#x548C;&#x53CD;&#x5411;&#x8BAD;&#x7EC3;&#x8BA1;&#x7B97;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x7684;&#x4F9D;&#x636E;&#x3002;</p>
+<pre><code class="python">  def build_map_of_graph(tensor, finished_nodes, nodes_in_progress):
+      layer, node_index, tensor_index = tensor._keras_history
+      node = layer.inbound_nodes[node_index]
+      nodes_in_progress.add(node)
+
+      # &#x5E7F;&#x5EA6;&#x4F18;&#x5148;&#x641C;&#x7D22;
+      for i in range(len(node.inbound_layers)):
+          x = node.input_tensors[i]
+          layer = node.inbound_layers[i]
+          node_index = node.node_indices[i]
+          tensor_index = node.tensor_indices[i]
+          # &#x9012;&#x5F52;&#x8C03;&#x7528;
+          build_map_of_graph(x, finished_nodes, nodes_in_progress,
+                             layer, node_index, tensor_index)
+
+      # &#x7EF4;&#x62A4;&#x4E24;&#x4E2A;&#x961F;&#x5217;
+      finished_nodes.add(node)
+      nodes_in_progress.remove(node)
+      nodes_in_decreasing_depth.append(node)
+
+  # &#x53CD;&#x5411;&#x6784;&#x5EFA;DAG
+  for x in self.outputs:
+      build_map_of_graph(x, finished_nodes, nodes_in_progress)
+</code></pre>
+<p>3&#xFF09; &#x8BA1;&#x7B97;&#x5404;&#x8282;&#x70B9;&#x7684;&#x6DF1;&#x5EA6;&#x5E76;&#x6309;&#x6DF1;&#x5EA6;&#x6807;&#x5B9A;&#x8282;&#x70B9;&#x5728;DAG&#x4E2D;&#x7684;&#x4F4D;&#x7F6E;</p>
+<pre><code class="python">  # &#x6839;&#x636E;&#x961F;&#x5217;&#x6807;&#x5B9A;&#x5404;&#x8282;&#x70B9;&#x7684;&#x6DF1;&#x5EA6;
+  for node in reversed(nodes_in_decreasing_depth):
+      depth = nodes_depths.setdefault(node, 0)
+      previous_depth = layers_depths.get(node.outbound_layer, 0)
+      depth = max(depth, previous_depth)
+      layers_depths[node.outbound_layer] = depth
+      nodes_depths[node] = depth
+
+      for i in range(len(node.inbound_layers)):
+          inbound_layer = node.inbound_layers[i]
+          node_index = node.node_indices[i]
+          inbound_node = inbound_layer.inbound_nodes[node_index]
+          previous_depth = nodes_depths.get(inbound_node, 0)
+          nodes_depths[inbound_node] = max(depth + 1, previous_depth)
+
+  # &#x6309;&#x6DF1;&#x5EA6;&#x6807;&#x5B9A;&#x5404;&#x8282;&#x70B9;&#x7684;&#x4F4D;&#x7F6E;
+  nodes_by_depth = {}
+  for node, depth in nodes_depths.items():
+      if depth not in nodes_by_depth:
+          nodes_by_depth[depth] = []
+      nodes_by_depth[depth].append(node)
+
+  # &#x6309;&#x6DF1;&#x5EA6;&#x6807;&#x5B9A;&#x5404;&#x5C42;&#x7684;&#x4F4D;&#x7F6E;
+  layers_by_depth = {}
+  for layer, depth in layers_depths.items():
+      if depth not in layers_by_depth:
+          layers_by_depth[depth] = []
+      layers_by_depth[depth].append(layer)
+
+  self.layers_by_depth = layers_by_depth
+  self.nodes_by_depth = nodes_by_depth
+</code></pre>
+<p>4&#xFF09;&#x5C06;&#x6574;&#x4E2A;<code>Container</code>&#x5E76;&#x5165;<code>Node</code>&#x4EE5;&#x4FDD;&#x6301;&#x517C;&#x5BB9;&#x6027;</p>
+<pre><code class="python">  self.outbound_nodes = []
+  self.inbound_nodes = []
+  Node(outbound_layer=self,
+       inbound_layers=[],
+       node_indices=[],
+       tensor_indices=[],
+       input_tensors=self.inputs,
+       output_tensors=self.outputs,
+       ...)
+</code></pre>
+<h3 id="&#x8BA1;&#x7B97;&#x56FE;&#x4E2D;&#x7684;&#x8BA1;&#x7B97;"><a href="#&#x8BA1;&#x7B97;&#x56FE;&#x4E2D;&#x7684;&#x8BA1;&#x7B97;" class="headerlink" title="&#x8BA1;&#x7B97;&#x56FE;&#x4E2D;&#x7684;&#x8BA1;&#x7B97;"></a>&#x8BA1;&#x7B97;&#x56FE;&#x4E2D;&#x7684;&#x8BA1;&#x7B97;</h3><p>&#x8BA1;&#x7B97;&#x5728;<code>Container</code>&#x5BF9;&#x8C61;&#x7684;<code>call()</code>&#x65B9;&#x6CD5;&#x5B8C;&#x6210;&#xFF0C;&#x5176;&#x5B9E;&#x73B0;&#x53C8;&#x4F9D;&#x9760;&#x5185;&#x90E8;&#x65B9;&#x6CD5;<code>run_internal_graph()</code>&#x3002;</p>
+<pre><code class="python">def run_internal_graph(self, inputs, masks=None):
+       depth_keys = list(self.nodes_by_depth.keys())
+       depth_keys.sort(reverse=True)
+       # &#x4F9D;&#x636E;&#x6DF1;&#x5EA6;
+       for depth in depth_keys:
+           nodes = self.nodes_by_depth[depth]
+           # &#x5BF9;&#x540C;&#x4E00;&#x6DF1;&#x5EA6;&#x4E0A;&#x7684;Node&#x8FDB;&#x884C;&#x8BA1;&#x7B97;
+           for node in nodes:
+               layer = node.outbound_layer # Node&#x5BF9;&#x5E94;&#x7684;layer
+               reference_input_tensors = node.input_tensors
+               reference_output_tensors = node.output_tensors
+               computed_data = []
+               if len(computed_data) == len(reference_input_tensors):
+                   # &#x5728;Layer&#x4E2D;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;
+                   with K.name_scope(layer.name):
+                       if len(computed_data) == 1:
+                           computed_tensor, computed_mask = computed_data[0]
+                           output_tensors = _to_list(layer.call(computed_tensor, **kwargs))
+                           computed_tensors = [computed_tensor]
+                       else:
+                           computed_tensors = [x[0] for x in computed_data]
+                           output_tensors = _to_list(layer.call(computed_tensors, **kwargs))
+       output_tensors = []
+       output_masks = []
+       for x in self.outputs:
+           tensor, mask = tensor_map[str(id(x))]
+           output_tensors.append(tensor)
+           output_masks.append(mask)
+       return output_tensors, output_masks
+</code></pre>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8BA1;&#x7B97;&#x662F;&#x4F9D;&#x636E;&#x6DF1;&#x5EA6;&#x8FDB;&#x884C;&#x7684;&#xFF0C;&#x5E76;&#x901A;&#x8FC7;&#x66F4;&#x65B0;<code>computed_data</code>&#x548C;<code>output_tensor</code>&#x7B49;&#x53D8;&#x91CF;&#x5B8C;&#x6210;&#x6574;&#x5F20;&#x56FE;&#x7684;&#x904D;&#x5386;&#x8BA1;&#x7B97;&#x3002;</p>
+<p>&#x7EE7;&#x7EED;&#x9605;&#x8BFB;&#x7CFB;&#x5217;&#x7B2C;&#x4E09;&#x7BC7;&#xFF1A;<a href="https://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/" target="_blank" rel="noopener">&#x3010;&#x6E90;&#x7801;&#x7B14;&#x8BB0;&#x3011;keras&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;Model</a></p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="noopener">ddlee</a></p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Programming/">#Programming</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/AI/">#AI</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Deep-Learning/">#Deep Learning</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Keras/">#Keras</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/ddc5b1bd/">[源码笔记]keras源码分析之Model</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/cd6f40b8/">深度学习中的权重衰减</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/ba61101c/';
+        this.page.identifier = 'posts/ba61101c/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

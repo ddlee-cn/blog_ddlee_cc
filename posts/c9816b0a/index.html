@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x672C;&amp;#x6587;&amp;#x662F;MobileNets&amp;#x7684;&amp;#x7B2C;&amp;#x4E8C;&amp;#x7248;&amp;#x3002;&amp;#x7B2C;&amp;#x4E00;&amp;#x7248;&amp;#x4E2D;&amp;#xFF0C;MobileNets&amp;#x5168;&amp;#x9762;&amp;#x5E94;&amp;#x7528;&amp;#x4E86;Depth-wise Seperable Convolution&amp;#x5">
+<meta name="keywords" content="Papers,Computer Vision,CNN,Mobile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/c9816b0a/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x672C;&amp;#x6587;&amp;#x662F;MobileNets&amp;#x7684;&amp;#x7B2C;&amp;#x4E8C;&amp;#x7248;&amp;#x3002;&amp;#x7B2C;&amp;#x4E00;&amp;#x7248;&amp;#x4E2D;&amp;#xFF0C;MobileNets&amp;#x5168;&amp;#x9762;&amp;#x5E94;&amp;#x7528;&amp;#x4E86;Depth-wise Seperable Convolution&amp;#x5">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/collapse.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/envolve.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/invert_residual.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module2.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/arch.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/imagenet.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/coco.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/seg.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/ablation.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/distribution.png">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation">
+<meta name="twitter:description" content="&amp;#x672C;&amp;#x6587;&amp;#x662F;MobileNets&amp;#x7684;&amp;#x7B2C;&amp;#x4E8C;&amp;#x7248;&amp;#x3002;&amp;#x7B2C;&amp;#x4E00;&amp;#x7248;&amp;#x4E2D;&amp;#xFF0C;MobileNets&amp;#x5168;&amp;#x9762;&amp;#x5E94;&amp;#x7528;&amp;#x4E86;Depth-wise Seperable Convolution&amp;#x5">
+<meta name="twitter:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/collapse.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            [论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-01-17T16:52:08.000Z" itemprop="datePublished">1月 18 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Papers/">Papers</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            17 分钟 读完 (约 2589 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x662F;MobileNets&#x7684;&#x7B2C;&#x4E8C;&#x7248;&#x3002;<a href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/" target="_blank" rel="noopener">&#x7B2C;&#x4E00;&#x7248;</a>&#x4E2D;&#xFF0C;MobileNets&#x5168;&#x9762;&#x5E94;&#x7528;&#x4E86;Depth-wise Seperable Convolution&#x5E76;&#x63D0;&#x51FA;&#x4E24;&#x4E2A;&#x8D85;&#x53C2;&#x6765;&#x63A7;&#x5236;&#x7F51;&#x7EDC;&#x5BB9;&#x91CF;&#xFF0C;&#x5728;&#x4FDD;&#x6301;&#x79FB;&#x52A8;&#x7AEF;&#x53EF;&#x63A5;&#x53D7;&#x7684;&#x6A21;&#x578B;&#x590D;&#x6742;&#x6027;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x8FBE;&#x5230;&#x4E86;&#x76F8;&#x5F53;&#x7684;&#x7CBE;&#x5EA6;&#x3002;&#x800C;&#x7B2C;&#x4E8C;&#x7248;&#x4E2D;&#xFF0C;MobileNets&#x5E94;&#x7528;&#x4E86;&#x65B0;&#x7684;&#x5355;&#x5143;&#xFF1A;Inverted residual with linear bottleneck&#xFF0C;&#x4E3B;&#x8981;&#x7684;&#x6539;&#x52A8;&#x662F;&#x6DFB;&#x52A0;&#x4E86;&#x7EBF;&#x6027;Bottleneck&#x548C;&#x5C06;skip-connection&#x8F6C;&#x79FB;&#x5230;&#x4F4E;&#x7EF4;bottleneck&#x5C42;&#x3002;<br><a id="more"></a></p>
+<h3 id="Intuition"><a href="#Intuition" class="headerlink" title="Intuition"></a>Intuition</h3><p>&#x672C;&#x7BC7;&#x6BD4;&#x8F83;&#x4E30;&#x5BCC;&#x7684;&#x5730;&#x65B9;&#x662F;&#x5BF9;&#x7F51;&#x7EDC;&#x4E2D;bottleneck&#x7ED3;&#x6784;&#x7684;&#x63A2;&#x8BA8;&#x3002;</p>
+<p>&#x5728;&#x6700;&#x65E9;&#x7684;Network in Network&#x5DE5;&#x4F5C;&#x4E2D;&#xFF0C;1x1&#x5377;&#x79EF;&#x88AB;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x964D;&#x7EF4;&#x7684;&#x64CD;&#x4F5C;&#x800C;&#x5F15;&#x5165;&#xFF0C;&#x540E;&#x6765;&#x9010;&#x6E10;&#x53D1;&#x5C55;&#x4E3A;Depth-wise Seperable Convolution&#xFF08;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#xFF09;&#x5E76;&#x88AB;&#x5E7F;&#x6CDB;&#x5E94;&#x7528;&#xFF0C;&#x582A;&#x79F0;&#x8DDF;skip-connection&#x540C;&#x6837;&#x5177;&#x6709;&#x5F71;&#x54CD;&#x529B;&#x7684;&#x7F51;&#x7EDC;&#x90E8;&#x4EF6;&#x3002;&#x5728;<a href="https://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/" target="_blank" rel="noopener">Inception&#x5355;&#x5143;</a>&#x6700;&#x521D;&#x63D0;&#x51FA;&#x4E4B;&#x65F6;&#xFF0C;&#x5177;&#x6709;&#x8F83;&#x591A;channel&#x7684;feature map&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x53EF;&#x4F9B;&#x538B;&#x7F29;&#x7684;&#xFF0C;&#x4F5C;&#x8005;&#x5F15;&#x5165;1x1&#x5377;&#x79EF;&#x5C06;&#x5B83;&#x4EEC;&#x6620;&#x5C04;&#x5230;&#x4F4E;&#x7EF4;&#xFF08;&#x8F83;&#x5C11;channel&#x6570;&#xFF09;&#x7A7A;&#x95F4;&#x4E0A;&#x5E76;&#x6DFB;&#x52A0;&#x591A;&#x8DEF;&#x5F84;&#x5904;&#x7406;&#x7684;&#x8303;&#x5F0F;&#x3002;&#x4E4B;&#x540E;&#x7684;<a href="https://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/" target="_blank" rel="noopener">Xception</a>&#x3001;MobileNets&#x7B49;&#x5DE5;&#x4F5C;&#x5219;&#x5C06;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#x5E94;&#x7528;&#x5230;&#x6781;&#x81F4;&#xFF1A;&#x524D;&#x8005;&#x6307;&#x51FA;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#x80CC;&#x540E;&#x7684;&#x5047;&#x8BBE;&#x662F;&#x8DE8;channel&#x76F8;&#x5173;&#x6027;&#x548C;&#x8DE8;spatial&#x76F8;&#x5173;&#x6027;&#x7684;&#x89E3;&#x8026;&#xFF0C;&#x540E;&#x8005;&#x5219;&#x5229;&#x7528;&#x53EF;&#x63A7;&#x7684;&#x4E24;&#x4E2A;&#x8D85;&#x53C2;&#x6765;&#x83B7;&#x5F97;&#x5728;&#x6548;&#x7387;&#x548C;&#x7CBE;&#x5EA6;&#x4E0A;&#x53D6;&#x5F97;&#x8F83;&#x597D;&#x5E73;&#x8861;&#x7684;&#x7F51;&#x7EDC;&#x3002;</p>
+<p>&#x6587;&#x4E2D;&#xFF0C;&#x7ECF;&#x8FC7;&#x6FC0;&#x6D3B;&#x5C42;&#x540E;&#x7684;&#x5F20;&#x91CF;&#x88AB;&#x79F0;&#x4E3A;&#x5174;&#x8DA3;&#x6D41;&#x5F62;&#xFF0C;&#x5177;&#x6709;&#x7EF4;HxWxD&#xFF0C;&#x5176;&#x4E2D;D&#x5373;&#x4E3A;&#x901A;&#x5E38;&#x610F;&#x4E49;&#x7684;channel&#x6570;&#xFF0C;&#x90E8;&#x5206;&#x6587;&#x7AE0;&#x4E5F;&#x5C06;&#x5176;&#x79F0;&#x4E3A;&#x7F51;&#x7EDC;&#x7684;&#x5BBD;&#x5EA6;&#xFF08;width&#xFF09;&#x3002;</p>
+<p>&#x6839;&#x636E;&#x4E4B;&#x524D;&#x7684;&#x7814;&#x7A76;&#xFF0C;&#x5174;&#x8DA3;&#x6D41;&#x5F62;&#x53EF;&#x80FD;&#x4EC5;&#x5206;&#x5E03;&#x5728;&#x6FC0;&#x6D3B;&#x7A7A;&#x95F4;&#x7684;&#x4E00;&#x4E2A;&#x4F4E;&#x7EF4;&#x5B50;&#x7A7A;&#x95F4;&#x91CC;&#xFF0C;&#x5229;&#x7528;&#x8FD9;&#x4E00;&#x70B9;&#x5F88;&#x5BB9;&#x6613;&#x4F7F;&#x7528;1x1&#x5377;&#x79EF;&#x5C06;&#x5F20;&#x91CF;&#x964D;&#x7EF4;&#xFF08;&#x5373;MobileNet V1&#x7684;&#x5DE5;&#x4F5C;&#xFF09;&#xFF0C;&#x4F46;&#x7531;&#x4E8E;ReLU&#x7684;&#x5B58;&#x5728;&#xFF0C;&#x8FD9;&#x79CD;&#x964D;&#x7EF4;&#x5B9E;&#x9645;&#x4E0A;&#x4F1A;&#x635F;&#x5931;&#x8F83;&#x591A;&#x7684;&#x4FE1;&#x606F;&#x3002;&#x4E0B;&#x56FE;&#x662F;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x3002;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/collapse.png" alt="envolve"></p>
+<p>&#x4E0A;&#x56FE;&#x4E2D;&#xFF0C;&#x5229;&#x7528;MxN&#x7684;&#x77E9;&#x9635;B&#x5C06;&#x5F20;&#x91CF;&#xFF08;2D&#xFF0C;&#x5373;N=2&#xFF09;&#x53D8;&#x6362;&#x5230;M&#x7EF4;&#x7684;&#x7A7A;&#x95F4;&#x4E2D;&#xFF0C;&#x901A;&#x8FC7;ReLUctant&#x540E;&#xFF08;y=ReLU(Bx)&#xFF09;&#xFF0C;&#x518D;&#x7528;&#x6B64;&#x77E9;&#x9635;&#x4E4B;&#x9006;&#x6062;&#x590D;&#x539F;&#x6765;&#x7684;&#x5F20;&#x91CF;&#x3002;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x5F53;M&#x8F83;&#x5C0F;&#x65F6;&#xFF0C;&#x6062;&#x590D;&#x540E;&#x7684;&#x5F20;&#x91CF;&#x574D;&#x7F29;&#x4E25;&#x91CD;&#xFF0C;M&#x8F83;&#x5927;&#x65F6;&#x5219;&#x6062;&#x590D;&#x8F83;&#x597D;&#x3002;</p>
+<p>&#x8FD9;&#x610F;&#x5473;&#x7740;&#xFF0C;&#x5728;&#x8F83;&#x4F4E;&#x7EF4;&#x5EA6;&#x7684;&#x5F20;&#x91CF;&#x8868;&#x793A;&#xFF08;&#x5174;&#x8DA3;&#x6D41;&#x5F62;&#xFF09;&#x4E0A;&#x8FDB;&#x884C;ReLU&#x7B49;&#x7EBF;&#x6027;&#x53D8;&#x6362;&#x4F1A;&#x6709;&#x5F88;&#x5927;&#x7684;&#x4FE1;&#x606F;&#x635F;&#x8017;&#x3002;&#x56E0;&#x800C;&#x672C;&#x6587;&#x63D0;&#x51FA;&#x4F7F;&#x7528;&#x7EBF;&#x6027;&#x53D8;&#x6362;&#x66FF;&#x4EE3;Bottleneck&#x7684;&#x6FC0;&#x6D3B;&#x5C42;&#xFF0C;&#x800C;&#x5728;&#x9700;&#x8981;&#x6FC0;&#x6D3B;&#x7684;&#x5377;&#x79EF;&#x5C42;&#x4E2D;&#xFF0C;&#x4F7F;&#x7528;&#x8F83;&#x5927;&#x7684;M&#x4F7F;&#x5F20;&#x91CF;&#x5728;&#x8FDB;&#x884C;&#x6FC0;&#x6D3B;&#x524D;&#x5148;&#x6269;&#x5F20;&#xFF0C;&#x6574;&#x4E2A;&#x5355;&#x5143;&#x7684;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x662F;&#x4F4E;&#x7EF4;&#x5F20;&#x91CF;&#xFF0C;&#x800C;&#x4E2D;&#x95F4;&#x7684;&#x5C42;&#x5219;&#x7528;&#x8F83;&#x9AD8;&#x7EF4;&#x7684;&#x5F20;&#x91CF;&#x3002;&#x6587;&#x4E2D;&#x6240;&#x7528;&#x5355;&#x5143;&#x7684;&#x6F14;&#x5316;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/envolve.png" alt="envolve"></p>
+<p>&#x3002;&#x56FE;a&#x4E2D;&#x666E;&#x901A;&#x5377;&#x79EF;&#x5C06;channel&#x548C;spatial&#x7684;&#x4FE1;&#x606F;&#x540C;&#x65F6;&#x8FDB;&#x884C;&#x6620;&#x5C04;&#xFF0C;&#x53C2;&#x6570;&#x91CF;&#x8F83;&#x5927;&#xFF1B;&#x56FE;b&#x4E3A;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#xFF0C;&#x89E3;&#x8026;&#x4E86;channel&#x548C;spatial&#xFF0C;&#x5316;&#x4E58;&#x6CD5;&#x4E3A;&#x52A0;&#x6CD5;&#xFF0C;&#x6709;&#x4E00;&#x5B9A;&#x6BD4;&#x4F8B;&#x7684;&#x53C2;&#x6570;&#x8282;&#x7701;&#xFF1B;&#x56FE;c&#x4E2D;&#x8FDB;&#x884C;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#x540E;&#x53C8;&#x6DFB;&#x52A0;&#x4E86;bottleneck&#xFF0C;&#x6620;&#x5C04;&#x5230;&#x4F4E;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#xFF1B;&#x56FE;d&#x5219;&#x662F;&#x4ECE;&#x4F4E;&#x7EF4;&#x7A7A;&#x95F4;&#x5F00;&#x59CB;&#xFF0C;&#x8FDB;&#x884C;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#x65F6;&#x6269;&#x5F20;&#x5230;&#x8F83;&#x9AD8;&#x7684;&#x7EF4;&#x5EA6;&#xFF08;&#x524D;&#x540E;&#x7EF4;&#x5EA6;&#x4E4B;&#x6BD4;&#x88AB;&#x79F0;&#x4E3A;expansion factor&#xFF0C;&#x6269;&#x5F20;&#x7CFB;&#x6570;&#xFF09;&#xFF0C;&#x4E4B;&#x540E;&#x518D;&#x901A;&#x8FC7;1x1&#x5377;&#x79EF;&#x964D;&#x5230;&#x539F;&#x59CB;&#x7EF4;&#x5EA6;&#x3002;</p>
+<p>&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x56FE;c&#x548C;&#x56FE;d&#x7684;&#x7ED3;&#x6784;&#x5728;&#x5806;&#x53E0;&#x65F6;&#x662F;&#x7B49;&#x4EF7;&#x7684;&#xFF0C;&#x53EA;&#x662F;&#x89C2;&#x5BDF;&#x8D77;&#x70B9;&#x7684;&#x4E0D;&#x540C;&#x3002;&#x4F46;&#x57FA;&#x4E8E;&#x5174;&#x8DA3;&#x6D41;&#x5F62;&#x5E94;&#x8BE5;&#x5206;&#x5E03;&#x5728;&#x4E00;&#x4E2A;&#x4F4E;&#x7EF4;&#x5B50;&#x7A7A;&#x95F4;&#x4E0A;&#x7684;&#x5047;&#x8BBE;&#xFF0C;&#x8FD9;&#x5F15;&#x51FA;&#x4E86;&#x6587;&#x7AE0;&#x7684;&#x7B2C;&#x4E8C;&#x4E2A;&#x5173;&#x952E;&#x70B9;&#xFF1A;&#x5C06;skip-connection&#x8F6C;&#x79FB;&#x5230;&#x4F4E;&#x7EF4;&#x8868;&#x8FBE;&#x95F4;&#xFF0C;&#x5373;Inverted residual block&#x3002;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/invert_residual.png" alt="inverted"></p>
+<p>&#x7EFC;&#x5408;&#x4EE5;&#x4E0A;&#x4E24;&#x70B9;&#xFF0C;&#x6587;&#x7AE0;&#x4E2D;&#x7F51;&#x7EDC;&#x6240;&#x7528;&#x7684;&#x57FA;&#x672C;&#x5355;&#x5143;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module.png" alt="envolve"></p>
+<p>&#x6587;&#x7AE0;&#x6307;&#x51FA;&#xFF0C;&#x8FD9;&#x79CD;&#x8BBE;&#x8BA1;&#x5C06;&#x5C42;&#x8F93;&#x5165;&#x3001;&#x8F93;&#x51FA;&#x7A7A;&#x95F4;&#x8DDF;&#x5C42;&#x53D8;&#x6362;&#x5206;&#x79BB;&#xFF0C;&#x5373;&#x7F51;&#x7EDC;&#x5BB9;&#x91CF;&#xFF08;capacity&#xFF09;&#x548C;&#x8868;&#x8FBE;&#x529B;&#xFF08;expressIveness&#xFF09;&#x7684;&#x89E3;&#x8026;&#x3002;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module2.png" alt="envolve"></p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>MobileNet V2&#x7684;&#x6574;&#x4F53;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#x8868;&#xFF1A;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/arch.png" alt="envolve"></p>
+<p>&#x4E0A;&#x56FE;&#x4E2D;&#xFF0C;t&#x4EE3;&#x8868;&#x5355;&#x5143;&#x7684;&#x6269;&#x5F20;&#x7CFB;&#x6570;&#xFF0C;c&#x4EE3;&#x8868;channel&#x6570;&#xFF0C;n&#x4E3A;&#x5355;&#x5143;&#x91CD;&#x590D;&#x4E2A;&#x6570;&#xFF0C;s&#x4E3A;stride&#x6570;&#x3002;&#x53EF;&#x89C1;&#xFF0C;&#x7F51;&#x7EDC;&#x6574;&#x4F53;&#x4E0A;&#x9075;&#x5FAA;&#x4E86;&#x91CD;&#x590D;&#x76F8;&#x540C;&#x5355;&#x5143;&#x548C;&#x52A0;&#x6DF1;&#x5219;&#x53D8;&#x5BBD;&#x7B49;&#x8BBE;&#x8BA1;&#x8303;&#x5F0F;&#x3002;&#x4E5F;&#x4E0D;&#x514D;&#x6709;&#x4EBA;&#x5DE5;&#x8BBE;&#x8BA1;&#x7684;&#x6210;&#x5206;&#xFF08;&#x5982;28^2*64&#x5355;&#x5143;&#x7684;stride&#xFF0C;&#x5355;&#x5143;&#x91CD;&#x590D;&#x6570;&#x7B49;&#xFF09;&#x3002;</p>
+<h4 id="ImageNet-Classification"><a href="#ImageNet-Classification" class="headerlink" title="ImageNet Classification"></a>ImageNet Classification</h4><p>MoblieNets V2&#x4ECD;&#x7136;&#x96C6;&#x6210;&#x4E86;V1&#x7248;&#x672C;&#x7684;&#x4E24;&#x4E2A;&#x8D85;&#x53C2;&#x6570;&#xFF0C;&#x5728;ImageNet&#x4E0A;&#x7684;&#x5B9E;&#x9A8C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/imagenet.png" alt="envolve"></p>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x76F8;&#x6BD4;V1&#x7248;&#x672C;&#x4F18;&#x52BF;&#x660E;&#x663E;&#xFF0C;&#x5728;&#x7CBE;&#x5EA6;&#x65B9;&#x9762;&#x8DDF;NAS&#x641C;&#x7D22;&#x51FA;&#x7684;&#x7ED3;&#x6784;&#x6709;&#x76F8;&#x5F53;&#x7684;&#x8868;&#x73B0;&#x3002;</p>
+<h4 id="Object-Detection"><a href="#Object-Detection" class="headerlink" title="Object Detection"></a>Object Detection</h4><p>&#x6587;&#x7AE0;&#x8FD8;&#x63D0;&#x51FA;SSDLite&#x6765;&#x66F4;&#x597D;&#x9002;&#x5E94;&#x79FB;&#x52A8;&#x7AEF;&#x9700;&#x6C42;&#xFF0C;&#x6539;&#x52A8;&#x662F;&#x5C06;head&#x90E8;&#x5206;&#x7684;&#x666E;&#x901A;&#x5377;&#x79EF;&#x90FD;&#x66FF;&#x6362;&#x4E3A;&#x4E86;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#x3002;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/coco.png" alt="envolve"></p>
+<p>&#x4E0A;&#x9762;&#x662F;&#x5728;COCO&#x4E0A;&#x7684;&#x8868;&#x73B0;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x7CBE;&#x5EA6;&#x65B9;&#x9762;&#x8DDF;YOLOv2&#x548C;SSD300&#x76F8;&#x5F53;&#xFF08;&#x5C3D;&#x7BA1;&#x5F88;&#x4F4E;&#xFF0C;&#x76F8;&#x6BD4;SOTA&#x5DEE;&#x8DDD;&#x8FD8;&#x5F88;&#x5927;&#xFF09;&#xFF0C;&#x4F46;&#x6A21;&#x578B;&#x53C2;&#x6570;&#x548C;&#x8FD0;&#x7B97;&#x590D;&#x6742;&#x5EA6;&#x90FD;&#x6709;&#x4E00;&#x4E2A;&#x6570;&#x91CF;&#x7EA7;&#x7684;&#x51CF;&#x5C11;&#x3002;&#x6700;&#x540E;&#x7684;CPU&#x65F6;&#x95F4;&#x662F;&#x5728;Pixel&#x4E0A;&#x6D4B;&#x5F97;&#xFF0C;&#x53EF;&#x4EE5;&#x5230;5FPS&#xFF0C;&#x8FBE;&#x4E0D;&#x5230;&#x771F;&#x6B63;&#x79FB;&#x52A8;&#x5B9E;&#x65F6;&#x7684;&#x8981;&#x6C42;&#xFF0C;&#x4F46;&#x4E5F;&#x662F;&#x4E0D;&#x5C0F;&#x7684;&#x63A8;&#x8FDB;&#x4E86;&#xFF08;&#x5E76;&#x6CA1;&#x6709;&#x7ED9;&#x51FA;GPU&#x4E0A;&#x7684;&#x63A8;&#x65AD;&#x65F6;&#x95F4;&#xFF0C;&#x800C;Pixel+TF-Lite&#x7684;benchmark&#x53C8;&#x8DDF;&#x5176;&#x4ED6;&#x7F51;&#x7EDC;&#x96BE;&#x4EE5;&#x4EA7;&#x751F;&#x6709;&#x6548;&#x7684;&#x6BD4;&#x8F83;&#xFF09;&#x3002;</p>
+<h4 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h4><p>&#x4E0B;&#x56FE;&#x662F;&#x5728;VOC&#x4E0A;&#x5206;&#x5272;&#x7684;&#x7ED3;&#x679C;&#xFF1A;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/seg.png" alt="envolve"></p>
+<h3 id="Ablation-Study"><a href="#Ablation-Study" class="headerlink" title="Ablation Study"></a>Ablation Study</h3><p>&#x6587;&#x7AE0;&#x8FD8;&#x505A;&#x4E86;&#x5173;&#x4E8E;&#x7EBF;&#x6027;&#x53D8;&#x6362;bottleneck&#x66FF;&#x4EE3;ReLU&#x548C;skip-connection&#x4F4D;&#x7F6E;&#x7684;&#x5B9E;&#x9A8C;&#xFF0C;&#x8FDB;&#x4E00;&#x6B65;&#x652F;&#x6491;&#x4E4B;&#x524D;&#x7684;&#x5206;&#x6790;&#x3002;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/ablation.png" alt="envolve"></p>
+<h3 id="&#x9644;&#x5F55;"><a href="#&#x9644;&#x5F55;" class="headerlink" title="&#x9644;&#x5F55;"></a>&#x9644;&#x5F55;</h3><p>&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x9644;&#x5F55;&#x90E8;&#x5206;&#x63D0;&#x4F9B;&#x4E86;&#x7D27;&#x7684;n&#x7EF4;&#x6D41;&#x5F62;&#x5728;&#x7ECF;&#x8FC7;&#x5347;&#x7EF4;&#x7EBF;&#x6027;&#x53D8;&#x5316;&#x52A0;ReLU&#x540E;&#x88AB;&#x6620;&#x5C04;&#x5230;&#x5B50;&#x96C6;&#x7684;&#x671F;&#x671B;&#x5927;&#x5C0F;&#x7684;&#x754C;&#xFF0C;&#x8FD9;&#x4E2A;&#x754C;&#x8BF4;&#x660E;&#x5728;&#x6269;&#x5F20;&#x5230;&#x8DB3;&#x591F;&#x9AD8;&#x7684;&#x7EF4;&#x5EA6;&#x540E;&#xFF0C;&#x5347;&#x7EF4;&#x7EBF;&#x6027;&#x53D8;&#x6362;&#x52A0;ReLu&#x80FD;&#x4EE5;&#x8F83;&#x9AD8;&#x7684;&#x6982;&#x7387;&#x53EF;&#x9006;&#xFF08;&#x4FDD;&#x6301;&#x4FE1;&#x606F;&#xFF09;&#x5E76;&#x52A0;&#x5165;&#x975E;&#x7EBF;&#x6027;&#x3002;</p>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7ED3;&#x8BBA;&#x662F;&#x975E;&#x5E38;&#x62D7;&#x53E3;&#x7684;&#x3002;&#x81EA;&#x5DF1;&#x7684;&#x7406;&#x89E3;&#x662F;&#xFF0C;&#x4F7F;&#x7528;ReLU&#x5F15;&#x5165;&#x975E;&#x7EBF;&#x6027;&#x7684;&#x540C;&#x65F6;&#x4F1A;&#x5BFC;&#x81F4;&#x4FE1;&#x606F;&#x635F;&#x5931;&#xFF08;&#x975E;&#x7EBF;&#x6027;&#x6307;&#x4E0D;&#x4F1A;&#x88AB;&#x5377;&#x79EF;&#x3001;&#x5168;&#x8FDE;&#x63A5;&#x7B49;&#x7EBF;&#x6027;&#x6620;&#x5C04;&#x5438;&#x6536;&#x6389;&#xFF0C;&#x4FE1;&#x606F;&#x635F;&#x5931;&#x5219;&#x662F;&#x6307;ReLU&#x5C06;&lt;0&#x7684;&#x8F93;&#x5165;&#x7F6E;0&#xFF0C;&#x8F93;&#x5165;&#x53D8;&#x5F97;&#x7A00;&#x758F;&#xFF0C;&#x800C;&#x82E5;&#x6240;&#x6709;&#x8F93;&#x5165;&#x7684;&#x67D0;&#x4E00;&#x7EF4;&#x5EA6;&#x90FD;&#x88AB;&#x7F6E;0&#xFF0C;&#x5219;&#x4F1A;&#x4F7F;&#x8F93;&#x5165;&#x7A7A;&#x95F4;&#x672C;&#x8EAB;&#x964D;&#x7EF4;&#xFF09;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x5BF9;&#x6297;&#x8FD9;&#x4E00;&#x53EF;&#x80FD;&#x7684;&#x4FE1;&#x606F;&#x635F;&#x5931;&#xFF0C;&#x9700;&#x8981;&#x5C06;&#x8F93;&#x5165;&#x5148;&#x6269;&#x5F20;&#xFF0C;&#x5373;y=ReLU(Bx)&#xFF0C;x&#x4E3A;R^n&#x7A7A;&#x95F4;&#x4E0A;&#x7684;&#x8F93;&#x5165;&#xFF0C;B&#x4E3A;m&#xD7;n&#x77E9;&#x9635;&#xFF0C;&#x6211;&#x4EEC;&#x671F;&#x671B;m&#x8DB3;&#x591F;&#x5927;&#xFF0C;&#x4EE5;&#x8FBE;&#x5230;&#x6269;&#x5F20;&#x7684;&#x6548;&#x679C;&#x5E76;&#x5728;&#x7ECF;&#x8FC7;ReLU&#x540E;&#x4FDD;&#x6301;y&#x8DDF;x&#x7684;&#x4FE1;&#x606F;&#x91CF;&#x540C;&#x6837;&#x591A;&#xFF08;&#x6587;&#x4E2D;&#x7684;&#x5F15;&#x7406;&#x4E8C;&#xFF0C;&#x5373;&#x662F;&#x8BC1;&#x6B64;&#x53D8;&#x6362;&#x53EF;&#x9006;&#x6027;&#x7684;&#x4E00;&#x4E2A;&#x6761;&#x4EF6;&#xFF0C;&#x5E94;&#x8BE5;&#x662F;&#x501F;&#x7528;&#x4E86;&#x4EE3;&#x6570;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x77E9;&#x9635;&#x5728;&#x7ECF;&#x8FC7;&#x53EF;&#x9006;&#x53D8;&#x6362;&#x540E;&#x4E0D;&#x4F1A;&#x964D;&#x79E9;&#xFF0C;&#x79E9;&#x6210;&#x4E3A;&#x8861;&#x91CF;&#x4FE1;&#x606F;&#x635F;&#x5931;&#x7684;&#x6307;&#x6807;&#xFF09;&#x3002;</p>
+<p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/distribution.png" alt="envolve"></p>
+<p>&#x5728;ReLU(Bx)&#x7B97;&#x7B26;&#x53EF;&#x9006;&#x6027;&#x7684;&#x95EE;&#x9898;&#x4E0A;&#xFF0C;&#x4F5C;&#x8005;&#x505A;&#x4E86;&#x4E00;&#x4E9B;&#x7ECF;&#x9A8C;&#x6027;&#x5B9E;&#x9A8C;&#xFF0C;&#x5982;&#x4E0A;&#x56FE;&#x3002;a&#x548C;b&#x5206;&#x522B;&#x4E3A;&#x8BAD;&#x7EC3;&#x524D;&#x540E;&#xFF0C;&#x6BCF;&#x5C42;&#x6B63;&#x6FC0;&#x6D3B;channel&#x6570;&#xFF08;&#x53EF;&#x9006;&#x6027;&#x6761;&#x4EF6;&#xFF09;&#x548C;&#x5176;&#x5360;&#x603B;channel&#x6570;&#x6BD4;&#x4F8B;&#x7684;&#x5206;&#x5E03;&#x3002;&#x56FE;a&#x548C;&#x56FE;b&#x7684;&#x5DE6;&#x56FE;&#xFF0C;&#x968F;&#x7F51;&#x7EDC;&#x52A0;&#x6DF1;&#xFF0C;channel&#x6570;&#x589E;&#x591A;&#xFF0C;&#x5373;&#x53D8;&#x5BBD;&#xFF1B;&#x8BAD;&#x7EC3;&#x524D;&#x540E;&#xFF0C;&#x65B9;&#x5DEE;&#x589E;&#x5927;&#xFF0C;&#x4E14;&#x6709;&#x4E24;&#x5C42;&#x4F4E;&#x4E8E;&#x4E86;&#x53EF;&#x9006;&#x6027;&#x6761;&#x4EF6;&#x9608;&#x503C;&#xFF08;&#x56FE;b&#x5DE6;&#x56FE;&#x4E2D;&#x7EFF;&#x8272;&#x7EBF;&#x4F4E;&#x4E8E;&#x7D2B;&#x8272;&#x9608;&#x503C;&#x7684;&#x90E8;&#x5206;&#xFF09;&#x3002;&#x53F3;&#x56FE;&#x662F;&#x4E00;&#x4E2A;&#x6BD4;&#x4F8B;&#xFF0C;&#x7531;&#x4E8E;&#x968F;&#x673A;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x5747;&#x503C;&#x5728;0.5&#x9644;&#x8FD1;&#xFF0C;&#x8BAD;&#x7EC3;&#x540E;&#x540C;&#x6837;&#x65B9;&#x5DEE;&#x589E;&#x5927;&#xFF0C;&#x800C;&#x53EF;&#x9006;&#x6027;&#x6761;&#x4EF6;&#x9608;&#x503C;&#x4E00;&#x76F4;&#x4E3A;1/6&#xFF08;&#x5373;&#x4E3A;MobileNet V2&#x6269;&#x5F20;&#x7CFB;&#x6570;&#x7684;&#x5012;&#x6570;&#xFF09;&#x3002;</p>
+<p>&#x9644;&#x5F55;&#x7684;Theorem 1&#x5219;&#x8BC1;&#x660E;&#x4E86;ReLU(Bx)&#x7B97;&#x7B26;&#x5C06;&#x8F93;&#x5165;x&#x538B;&#x7F29;&#x540E;&#x7684;&#x7A7A;&#x95F4;&#x7EF4;&#x5EA6;(n-volume)&#x7684;&#x754C;&#xFF0C;&#x6B64;&#x754C;&#x5728;&#x6269;&#x5F20;&#x7CFB;&#x6570;&#x8F83;&#x5927;&#x65F6;&#x53EF;&#x4EE5;&#x8DDF;&#x539F;&#x7A7A;&#x95F4;&#x76F8;&#x5F53;&#xFF0C;&#x5373;&#x4FE1;&#x606F;&#x635F;&#x5931;&#x5F88;&#x5C0F;&#x3002;</p>
+<h3 id="&#x5C0F;&#x7ED3;"><a href="#&#x5C0F;&#x7ED3;" class="headerlink" title="&#x5C0F;&#x7ED3;"></a>&#x5C0F;&#x7ED3;</h3><p>&#x80FD;&#x591F;&#x770B;&#x5230;&#x9644;&#x5F55;&#x91CC;&#x7ED9;&#x51FA;&#x6587;&#x4E2D;&#x5047;&#x5B9A;&#x6216;&#x89C2;&#x5BDF;&#x7684;&#x6570;&#x5B66;&#x8BC1;&#x660E;&#x7684;&#x8BBA;&#x6587;&#x8FD8;&#x662F;&#x5F00;&#x5FC3;&#x7684;&#x3002;&#x592A;&#x591A;&#x8BBA;&#x6587;&#x53EA;&#x662F;&#x7EC8;&#x4E8E;&#x5B9E;&#x9A8C;&#x7684;SOTA&#x800C;&#x907F;&#x800C;&#x4E0D;&#x8C08;Insights&#xFF0C;&#x51B5;&#x4E14;&#x7ED9;&#x51FA;&#x8BC1;&#x660E;&#x3002;&#x5C3D;&#x7BA1;&#x672C;&#x7BC7;&#x9644;&#x5F55;&#x4E2D;&#x7684;&#x8BC1;&#x660E;&#x4ECD;&#x6709;&#x7ECF;&#x9A8C;&#x4E3B;&#x4E49;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x4E14;&#x5E76;&#x6CA1;&#x6709;&#x5B8C;&#x5168;&#x5B9A;&#x4E49;&#x6E05;&#x695A;&#x95EE;&#x9898;&#x548C;&#x7ED3;&#x8BBA;&#xFF0C;&#x5176;&#x5BF9;&#x540E;&#x7EED;&#x5DE5;&#x4F5C;&#x7684;&#x542F;&#x53D1;&#x4EF7;&#x503C;&#x8FD8;&#x662F;&#x6709;&#x7684;&#x3002;</p>
+<p>&#x8FD9;&#x4E5F;&#x66B4;&#x9732;&#x4E86;&#x5F53;&#x524D;&#x9886;&#x57DF;&#x7684;&#x901A;&#x75C5;&#xFF0C;&#x6211;&#x4EEC;&#x6CA1;&#x6709;&#x5171;&#x901A;&#x7684;&#x4E00;&#x5957;&#x8BED;&#x8A00;&#x6765;&#x63CF;&#x8FF0;&#x81EA;&#x5DF1;&#x7684;&#x7F51;&#x7EDC;&#xFF0C;&#x8B6C;&#x5982;&#xFF0C;&#x5982;&#x4F55;&#x5B9A;&#x4E49;&#x7F51;&#x7EDC;&#x7684;&#x5BB9;&#x91CF;&#x3001;&#x8868;&#x8FBE;&#x529B;&#xFF0C;&#x5982;&#x4F55;&#x8861;&#x91CF;&#x4FE1;&#x606F;&#x7684;&#x635F;&#x5931;&#x3002;&#x6CA1;&#x6709;&#x901A;&#x7528;&#x7684;&#x5B9A;&#x4E49;&#x9020;&#x6210;&#x4E86;&#x8BBA;&#x6587;&#x8868;&#x8FF0;&#x5E38;&#x5E38;&#x6709;&#x4EE4;&#x7ECF;&#x9A8C;&#x5C11;&#x8005;&#x96BE;&#x4EE5;&#x7406;&#x89E3;&#x7684;&#x8868;&#x8FBE;&#x3002;&#x53BB;&#x5B9A;&#x4E49;&#x8FD9;&#x6837;&#x4E00;&#x5957;&#x8BED;&#x8A00;&#x548C;&#x6807;&#x51C6;&#x6765;&#x4E3A;&#x7F51;&#x7EDC;&#x8BBE;&#x8BA1;&#x63D0;&#x4F9B;&#x53C2;&#x8003;&#xFF0C;&#x5E0C;&#x671B;&#x6210;&#x4E3A;&#x4EE5;&#x540E;&#x7684;&#x7814;&#x7A76;&#x70ED;&#x70B9;&#xFF0C;&#x4E5F;&#x662F;&#x6211;&#x81EA;&#x5DF1;&#x7684;&#x4E00;&#x4E2A;&#x601D;&#x8003;&#x65B9;&#x5411;&#x3002;</p>
+<p>&#x603B;&#x4F53;&#x6765;&#x770B;&#xFF0C;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x63D0;&#x4F9B;&#x7684;&#x4E24;&#x70B9;&#x6539;&#x8FDB;&#x90FD;&#x662F;&#x6709;&#x542F;&#x53D1;&#x6027;&#x7684;&#xFF0C;&#x4F46;&#x5E76;&#x4E0D;&#x5B8C;&#x6574;&#xFF0C;&#x9700;&#x8981;&#x66F4;&#x591A;&#x5DE5;&#x4F5C;&#x6765;&#x8865;&#x5145;&#x3002;&#x53E6;&#x5916;&#x6E90;&#x7801;&#x6CA1;&#x6709;&#x7ED9;&#x51FA;&#xFF0C;&#x4F1A;&#x5C1D;&#x8BD5;&#x590D;&#x73B0;&#x3002;</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Papers/">#Papers</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Computer-Vision/">#Computer Vision</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/CNN/">#CNN</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Mobile/">#Mobile</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/2da92ac3/">PyCharm+PipEnv本地Python开发环境配置</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/4213a4c1/">FlintOS轻体验</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/c9816b0a/';
+        this.page.identifier = 'posts/c9816b0a/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>[源码笔记]keras源码分析之Model - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x672C;&amp;#x7BC7;&amp;#x662F;keras&amp;#x6E90;&amp;#x7801;&amp;#x7B14;&amp;#x8BB0;&amp;#x7CFB;&amp;#x5217;&amp;#x7684;&amp;#x7B2C;&amp;#x4E09;&amp;#x7BC7;&amp;#x3002;&amp;#x5728;&amp;#x524D;&amp;#x4E24;&amp;#x7BC7;&amp;#x4E2D;&amp;#xFF0C;&amp;#x6211;&amp;#x4EEC;&amp;#x5206;&amp;#x6790;&amp;#x">
+<meta name="keywords" content="Programming,AI,Deep Learning,Keras">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[源码笔记]keras源码分析之Model">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/ddc5b1bd/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x672C;&amp;#x7BC7;&amp;#x662F;keras&amp;#x6E90;&amp;#x7801;&amp;#x7B14;&amp;#x8BB0;&amp;#x7CFB;&amp;#x5217;&amp;#x7684;&amp;#x7B2C;&amp;#x4E09;&amp;#x7BC7;&amp;#x3002;&amp;#x5728;&amp;#x524D;&amp;#x4E24;&amp;#x7BC7;&amp;#x4E2D;&amp;#xFF0C;&amp;#x6211;&amp;#x4EEC;&amp;#x5206;&amp;#x6790;&amp;#x">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.294Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[源码笔记]keras源码分析之Model">
+<meta name="twitter:description" content="&amp;#x672C;&amp;#x7BC7;&amp;#x662F;keras&amp;#x6E90;&amp;#x7801;&amp;#x7B14;&amp;#x8BB0;&amp;#x7CFB;&amp;#x5217;&amp;#x7684;&amp;#x7B2C;&amp;#x4E09;&amp;#x7BC7;&amp;#x3002;&amp;#x5728;&amp;#x524D;&amp;#x4E24;&amp;#x7BC7;&amp;#x4E2D;&amp;#xFF0C;&amp;#x6211;&amp;#x4EEC;&amp;#x5206;&amp;#x6790;&amp;#x">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            [源码笔记]keras源码分析之Model
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-30T15:19:42.000Z" itemprop="datePublished">7月 30 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分钟 读完 (约 1086 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x7BC7;&#x662F;keras&#x6E90;&#x7801;&#x7B14;&#x8BB0;&#x7CFB;&#x5217;&#x7684;&#x7B2C;&#x4E09;&#x7BC7;&#x3002;&#x5728;&#x524D;&#x4E24;&#x7BC7;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5206;&#x6790;&#x4E86;keras&#x5BF9;Tensor&#x548C;Layer&#x7B49;&#x6982;&#x5FF5;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x5E76;&#x8BF4;&#x660E;&#x4E86;&#x5B83;&#x4EEC;&#x662F;&#x5982;&#x4F55;&#x4F5C;&#x7528;&#x522B;&#x5F04;&#x4E2A;&#x6784;&#x6210;&#x6709;&#x5411;&#x65E0;&#x73AF;&#x56FE;&#x7684;&#x3002;&#x672C;&#x7BC7;&#x7740;&#x773C;&#x4E8E;&#x591A;&#x5C42;&#x7F51;&#x7EDC;&#x6A21;&#x578B;&#x5C42;&#x9762;&#x7684;&#x62BD;&#x8C61;&#xFF0C;&#x5373;&#x4E0E;&#x7528;&#x6237;&#x8DDD;&#x79BB;&#x6700;&#x8FD1;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x6E90;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x662F;<a href="https://github.com/fchollet/keras/blob/master/keras/engine/training.py" target="_blank" rel="noopener">/keras/engine/training.py</a>&#x548C;<a href="https://github.com/fchollet/keras/blob/master/keras/models.py" target="_blank" rel="noopener">/keras/model.py</a>&#xFF0C;&#x8981;&#x89C2;&#x5BDF;&#x7684;&#x7C7B;&#x662F;<code>Model</code>&#x548C;<code>Sequential</code>&#x3002;<br><a id="more"></a></p>
+<p>&#x672C;&#x7CFB;&#x5217;&#x7B2C;&#x4E00;&#x7BC7;&#xFF1A;<a href="https://blog.ddlee.cn/posts/4943e1b8/" target="_blank" rel="noopener">&#x3010;&#x6E90;&#x7801;&#x7B14;&#x8BB0;&#x3011;keras&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;Tensor, Node&#x548C;Layer</a><br>&#x7B2C;&#x4E8C;&#x7BC7;&#xFF1A;<a href="https://blog.ddlee.cn/posts/ba61101c/" target="_blank" rel="noopener">&#x3010;&#x6E90;&#x7801;&#x7B14;&#x8BB0;&#x3011;keras&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;Container</a></p>
+<h3 id="Model&#xFF1A;&#x6DFB;&#x52A0;&#x4E86;&#x8BAD;&#x7EC3;&#x4FE1;&#x606F;&#x7684;Container"><a href="#Model&#xFF1A;&#x6DFB;&#x52A0;&#x4E86;&#x8BAD;&#x7EC3;&#x4FE1;&#x606F;&#x7684;Container" class="headerlink" title="Model&#xFF1A;&#x6DFB;&#x52A0;&#x4E86;&#x8BAD;&#x7EC3;&#x4FE1;&#x606F;&#x7684;Container"></a><code>Model</code>&#xFF1A;&#x6DFB;&#x52A0;&#x4E86;&#x8BAD;&#x7EC3;&#x4FE1;&#x606F;&#x7684;<code>Container</code></h3><p><code>Model.compile()</code>&#x4E3B;&#x8981;&#x5B8C;&#x6210;&#x4E86;&#x914D;&#x7F6E;<code>optimizer</code>, <code>loss</code>, <code>metrics</code>&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x800C;&#x8981;&#x6267;&#x884C;&#x7684;<code>fit</code>, <code>evaluate</code>&#x7B49;&#x5219;&#x4E0D;&#x5728;<code>compile</code>&#x8FC7;&#x7A0B;&#x4E2D;&#x914D;&#x7F6E;&#x3002;</p>
+<pre><code class="python">def compile(self, optimizer, loss, metrics=None, loss_weights=None,
+            sample_weight_mode=None, **kwargs):
+    loss = loss or {}
+    self.optimizer = optimizers.get(optimizer)
+    self.sample_weight_mode = sample_weight_mode
+    self.loss = loss
+    self.loss_weights = loss_weights
+
+    loss_function = losses.get(loss)
+    loss_functions = [loss_function for _ in range(len(self.outputs))]
+    self.loss_functions = loss_functions
+
+    # Prepare targets of model.
+    self.targets = []
+    self._feed_targets = []
+    for i in range(len(self.outputs)):
+        shape = self.internal_output_shapes[i]
+        name = self.output_names[i]
+        target = K.placeholder(ndim=len(shape),
+                               name=name + &apos;_target&apos;,
+                               sparse=K.is_sparse(self.outputs[i]),
+                               dtype=K.dtype(self.outputs[i]))
+        self.targets.append(target)
+        self._feed_targets.append(target)
+
+    # Prepare metrics.
+    self.metrics = metrics
+    self.metrics_names = [&apos;loss&apos;]
+    self.metrics_tensors = []
+
+    # Compute total loss.
+    total_loss = None
+    for i in range(len(self.outputs)):
+        y_true = self.targets[i]
+        y_pred = self.outputs[i]
+        loss_weight = loss_weights_list[i]
+        if total_loss is None:
+            total_loss = loss_weight * output_loss
+        else:
+            total_loss += loss_weight * output_loss
+
+    for loss_tensor in self.losses:
+        total_loss += loss_tensor
+
+    self.total_loss = total_loss
+    self.sample_weights = sample_weights
+</code></pre>
+<p><code>Model</code>&#x5BF9;&#x8C61;&#x7684;<code>fit()</code>&#x65B9;&#x6CD5;&#x5C01;&#x88C5;&#x4E86;<code>_fit_loop()</code>&#x5185;&#x90E8;&#x65B9;&#x6CD5;&#xFF0C;&#x800C;<code>_fit_loop()</code>&#x65B9;&#x6CD5;&#x7684;&#x5173;&#x952E;&#x6B65;&#x9AA4;&#x7531;<code>_make_train_function()</code>&#x65B9;&#x6CD5;&#x5B8C;&#x6210;&#xFF0C;&#x8FD4;&#x56DE;<code>history</code>&#x5BF9;&#x8C61;&#xFF0C;&#x7528;&#x4E8E;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x5904;&#x7406;&#x3002;</p>
+<pre><code class="python">def fit(self, x=None, y=None, ...)&#xFF1A;
+      self._make_train_function()
+      f = self.train_function
+      return self._fit_loop(f, ins, ...)
+</code></pre>
+<p>&#x5728;<code>_fit_loop()</code>&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x5B8C;&#x6210;&#x4E86;&#x5BF9;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x7684;&#x76D1;&#x63A7;&#x8BB0;&#x5F55;&#x7B49;&#x4EFB;&#x52A1;&#xFF0C;<code>train_function</code>&#x4E5F;&#x88AB;&#x5E94;&#x7528;&#x4E8E;&#x4F20;&#x5165;&#x7684;&#x6570;&#x636E;&#xFF1A;</p>
+<pre><code class="python">def _fit_loop(self, f, ins, out_labels=None, batch_size=32,
+              epochs=100, verbose=1, callbacks=None,
+              val_f=None, val_ins=None, shuffle=True,
+              callback_metrics=None, initial_epoch=0):
+    self.history = cbks.History()
+    callbacks = [cbks.BaseLogger()] + (callbacks or []) + [self.history]
+    callbacks = cbks.CallbackList(callbacks)
+    out_labels = out_labels or []
+    callbacks.set_model(callback_model)
+    callbacks.set_params({
+        &apos;batch_size&apos;: batch_size,
+        &apos;epochs&apos;: epochs,
+        &apos;samples&apos;: num_train_samples,
+        &apos;verbose&apos;: verbose,
+        &apos;do_validation&apos;: do_validation,
+        &apos;metrics&apos;: callback_metrics or [],
+    })
+    callbacks.on_train_begin()
+    callback_model.stop_training = False
+
+    for epoch in range(initial_epoch, epochs):
+        callbacks.on_epoch_begin(epoch)
+        batches = _make_batches(num_train_samples, batch_size)
+        epoch_logs = {}
+        for batch_index, (batch_start, batch_end) in enumerate(batches):
+            batch_ids = index_array[batch_start:batch_end]
+            batch_logs = {}
+            batch_logs[&apos;batch&apos;] = batch_index
+            batch_logs[&apos;size&apos;] = len(batch_ids)
+            callbacks.on_batch_begin(batch_index, batch_logs)
+            # &#x5E94;&#x7528;&#x4F20;&#x5165;&#x7684;train_function
+            outs = f(ins_batch)
+            callbacks.on_batch_end(batch_index, batch_logs)
+        callbacks.on_epoch_end(epoch, epoch_logs)
+    callbacks.on_train_end()
+    return self.history
+
+</code></pre>
+<p><code>_make_train_function()</code>&#x65B9;&#x6CD5;&#x4ECE;<code>optimizer</code>&#x83B7;&#x53D6;&#x8981;&#x66F4;&#x65B0;&#x7684;&#x53C2;&#x6570;&#x4FE1;&#x606F;&#xFF0C;&#x5E76;&#x4F20;&#x5165;&#x6765;&#x81EA;<code>backend</code>&#x7684;<code>function</code>&#x5BF9;&#x8C61;&#xFF1A;</p>
+<pre><code class="python">def _make_train_function(self):
+    if self.train_function is None:
+        inputs = self._feed_inputs + self._feed_targets + self._feed_sample_weights
+        training_updates = self.optimizer.get_updates(
+            self._collected_trainable_weights,
+            self.constraints,
+            self.total_loss)
+        updates = self.updates + training_updates
+        # Gets loss and metrics. Updates weights at each call.
+        self.train_function = K.function(inputs,
+                                         [self.total_loss] + self.metrics_tensors,
+                                         updates=updates,
+                                         name=&apos;train_function&apos;,
+                                         **self._function_kwargs)
+
+</code></pre>
+<p><code>Model</code>&#x7684;&#x5176;&#x4ED6;&#x65B9;&#x6CD5;<code>evaluate()</code>&#x7B49;&#xFF0C;&#x4E0E;<code>fit()</code>&#x7684;&#x7ED3;&#x6784;&#x7C7B;&#x4F3C;&#x3002;</p>
+<h3 id="Sequential-&#x6784;&#x5EFA;&#x6A21;&#x578B;&#x7684;&#x5916;&#x5C42;&#x63A5;&#x53E3;"><a href="#Sequential-&#x6784;&#x5EFA;&#x6A21;&#x578B;&#x7684;&#x5916;&#x5C42;&#x63A5;&#x53E3;" class="headerlink" title="Sequential:&#x6784;&#x5EFA;&#x6A21;&#x578B;&#x7684;&#x5916;&#x5C42;&#x63A5;&#x53E3;"></a><code>Sequential</code>:&#x6784;&#x5EFA;&#x6A21;&#x578B;&#x7684;&#x5916;&#x5C42;&#x63A5;&#x53E3;</h3><p><code>Sequential</code>&#x5BF9;&#x8C61;&#x662F;<code>Model</code>&#x5BF9;&#x8C61;&#x7684;&#x8FDB;&#x4E00;&#x6B65;&#x5C01;&#x88C5;&#xFF0C;&#x4E5F;&#x662F;&#x7528;&#x6237;&#x76F4;&#x63A5;&#x9762;&#x5BF9;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x5176;<code>compile()</code>, <code>fit()</code>, <code>predict()</code>&#x7B49;&#x65B9;&#x6CD5;&#x4E0E;<code>Model</code>&#x51E0;&#x4E4E;&#x4E00;&#x81F4;&#xFF0C;&#x6240;&#x4E0D;&#x540C;&#x7684;&#x662F;&#x6DFB;&#x52A0;&#x4E86;<code>add()</code>&#x65B9;&#x6CD5;&#xFF0C;&#x4E5F;&#x662F;&#x6211;&#x4EEC;&#x7528;&#x4E8E;&#x6784;&#x5EFA;&#x7F51;&#x7EDC;&#x7684;&#x6700;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#x3002;</p>
+<p><code>Sequential.add()</code>&#x65B9;&#x6CD5;&#x7684;&#x6E90;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="python">def add(self, layer):
+    # &#x7B2C;&#x4E00;&#x5C42;&#x5FC5;&#x987B;&#x662F;InputLayer&#x5BF9;&#x8C61;
+    if not self.outputs:
+        if not layer.inbound_nodes:
+            x = Input(batch_shape=layer.batch_input_shape,
+                      dtype=layer.dtype, name=layer.name + &apos;_input&apos;)
+            layer(x)
+
+        self.outputs = [layer.inbound_nodes[0].output_tensors[0]]
+        self.inputs = topology.get_source_inputs(self.outputs[0])
+
+        topology.Node(outbound_layer=self, ...)
+    else:
+        output_tensor = layer(self.outputs[0])
+        self.outputs = [output_tensor]
+        self.inbound_nodes[0].output_tensors = self.outputs
+
+    self.layers.append(layer)
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;<code>add()</code>&#x65B9;&#x6CD5;&#x603B;&#x662F;&#x786E;&#x4FDD;&#x7F51;&#x7EDC;&#x7684;&#x7B2C;&#x4E00;&#x5C42;&#x4E3A;<code>InputLayer</code>&#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x5C06;&#x65B0;&#x52A0;&#x5165;&#x7684;&#x5C42;&#x5E94;&#x7528;&#x4E8E;<code>outputs</code>&#xFF0C;&#x4F7F;&#x4E4B;&#x66F4;&#x65B0;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x4ECE;&#x672C;&#x8D28;&#x4E0A;&#x8BB2;&#xFF0C;&#x5728;<code>Model</code>&#x4E2D;&#x6DFB;&#x52A0;&#x65B0;&#x5C42;&#x8FD8;&#x662F;&#x5728;&#x66F4;&#x65B0;&#x6A21;&#x578B;&#x7684;<code>outputs</code>&#x3002;</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="noopener">ddlee</a></p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Programming/">#Programming</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/AI/">#AI</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Deep-Learning/">#Deep Learning</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Keras/">#Keras</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/415f4992/">[论文笔记](R-CNN)Rich feature hierarchies for accurate object detection and semantic segmentation</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/ba61101c/">[源码笔记]keras源码分析之Container</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/ddc5b1bd/';
+        this.page.identifier = 'posts/ddc5b1bd/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

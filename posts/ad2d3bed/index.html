@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>论文阅读心得 - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x672C;&amp;#x535A;&amp;#x5BA2;&amp;#x8BB0;&amp;#x5F55;&amp;#x4E86;&amp;#x4E0D;&amp;#x5C11;&amp;#x6211;&amp;#x5728;&amp;#x8BFB;&amp;#x6587;&amp;#x7AE0;&amp;#x65F6;&amp;#x6240;&amp;#x4F5C;&amp;#x7684;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x4F46;&amp;#x8D28;&amp;#x91CF;&amp;#x666E;&amp;#x904D;">
+<meta name="keywords" content="Deep Learning,Papers,Research">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文阅读心得">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/ad2d3bed/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x672C;&amp;#x535A;&amp;#x5BA2;&amp;#x8BB0;&amp;#x5F55;&amp;#x4E86;&amp;#x4E0D;&amp;#x5C11;&amp;#x6211;&amp;#x5728;&amp;#x8BFB;&amp;#x6587;&amp;#x7AE0;&amp;#x65F6;&amp;#x6240;&amp;#x4F5C;&amp;#x7684;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x4F46;&amp;#x8D28;&amp;#x91CF;&amp;#x666E;&amp;#x904D;">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.302Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="论文阅读心得">
+<meta name="twitter:description" content="&amp;#x672C;&amp;#x535A;&amp;#x5BA2;&amp;#x8BB0;&amp;#x5F55;&amp;#x4E86;&amp;#x4E0D;&amp;#x5C11;&amp;#x6211;&amp;#x5728;&amp;#x8BFB;&amp;#x6587;&amp;#x7AE0;&amp;#x65F6;&amp;#x6240;&amp;#x4F5C;&amp;#x7684;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x4F46;&amp;#x8D28;&amp;#x91CF;&amp;#x666E;&amp;#x904D;">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            论文阅读心得
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-07-05T13:19:57.000Z" itemprop="datePublished">7月 5 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Papers/">Papers</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分钟 读完 (约 694 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x535A;&#x5BA2;&#x8BB0;&#x5F55;&#x4E86;&#x4E0D;&#x5C11;&#x6211;&#x5728;&#x8BFB;&#x6587;&#x7AE0;&#x65F6;&#x6240;&#x4F5C;&#x7684;&#x7B14;&#x8BB0;&#xFF0C;&#x4F46;&#x8D28;&#x91CF;&#x666E;&#x904D;&#x4E0D;&#x9AD8;&#xFF0C;&#x672C;&#x6587;&#x662F;&#x6211;&#x5BF9;&#x79D1;&#x6280;&#x7C7B;&#x8BBA;&#x6587;&#x9605;&#x8BFB;&#x548C;&#x8BB0;&#x7B14;&#x8BB0;&#x4E60;&#x60EF;&#x7684;&#x53CD;&#x601D;&#xFF0C;&#x4E5F;&#x662F;&#x5BF9;&#x81EA;&#x5DF1;&#x65E5;&#x540E;&#x7B14;&#x8BB0;&#x7684;&#x8981;&#x6C42;&#x3002;</p>
+<a id="more"></a>
+<h3 id="&#x7814;&#x7A76;&#x751F;&#x7684;&#x4E09;&#x79CD;&#x80FD;&#x529B;"><a href="#&#x7814;&#x7A76;&#x751F;&#x7684;&#x4E09;&#x79CD;&#x80FD;&#x529B;" class="headerlink" title="&#x7814;&#x7A76;&#x751F;&#x7684;&#x4E09;&#x79CD;&#x80FD;&#x529B;"></a>&#x7814;&#x7A76;&#x751F;&#x7684;&#x4E09;&#x79CD;&#x80FD;&#x529B;</h3><ol>
+<li>&#x4ECE;&#x65E0;&#x7EC4;&#x7EC7;&#x7684;&#x53EA;&#x662F;&#x79CD;&#x68C0;&#x7D22;&#x3001;&#x7B5B;&#x9009;&#x3001;&#x7EC4;&#x7EC7;&#x77E5;&#x8BC6;&#x7684;&#x80FD;&#x529B;</li>
+<li>&#x5BF9;&#x4E00;&#x5207;&#x65E2;&#x6709;&#x8FDB;&#x884C;&#x7CBE;&#x786E;&#x6279;&#x5224;&#x7684;&#x72EC;&#x7ACB;&#x81EA;&#x4E3B;&#x5224;&#x65AD;&#x80FD;&#x529B;</li>
+<li>&#x521B;&#x9020;&#x65B0;&#x77E5;&#x8BC6;&#x7684;&#x80FD;&#x529B;</li>
+</ol>
+<h3 id="&#x79D1;&#x6280;&#x7C7B;&#x6587;&#x7AE0;&#x7684;&#x4E3B;&#x8981;&#x5185;&#x5BB9;"><a href="#&#x79D1;&#x6280;&#x7C7B;&#x6587;&#x7AE0;&#x7684;&#x4E3B;&#x8981;&#x5185;&#x5BB9;" class="headerlink" title="&#x79D1;&#x6280;&#x7C7B;&#x6587;&#x7AE0;&#x7684;&#x4E3B;&#x8981;&#x5185;&#x5BB9;"></a>&#x79D1;&#x6280;&#x7C7B;&#x6587;&#x7AE0;&#x7684;&#x4E3B;&#x8981;&#x5185;&#x5BB9;</h3><h4 id="&#x9886;&#x57DF;&#x7EFC;&#x8FF0;-&#x8BBA;&#x6587;&#x4E2D;&#x7684;&#x5DE5;&#x4F5C;&#x5F15;&#x8FF0;&#x90E8;&#x5206;"><a href="#&#x9886;&#x57DF;&#x7EFC;&#x8FF0;-&#x8BBA;&#x6587;&#x4E2D;&#x7684;&#x5DE5;&#x4F5C;&#x5F15;&#x8FF0;&#x90E8;&#x5206;" class="headerlink" title="&#x9886;&#x57DF;&#x7EFC;&#x8FF0;/&#x8BBA;&#x6587;&#x4E2D;&#x7684;&#x5DE5;&#x4F5C;&#x5F15;&#x8FF0;&#x90E8;&#x5206;"></a>&#x9886;&#x57DF;&#x7EFC;&#x8FF0;/&#x8BBA;&#x6587;&#x4E2D;&#x7684;&#x5DE5;&#x4F5C;&#x5F15;&#x8FF0;&#x90E8;&#x5206;</h4><p>1A&#xFF09;&#x8FD9;&#x4E2A;&#x9886;&#x57DF;&#x6700;&#x5E38;&#x88AB;&#x5F15;&#x8FF0;&#x7684;&#x65B9;&#x6CD5;&#x6709;&#x54EA;&#x4E9B;<br>1B&#xFF09;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x88AB;&#x5206;&#x4E3A;&#x54EA;&#x4E9B;&#x4E3B;&#x8981;&#x6D3E;&#x522B;<br>1C&#xFF09;&#x6BCF;&#x4E2A;&#x6D3E;&#x522B;&#x7684;&#x4E3B;&#x8981;&#x7279;&#x8272;&#xFF08;&#x4F18;&#x70B9;&#x548C;&#x7F3A;&#x70B9;&#xFF09;&#x662F;&#x4EC0;&#x4E48;<br>1D&#xFF09;&#x8FD9;&#x4E2A;&#x9886;&#x57DF;&#x5927;&#x5BB6;&#x8BA4;&#x4E3A;&#x7684;&#x5173;&#x952E;&#x95EE;&#x9898;&#x6709;&#x54EA;&#x4E9B;&#xFF0C;&#x6709;&#x54EA;&#x4E9B;&#x7279;&#x6027;&#x662F;&#x5927;&#x5BB6;&#x91CD;&#x89C6;&#x7684;&#x4F18;&#x70B9;&#xFF0C;&#x54EA;&#x4E9B;&#x7279;&#x6027;&#x662F;&#x5927;&#x5BB6;&#x91CD;&#x89C6;&#x7684;&#x7F3A;&#x70B9;&#xFF0C;&#x8FD9;&#x4E9B;&#x7279;&#x6027;&#x5728;&#x54EA;&#x4E9B;&#x573A;&#x666F;&#x4E0B;&#x53D7;&#x91CD;&#x89C6;</p>
+<h4 id="&#x5355;&#x9879;&#x5DE5;&#x4F5C;"><a href="#&#x5355;&#x9879;&#x5DE5;&#x4F5C;" class="headerlink" title="&#x5355;&#x9879;&#x5DE5;&#x4F5C;"></a>&#x5355;&#x9879;&#x5DE5;&#x4F5C;</h4><p>2A&#xFF09;&#x8FD9;&#x9879;&#x5DE5;&#x4F5C;&#x7684;&#x4E3B;&#x8981;&#x5047;&#x8BBE;&#x662F;&#x4EC0;&#x4E48;&#xFF0C;&#x8FD9;&#x4E9B;&#x5047;&#x8BBE;&#x5728;&#x73B0;&#x5B9E;&#x60C5;&#x51B5;&#x4E0B;&#x6709;&#x591A;&#x96BE;/&#x5BB9;&#x6613;&#x6210;&#x7ACB;<br>2B&#xFF09;&#x5728;&#x8FD9;&#x4E9B;&#x5047;&#x8BBE;&#x4E0B;&#xFF0C;&#x8FD9;&#x9879;&#x5DE5;&#x4F5C;&#x7684;&#x4F18;&#x70B9;&#x662F;&#x4EC0;&#x4E48;<br>2C&#xFF09;&#x8FD9;&#x4E9B;&#x4F18;&#x70B9;&#x4E3B;&#x8981;&#x4F53;&#x73B0;&#x5728;&#x54EA;&#x91CC;<br>2D&#xFF09;&#x8FD9;&#x9879;&#x5DE5;&#x4F5C;&#x7684;&#x7F3A;&#x70B9;&#x662F;&#x4EC0;&#x4E48;<br>2E&#xFF09;&#x8FD9;&#x9879;&#x5DE5;&#x4F5C;&#xFF08;&#x8FD9;&#x4E2A;&#x6D3E;&#x522B;&#x7684;&#x65B9;&#x6CD5;&#xFF09;&#x9002;&#x7528;&#x7684;&#x573A;&#x5408;&#x6709;&#x54EA;&#x4E9B;</p>
+<h3 id="&#x8BFB;&#x6587;&#x7AE0;&#x7684;&#x539F;&#x5219;-&#x6280;&#x5DE7;"><a href="#&#x8BFB;&#x6587;&#x7AE0;&#x7684;&#x539F;&#x5219;-&#x6280;&#x5DE7;" class="headerlink" title="&#x8BFB;&#x6587;&#x7AE0;&#x7684;&#x539F;&#x5219;/&#x6280;&#x5DE7;"></a>&#x8BFB;&#x6587;&#x7AE0;&#x7684;&#x539F;&#x5219;/&#x6280;&#x5DE7;</h3><ol>
+<li>&#x6574;&#x6279;&#x8BFB;&#x6587;&#x732E;&#xFF0C;&#x5229;&#x7528;&#x4E92;&#x76F8;&#x5F15;&#x8FF0;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x4E0D;&#x540C;&#x5DE5;&#x4F5C;&#x4E4B;&#x95F4;&#x7684;&#x8BC4;&#x8BBA;&#x5E38;&#x5E38;&#x6BD4;&#x4F5C;&#x8005;&#x81EA;&#x5DF1;&#x7684;&#x8BC4;&#x8BBA;&#x66F4;&#x6709;&#x4EF7;&#x503C;</li>
+<li>&#x53EA;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x5230;&#x81EA;&#x5DF1;&#x6240;&#x9700;&#x7684;&#x77E5;&#x8BC6;&#x7C92;&#x5EA6;&#xFF0C;&#x5FCC;&#x4E8B;&#x65E0;&#x5DE8;&#x7EC6;&#xFF0C;&#x5373;&#x5728;&#x8BFB;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x4E0D;&#x65AD;&#x8C03;&#x6574;&#x81EA;&#x5DF1;&#x7684;&#x671F;&#x5F85;&#x548C;&#x76EE;&#x7684;</li>
+</ol>
+<h3 id="&#x7B14;&#x8BB0;-&#x8BBA;&#x6587;&#x62A5;&#x544A;&#x5E94;&#x8BE5;&#x5305;&#x542B;&#x7684;&#x5185;&#x5BB9;"><a href="#&#x7B14;&#x8BB0;-&#x8BBA;&#x6587;&#x62A5;&#x544A;&#x5E94;&#x8BE5;&#x5305;&#x542B;&#x7684;&#x5185;&#x5BB9;" class="headerlink" title="&#x7B14;&#x8BB0;/&#x8BBA;&#x6587;&#x62A5;&#x544A;&#x5E94;&#x8BE5;&#x5305;&#x542B;&#x7684;&#x5185;&#x5BB9;"></a>&#x7B14;&#x8BB0;/&#x8BBA;&#x6587;&#x62A5;&#x544A;&#x5E94;&#x8BE5;&#x5305;&#x542B;&#x7684;&#x5185;&#x5BB9;</h3><h4 id="&#x4ECB;&#x7ECD;&#x90E8;&#x5206;&#xFF08;&#x5982;&#x4F55;&#x5C06;&#x6587;&#x7AE0;&#x8F6C;&#x8FF0;&#x6E05;&#x695A;&#xFF09;"><a href="#&#x4ECB;&#x7ECD;&#x90E8;&#x5206;&#xFF08;&#x5982;&#x4F55;&#x5C06;&#x6587;&#x7AE0;&#x8F6C;&#x8FF0;&#x6E05;&#x695A;&#xFF09;" class="headerlink" title="&#x4ECB;&#x7ECD;&#x90E8;&#x5206;&#xFF08;&#x5982;&#x4F55;&#x5C06;&#x6587;&#x7AE0;&#x8F6C;&#x8FF0;&#x6E05;&#x695A;&#xFF09;"></a>&#x4ECB;&#x7ECD;&#x90E8;&#x5206;&#xFF08;&#x5982;&#x4F55;&#x5C06;&#x6587;&#x7AE0;&#x8F6C;&#x8FF0;&#x6E05;&#x695A;&#xFF09;</h4><p>1&#xFF09;&#x7814;&#x7A76;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x5DE5;&#x4E1A;&#x754C;&#x76F8;&#x5173;<br>2&#xFF09;&#x4E3B;&#x8981;&#x5047;&#x8BBE;&#x3001;&#x4E3B;&#x8981;&#x516C;&#x5F0F;&#x3001;&#x5E94;&#x7528;&#x65B9;&#x5F0F;</p>
+<h4 id="&#x8BC4;&#x4EF7;&#xFF08;&#x5982;&#x4F55;&#x5168;&#x9762;&#x5BA2;&#x89C2;&#x8BC4;&#x5B9A;&#x8FD9;&#x9879;&#x5DE5;&#x4F5C;&#x7684;&#x8D21;&#x732E;&#xFF09;"><a href="#&#x8BC4;&#x4EF7;&#xFF08;&#x5982;&#x4F55;&#x5168;&#x9762;&#x5BA2;&#x89C2;&#x8BC4;&#x5B9A;&#x8FD9;&#x9879;&#x5DE5;&#x4F5C;&#x7684;&#x8D21;&#x732E;&#xFF09;" class="headerlink" title="&#x8BC4;&#x4EF7;&#xFF08;&#x5982;&#x4F55;&#x5168;&#x9762;&#x5BA2;&#x89C2;&#x8BC4;&#x5B9A;&#x8FD9;&#x9879;&#x5DE5;&#x4F5C;&#x7684;&#x8D21;&#x732E;&#xFF09;"></a>&#x8BC4;&#x4EF7;&#xFF08;&#x5982;&#x4F55;&#x5168;&#x9762;&#x5BA2;&#x89C2;&#x8BC4;&#x5B9A;&#x8FD9;&#x9879;&#x5DE5;&#x4F5C;&#x7684;&#x8D21;&#x732E;&#xFF09;</h4><p>1&#xFF09;&#x6700;&#x4E3B;&#x8981;&#x7684;&#x521B;&#x610F;/&#x8D21;&#x732E;<br>2&#xFF09;&#x521B;&#x610F;/&#x5171;&#x4EAB;&#x5E26;&#x6765;&#x7684;&#x597D;&#x5904;<br>3&#xFF09;&#x8FD9;&#x4E9B;&#x597D;&#x5904;&#x5728;&#x54EA;&#x4E9B;&#x6761;&#x4EF6;&#x4E0B;&#x6210;&#x7ACB;&#xFF08;&#x9002;&#x7528;&#x7684;&#x8303;&#x56F4;&#xFF09;<br>4&#xFF09;&#x6700;&#x4E3B;&#x8981;&#x7684;&#x7F3A;&#x70B9;/&#x5C40;&#x9650;<br>5&#xFF09;&#x7F3A;&#x70B9;/&#x5C40;&#x9650;&#x5E26;&#x6765;&#x7684;&#x574F;&#x5904;<br>6&#xFF09;&#x7F3A;&#x70B9;/&#x5C40;&#x9650;&#x56E0;&#x4E3A;&#x54EA;&#x4E9B;&#x56E0;&#x7D20;&#x5F15;&#x5165;&#x7684;</p>
+<h3 id="CV&#x7C7B;&#x6587;&#x7AE0;&#x9605;&#x8BFB;&#x987A;&#x5E8F;"><a href="#CV&#x7C7B;&#x6587;&#x7AE0;&#x9605;&#x8BFB;&#x987A;&#x5E8F;" class="headerlink" title="CV&#x7C7B;&#x6587;&#x7AE0;&#x9605;&#x8BFB;&#x987A;&#x5E8F;"></a>CV&#x7C7B;&#x6587;&#x7AE0;&#x9605;&#x8BFB;&#x987A;&#x5E8F;</h3><ol>
+<li>&#x6458;&#x8981;&#x4E2D;&#x5BF9;&#x4E8E;&#x65B9;&#x6CD5;&#x53D9;&#x8FF0;&#x548C;&#x6548;&#x679C;&#x63CF;&#x8FF0;&#x7684;&#x5173;&#x952E;&#x6027;&#x8BED;&#x53E5;</li>
+<li>&#x5728;&#x6807;&#x51C6;&#x8BC4;&#x6D4B;&#x96C6;&#x4E0A;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x6D88;&#x878D;&#x5B9E;&#x9A8C;(Ablation Study)&#x7684;&#x8BF4;&#x670D;&#x529B;&#xFF08;&#x57FA;&#x672C;&#x5224;&#x5B9A;&#x662F;&#x5426;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x9605;&#x8BFB;&#xFF09;</li>
+<li>&#x6B63;&#x6587;&#x4E2D;&#x65B9;&#x6CD5;&#x63CF;&#x8FF0;&#xFF0C;&#x505A;&#x6CD5;&#x7684;&#x89E3;&#x91CA;&#xFF0C;&#x7F51;&#x7EDC;&#x7ED3;&#x6784;&#x7684;&#x8BBE;&#x8BA1;&#x7B49;</li>
+<li>&#x5B9E;&#x9A8C;&#x7EC6;&#x8282;&#x7684;&#x63CF;&#x8FF0;</li>
+<li>&#x80CC;&#x666F;&#x8C03;&#x7814;&#x7B49;</li>
+</ol>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Deep-Learning/">#Deep Learning</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Papers/">#Papers</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Research/">#Research</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/f7ead50b/">机器学习工作习惯侧记</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/3a6233e2/">我的信息方法论：原则与实践</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/ad2d3bed/';
+        this.page.identifier = 'posts/ad2d3bed/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

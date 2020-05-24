@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x76EE;&amp;#x6807;&amp;#x68C0;&amp;#x6D4B;&amp;#x5E38;&amp;#x7528;&amp;#x7684;&amp;#x8BC4;&amp;#x6D4B;&amp;#x6307;&amp;#x6807;&amp;#x548C;&amp;#x8BC4;&amp;#x6D4B;&amp;#x6570;&amp;#x636E;&amp;#x96C6;&amp;#x4ECB;&amp;#x7ECD;&amp;#x3002;">
+<meta name="keywords" content="Deep Learning,Object Detection,Computer Vision">
+<meta property="og:type" content="article">
+<meta property="og:title" content="目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/7845fb62/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x76EE;&amp;#x6807;&amp;#x68C0;&amp;#x6D4B;&amp;#x5E38;&amp;#x7528;&amp;#x7684;&amp;#x8BC4;&amp;#x6D4B;&amp;#x6307;&amp;#x6807;&amp;#x548C;&amp;#x8BC4;&amp;#x6D4B;&amp;#x6570;&amp;#x636E;&amp;#x96C6;&amp;#x4ECB;&amp;#x7ECD;&amp;#x3002;">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/coco.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/iconic-non-iconic.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/coco-stat.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/coco-size.png">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/coco-error-analysis.jpg">
+<meta property="og:image" content="https://blog.ddlee.cc/user-imgs/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/cityscapes-example.png">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.295Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes">
+<meta name="twitter:description" content="&amp;#x76EE;&amp;#x6807;&amp;#x68C0;&amp;#x6D4B;&amp;#x5E38;&amp;#x7528;&amp;#x7684;&amp;#x8BC4;&amp;#x6D4B;&amp;#x6307;&amp;#x6807;&amp;#x548C;&amp;#x8BC4;&amp;#x6D4B;&amp;#x6570;&amp;#x636E;&amp;#x96C6;&amp;#x4ECB;&amp;#x7ECD;&amp;#x3002;">
+<meta name="twitter:image" content="https://blog.ddlee.cc/user-imgs/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/coco.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-03-04T16:18:16.000Z" itemprop="datePublished">3月 5 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            12 分钟 读完 (约 1757 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x8282;&#x9009;&#x81EA;&#x535A;&#x4E3B;&#x901A;&#x8FC7;&#x683C;&#x7075;&#x6DF1;&#x77B3;&#x673A;&#x6784;&#x53F7;&#x53D1;&#x8868;&#x4E8E;&#x77E5;&#x4E4E;&#x7684;&#x6587;&#x7AE0;&#xFF1A;<a href="https://zhuanlan.zhihu.com/p/34179420" target="_blank" rel="noopener">&#x76EE;&#x6807;&#x68C0;&#x6D4B;&#x5165;&#x95E8;&#xFF08;&#x4E8C;&#xFF09;&#xFF1A;&#x6A21;&#x578B;&#x7684;&#x8BC4;&#x6D4B;&#x4E0E;&#x8BAD;&#x7EC3;&#x6280;&#x5DE7;
+</a>&#x3002;</p>
+<h2 id="&#x68C0;&#x6D4B;&#x6A21;&#x578B;&#x7684;&#x8BC4;&#x6D4B;&#x6307;&#x6807;"><a href="#&#x68C0;&#x6D4B;&#x6A21;&#x578B;&#x7684;&#x8BC4;&#x6D4B;&#x6307;&#x6807;" class="headerlink" title="&#x68C0;&#x6D4B;&#x6A21;&#x578B;&#x7684;&#x8BC4;&#x6D4B;&#x6307;&#x6807;"></a>&#x68C0;&#x6D4B;&#x6A21;&#x578B;&#x7684;&#x8BC4;&#x6D4B;&#x6307;&#x6807;</h2><p>&#x76EE;&#x6807;&#x68C0;&#x6D4B;&#x6A21;&#x578B;&#x672C;&#x6E90;&#x4E0A;&#x53EF;&#x4EE5;&#x7528;&#x7EDF;&#x8BA1;&#x63A8;&#x65AD;&#x7684;&#x6846;&#x67B6;&#x63CF;&#x8FF0;&#xFF0C;&#x6211;&#x4EEC;&#x5173;&#x6CE8;&#x5176;&#x72AF;&#x7B2C;&#x4E00;&#x7C7B;&#x9519;&#x8BEF;&#x548C;&#x7B2C;&#x4E8C;&#x7C7B;&#x9519;&#x8BEF;&#x7684;&#x6982;&#x7387;&#xFF0C;&#x901A;&#x5E38;&#x7528;&#x51C6;&#x786E;&#x7387;&#x548C;&#x53EC;&#x56DE;&#x7387;&#x6765;&#x63CF;&#x8FF0;&#x3002;&#x51C6;&#x786E;&#x7387;&#x63CF;&#x8FF0;&#x4E86;&#x6A21;&#x578B;&#x6709;&#x591A;&#x51C6;&#xFF0C;&#x5373;&#x5728;&#x9884;&#x6D4B;&#x4E3A;&#x6B63;&#x4F8B;&#x7684;&#x7ED3;&#x679C;&#x4E2D;&#xFF0C;&#x6709;&#x591A;&#x5C11;&#x662F;&#x771F;&#x6B63;&#x4F8B;&#xFF1B;&#x53EC;&#x56DE;&#x7387;&#x5219;&#x63CF;&#x8FF0;&#x4E86;&#x6A21;&#x578B;&#x6709;&#x591A;&#x5168;&#xFF0C;&#x5373;&#x5728;&#x4E3A;&#x771F;&#x7684;&#x6837;&#x672C;&#x4E2D;&#xFF0C;&#x6709;&#x591A;&#x5C11;&#x88AB;&#x6211;&#x4EEC;&#x7684;&#x6A21;&#x578B;&#x9884;&#x6D4B;&#x4E3A;&#x6B63;&#x4F8B;&#x3002;&#x4E0D;&#x540C;&#x7684;&#x4EFB;&#x52A1;&#xFF0C;&#x5BF9;&#x4E24;&#x7C7B;&#x9519;&#x8BEF;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x504F;&#x597D;&#xFF0C;&#x5E38;&#x5E38;&#x5728;&#x67D0;&#x4E00;&#x7C7B;&#x9519;&#x8BEF;&#x4E0D;&#x591A;&#x4E8E;&#x4E00;&#x5B9A;&#x9608;&#x503C;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x52AA;&#x529B;&#x51CF;&#x5C11;&#x53E6;&#x4E00;&#x7C7B;&#x9519;&#x8BEF;&#x3002;&#x5728;&#x68C0;&#x6D4B;&#x4E2D;&#xFF0C;mAP&#xFF08;mean Average Precision&#xFF09;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x7EDF;&#x4E00;&#x7684;&#x6307;&#x6807;&#x5C06;&#x8FD9;&#x4E24;&#x79CD;&#x9519;&#x8BEF;&#x517C;&#x987E;&#x8003;&#x8651;&#x3002;</p>
+<p>&#x5177;&#x4F53;&#x5730;&#xFF0C;&#x5BF9;&#x4E8E;&#x6BCF;&#x5F20;&#x56FE;&#x7247;&#xFF0C;&#x68C0;&#x6D4B;&#x6A21;&#x578B;&#x8F93;&#x51FA;&#x591A;&#x4E2A;&#x9884;&#x6D4B;&#x6846;&#xFF08;&#x5E38;&#x5E38;&#x8FDC;&#x8D85;&#x771F;&#x5B9E;&#x6846;&#x7684;&#x4E2A;&#x6570;&#xFF09;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528;IoU&#xFF08;Intersection Over Union&#xFF0C;&#x4EA4;&#x5E76;&#x6BD4;&#xFF09;&#x6765;&#x6807;&#x8BB0;&#x9884;&#x6D4B;&#x6846;&#x662F;&#x5426;&#x4E3A;&#x9884;&#x6D4B;&#x6B63;&#x786E;&#x3002;&#x6807;&#x8BB0;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x968F;&#x7740;&#x9884;&#x6D4B;&#x6846;&#x7684;&#x589E;&#x591A;&#xFF0C;&#x53EC;&#x56DE;&#x7387;&#x603B;&#x4F1A;&#x63D0;&#x5347;&#xFF0C;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x53EC;&#x56DE;&#x7387;&#x6C34;&#x5E73;&#x4E0B;&#x5BF9;&#x51C6;&#x786E;&#x7387;&#x505A;&#x5E73;&#x5747;&#xFF0C;&#x5373;&#x5F97;&#x5230;AP&#xFF0C;&#x6700;&#x540E;&#x518D;&#x5BF9;&#x6240;&#x6709;&#x7C7B;&#x522B;&#x6309;&#x5176;&#x6240;&#x5360;&#x6BD4;&#x4F8B;&#x505A;&#x5E73;&#x5747;&#xFF0C;&#x5373;&#x5F97;&#x5230;mAP&#x3002;</p>
+<p>&#x5728;&#x8F83;&#x65E9;&#x7684;Pascal VOC&#x6570;&#x636E;&#x96C6;&#x4E0A;&#xFF0C;&#x5E38;&#x91C7;&#x7528;&#x56FA;&#x5B9A;&#x7684;&#x4E00;&#x4E2A;IoU&#x9608;&#x503C;&#xFF08;&#x5982;0.5, 0.75&#xFF09;&#x6765;&#x8BA1;&#x7B97;mAP&#xFF0C;&#x73B0;&#x9636;&#x6BB5;&#x8F83;&#x4E3A;&#x6743;&#x5A01;&#x7684;MS COCO&#x6570;&#x636E;&#x96C6;&#x4E0A;&#xFF0C;&#x5BF9;&#x4E0D;&#x540C;&#x7684;IoU&#x9608;&#x503C;&#xFF08;0.5-0.95&#xFF0C;0.05&#x4E3A;&#x6B65;&#x957F;&#xFF09;&#x5206;&#x522B;&#x8BA1;&#x7B97;AP&#xFF0C;&#x518D;&#x7EFC;&#x5408;&#x5E73;&#x5747;&#xFF0C;&#x5E76;&#x4E14;&#x7ED9;&#x51FA;&#x4E86;&#x4E0D;&#x540C;&#x5927;&#x5C0F;&#x7269;&#x4F53;&#x5206;&#x522B;&#x7684;AP&#x8868;&#x73B0;&#xFF0C;&#x5BF9;&#x5B9A;&#x4F4D;&#x51C6;&#x786E;&#x7684;&#x6A21;&#x578B;&#x7ED9;&#x4E88;&#x5956;&#x52B1;&#x5E76;&#x5168;&#x9762;&#x5730;&#x5C55;&#x73B0;&#x4E0D;&#x540C;&#x5927;&#x5C0F;&#x7269;&#x4F53;&#x4E0A;&#x68C0;&#x6D4B;&#x7B97;&#x6CD5;&#x7684;&#x6027;&#x80FD;&#xFF0C;&#x66F4;&#x4E3A;&#x79D1;&#x5B66;&#x5408;&#x7406;&#x3002;</p>
+<p>&#x5728;&#x5B9E;&#x8DF5;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x4E0D;&#x4EC5;&#x5173;&#x6CE8;&#x68C0;&#x6D4B;&#x6A21;&#x578B;&#x7684;&#x7CBE;&#x5EA6;&#xFF0C;&#x8FD8;&#x5173;&#x6CE8;&#x5176;&#x8FD0;&#x884C;&#x7684;&#x901F;&#x5EA6;&#xFF0C;&#x5E38;&#x5E38;&#x7528;FPS&#xFF08;Frame Per Second&#xFF0C;&#x6BCF;&#x79D2;&#x5E27;&#x7387;&#xFF09;&#x6765;&#x8868;&#x793A;&#x68C0;&#x6D4B;&#x6A21;&#x578B;&#x80FD;&#x591F;&#x5728;&#x6307;&#x5B9A;&#x786C;&#x4EF6;&#x4E0A;&#x6BCF;&#x79D2;&#x5904;&#x7406;&#x56FE;&#x7247;&#x7684;&#x5F20;&#x6570;&#x3002;&#x901A;&#x5E38;&#x6765;&#x8BB2;&#xFF0C;&#x5728;&#x5355;&#x5757;GPU&#x4E0A;&#xFF0C;&#x4E24;&#x9636;&#x6BB5;&#x65B9;&#x6CD5;&#x7684;FPS&#x4E00;&#x822C;&#x5728;&#x4E2A;&#x4F4D;&#x6570;&#xFF0C;&#x800C;&#x5355;&#x9636;&#x6BB5;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x6570;&#x5341;&#x3002;&#x73B0;&#x5728;&#x68C0;&#x6D4B;&#x6A21;&#x578B;&#x8FD0;&#x884C;&#x7684;&#x5E73;&#x53F0;&#x5E76;&#x4E0D;&#x7EDF;&#x4E00;&#xFF0C;&#x5B9E;&#x8DF5;&#x4E2D;&#x4E5F;&#x4E0D;&#x80FD;&#x90E8;&#x7F72;&#x8F83;&#x4E3A;&#x6602;&#x8D35;&#x7684;GPU&#x8FDB;&#x884C;&#x63A8;&#x65AD;&#x3002;&#x4E8B;&#x5B9E;&#x4E0A;&#xFF0C;&#x5F88;&#x591A;&#x6587;&#x7AE0;&#x5E76;&#x6CA1;&#x6709;&#x4E25;&#x8C28;&#x8BA8;&#x8BBA;&#x5176;&#x63D0;&#x51FA;&#x6A21;&#x578B;&#x7684;&#x901F;&#x5EA6;&#x8868;&#x73B0;&#xFF08;&#x52A0;&#x4E86;&#x8F83;&#x591A;&#x7684;trick&#x4EE5;&#x4F7F;&#x7CBE;&#x5EA6;&#x8FBE;&#x5230;SOTA&#xFF09;&#xFF0C;&#x53E6;&#x5916;&#xFF0C;&#x8003;&#x8651;&#x5230;&#x76EE;&#x524D;&#x79FB;&#x52A8;&#x7AEF;&#x4E13;&#x7528;&#x82AF;&#x7247;&#x7684;&#x53D1;&#x5C55;&#x901F;&#x5EA6;&#x548C;&#x7814;&#x7A76;&#x8FDB;&#x5C55;&#xFF0C;&#x901F;&#x5EA6;&#x65B9;&#x9762;&#x7684;&#x6307;&#x6807;&#x53EF;&#x80FD;&#x8F83;&#x96BE;&#x5F62;&#x6210;&#x7EDF;&#x4E00;&#x7684;&#x53C2;&#x8003;&#x6807;&#x51C6;&#xFF0C;&#x9700;&#x8981;&#x8C28;&#x614E;&#x770B;&#x5F85;&#x6587;&#x7AE0;&#x4E2D;&#x6C47;&#x62A5;&#x7684;&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#x3002;</p>
+<h2 id="&#x6807;&#x51C6;&#x8BC4;&#x6D4B;&#x6570;&#x636E;&#x96C6;"><a href="#&#x6807;&#x51C6;&#x8BC4;&#x6D4B;&#x6570;&#x636E;&#x96C6;" class="headerlink" title="&#x6807;&#x51C6;&#x8BC4;&#x6D4B;&#x6570;&#x636E;&#x96C6;"></a>&#x6807;&#x51C6;&#x8BC4;&#x6D4B;&#x6570;&#x636E;&#x96C6;</h2><h3 id="Pascal-VOC&#xFF08;Pascal-Visual-Object-Classes&#xFF09;"><a href="#Pascal-VOC&#xFF08;Pascal-Visual-Object-Classes&#xFF09;" class="headerlink" title="Pascal VOC&#xFF08;Pascal Visual Object Classes&#xFF09;"></a>Pascal VOC&#xFF08;<a href="http://host.robots.ox.ac.uk/pascal/VOC/" target="_blank" rel="noopener">Pascal Visual Object Classes</a>&#xFF09;</h3><p>&#x81EA;2005&#x5E74;&#x8D77;&#x6BCF;&#x5E74;&#x4E3E;&#x529E;&#x4E00;&#x6B21;&#x6BD4;&#x8D5B;&#xFF0C;&#x6700;&#x5F00;&#x59CB;&#x53EA;&#x6709;4&#x7C7B;&#xFF0C;&#x5230;2007&#x5E74;&#x6269;&#x5145;&#x4E3A;20&#x4E2A;&#x7C7B;&#xFF0C;&#x5171;&#x6709;&#x4E24;&#x4E2A;&#x5E38;&#x7528;&#x7684;&#x7248;&#x672C;&#xFF1A;2007&#x548C;2012&#x3002;&#x5B66;&#x672F;&#x754C;&#x5E38;&#x7528;5k&#x7684;trainval2007&#x548C;16k&#x7684;trainval2012&#x4F5C;&#x4E3A;&#x8BAD;&#x7EC3;&#x96C6;&#xFF08;07+12&#xFF09;&#xFF0C;test2007&#x4F5C;&#x4E3A;&#x6D4B;&#x8BD5;&#x96C6;&#xFF0C;&#x7528;10k&#x7684;trainval2007+test2007&#x548C;&#x548C;16k&#x7684;trainval2012&#x4F5C;&#x4E3A;&#x8BAD;&#x7EC3;&#x96C6;&#xFF08;07++12&#xFF09;&#xFF0C;test2012&#x4F5C;&#x4E3A;&#x6D4B;&#x8BD5;&#x96C6;&#xFF0C;&#x5206;&#x522B;&#x6C47;&#x62A5;&#x7ED3;&#x679C;&#x3002;</p>
+<p>Pascal VOC&#x5BF9;&#x65E9;&#x671F;&#x68C0;&#x6D4B;&#x5DE5;&#x4F5C;&#x8D77;&#x5230;&#x4E86;&#x91CD;&#x8981;&#x7684;&#x63A8;&#x52A8;&#x4F5C;&#x7528;&#xFF0C;&#x76EE;&#x524D;&#x63D0;&#x5347;&#x7684;&#x7A7A;&#x95F4;&#x76F8;&#x5BF9;&#x6709;&#x9650;&#xFF0C;&#x6743;&#x5A01;&#x8BC4;&#x6D4B;&#x96C6;&#x7684;&#x4EA4;&#x63A5;&#x68D2;&#x4E5F;&#x9010;&#x6E10;&#x4F20;&#x7ED9;&#x4E86;&#x4E0B;&#x9762;&#x8981;&#x4ECB;&#x7ECD;&#x7684;COCO&#x3002;</p>
+<h3 id="MS-COCO&#xFF08;Common-Objects-in-COntext&#xFF09;"><a href="#MS-COCO&#xFF08;Common-Objects-in-COntext&#xFF09;" class="headerlink" title="MS COCO&#xFF08;Common Objects in COntext&#xFF09;"></a>MS COCO&#xFF08;<a href="http://cocodataset.org" target="_blank" rel="noopener">Common Objects in COntext</a>&#xFF09;</h3><p><img src="/user-imgs/&#x76EE;&#x6807;&#x68C0;&#x6D4B;&#x5E38;&#x7528;&#x8BC4;&#x6D4B;&#x96C6;&#xFF1A;Pascal-VOC-MS-COCO-Cityscapes/coco.png" alt="MS COCO Roadmap&#xFF0C;https://places-coco2017.github.io/"> <em>&#x68C0;&#x6D4B;&#x4EFB;&#x52A1;&#x5728;COCO&#x6570;&#x636E;&#x96C6;&#x4E0A;&#x7684;&#x8FDB;&#x5C55;</em></p>
+<p>COCO&#x6570;&#x636E;&#x96C6;&#x6536;&#x96C6;&#x4E86;&#x5927;&#x91CF;&#x5305;&#x542B;&#x5E38;&#x89C1;&#x7269;&#x4F53;&#x7684;&#x65E5;&#x5E38;&#x573A;&#x666F;&#x56FE;&#x7247;&#xFF0C;&#x5E76;&#x63D0;&#x4F9B;&#x50CF;&#x7D20;&#x7EA7;&#x7684;&#x5B9E;&#x4F8B;&#x6807;&#x6CE8;&#x4EE5;&#x66F4;&#x7CBE;&#x786E;&#x5730;&#x8BC4;&#x4F30;&#x68C0;&#x6D4B;&#x548C;&#x5206;&#x5272;&#x7B97;&#x6CD5;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x81F4;&#x529B;&#x4E8E;&#x63A8;&#x52A8;&#x573A;&#x666F;&#x7406;&#x89E3;&#x7684;&#x7814;&#x7A76;&#x8FDB;&#x5C55;&#x3002;&#x4F9D;&#x6258;&#x8FD9;&#x4E00;&#x6570;&#x636E;&#x96C6;&#xFF0C;&#x6BCF;&#x5E74;&#x4E3E;&#x529E;&#x4E00;&#x6B21;&#x6BD4;&#x8D5B;&#xFF0C;&#x73B0;&#x5DF2;&#x6DB5;&#x76D6;&#x68C0;&#x6D4B;&#x3001;&#x5206;&#x5272;&#x3001;&#x5173;&#x952E;&#x70B9;&#x8BC6;&#x522B;&#x3001;&#x6CE8;&#x91CA;&#x7B49;&#x673A;&#x5668;&#x89C6;&#x89C9;&#x7684;&#x4E2D;&#x5FC3;&#x4EFB;&#x52A1;&#xFF0C;&#x662F;&#x7EE7;ImageNet Chanllenge&#x4EE5;&#x6765;&#x6700;&#x6709;&#x5F71;&#x54CD;&#x529B;&#x7684;&#x5B66;&#x672F;&#x7ADE;&#x8D5B;&#x4E4B;&#x4E00;&#x3002;</p>
+<p><img src="/user-imgs/&#x76EE;&#x6807;&#x68C0;&#x6D4B;&#x5E38;&#x7528;&#x8BC4;&#x6D4B;&#x96C6;&#xFF1A;Pascal-VOC-MS-COCO-Cityscapes/iconic-non-iconic.png" alt="iconic"> <em>iconic&#x4E0E;non-iconic&#x56FE;&#x7247;&#x5BF9;&#x6BD4;</em></p>
+<p>&#x76F8;&#x6BD4;ImageNet&#xFF0C;COCO&#x66F4;&#x52A0;&#x504F;&#x597D;&#x76EE;&#x6807;&#x4E0E;&#x5176;&#x573A;&#x666F;&#x5171;&#x540C;&#x51FA;&#x73B0;&#x7684;&#x56FE;&#x7247;&#xFF0C;&#x5373;non-iconic images&#x3002;&#x8FD9;&#x6837;&#x7684;&#x56FE;&#x7247;&#x80FD;&#x591F;&#x53CD;&#x6620;&#x89C6;&#x89C9;&#x4E0A;&#x7684;&#x8BED;&#x4E49;&#xFF0C;&#x66F4;&#x7B26;&#x5408;&#x56FE;&#x50CF;&#x7406;&#x89E3;&#x7684;&#x4EFB;&#x52A1;&#x8981;&#x6C42;&#x3002;&#x800C;&#x76F8;&#x5BF9;&#x7684;iconic images&#x5219;&#x66F4;&#x9002;&#x5408;&#x6D45;&#x8BED;&#x4E49;&#x7684;&#x56FE;&#x50CF;&#x5206;&#x7C7B;&#x7B49;&#x4EFB;&#x52A1;&#x3002;</p>
+<p>COCO&#x7684;&#x68C0;&#x6D4B;&#x4EFB;&#x52A1;&#x5171;&#x542B;&#x6709;80&#x4E2A;&#x7C7B;&#xFF0C;&#x5728;2014&#x5E74;&#x53D1;&#x5E03;&#x7684;&#x6570;&#x636E;&#x89C4;&#x6A21;&#x5206;train/val/test&#x5206;&#x522B;&#x4E3A;80k/40k/40k&#xFF0C;&#x5B66;&#x672F;&#x754C;&#x8F83;&#x4E3A;&#x901A;&#x7528;&#x7684;&#x5212;&#x5206;&#x662F;&#x4F7F;&#x7528;train&#x548C;35k&#x7684;val&#x5B50;&#x96C6;&#x4F5C;&#x4E3A;&#x8BAD;&#x7EC3;&#x96C6;&#xFF08;trainval35k&#xFF09;&#xFF0C;&#x4F7F;&#x7528;&#x5269;&#x4F59;&#x7684;val&#x4F5C;&#x4E3A;&#x6D4B;&#x8BD5;&#x96C6;&#xFF08;minival&#xFF09;&#xFF0C;&#x540C;&#x65F6;&#x5411;&#x5B98;&#x65B9;&#x7684;evaluation server&#x63D0;&#x4EA4;&#x7ED3;&#x679C;&#xFF08;test-dev&#xFF09;&#x3002;&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;COCO&#x5B98;&#x65B9;&#x4E5F;&#x4FDD;&#x7559;&#x4E00;&#x90E8;&#x5206;test&#x6570;&#x636E;&#x4F5C;&#x4E3A;&#x6BD4;&#x8D5B;&#x7684;&#x8BC4;&#x6D4B;&#x96C6;&#x3002;</p>
+<p><img src="/user-imgs/&#x76EE;&#x6807;&#x68C0;&#x6D4B;&#x5E38;&#x7528;&#x8BC4;&#x6D4B;&#x96C6;&#xFF1A;Pascal-VOC-MS-COCO-Cityscapes/coco-stat.png" alt="dist"> <em>COCO&#x6570;&#x636E;&#x96C6;&#x5206;&#x5E03;</em></p>
+<p>&#x5728;&#x5206;&#x5E03;&#x65B9;&#x9762;&#xFF0C;COCO&#x7684;&#x6BCF;&#x4E2A;&#x7C7B;&#x542B;&#x6709;&#x66F4;&#x591A;&#x5B9E;&#x4F8B;&#xFF0C;&#x5206;&#x5E03;&#x4E5F;&#x8F83;&#x4E3A;&#x5747;&#x8861;&#xFF08;&#x4E0A;&#x56FE;a&#xFF09;&#xFF0C;&#x6BCF;&#x5F20;&#x56FE;&#x7247;&#x5305;&#x542B;&#x66F4;&#x591A;&#x7C7B;&#x548C;&#x66F4;&#x591A;&#x7684;&#x5B9E;&#x4F8B;&#xFF08;&#x4E0A;&#x56FE;b&#x548C;c&#xFF0C;&#x5747;&#x4E3A;&#x76F4;&#x65B9;&#x56FE;&#xFF0C;&#x6BCF;&#x5F20;&#x56FE;&#x7247;&#x5E73;&#x5747;&#x5206;&#x522B;&#x542B;3.3&#x4E2A;&#x7C7B;&#x548C;7.7&#x4E2A;&#x5B9E;&#x4F8B;&#xFF09;&#xFF0C;&#x76F8;&#x6BD4;Pascal VOC&#xFF0C;COCO&#x8FD8;&#x542B;&#x6709;&#x66F4;&#x591A;&#x7684;&#x5C0F;&#x7269;&#x4F53;&#xFF08;&#x4E0B;&#x56FE;&#xFF0C;&#x6A2A;&#x8F74;&#x662F;&#x7269;&#x4F53;&#x5360;&#x56FE;&#x7247;&#x7684;&#x6BD4;&#x4F8B;&#xFF09;&#x3002;</p>
+<p><img src="/user-imgs/&#x76EE;&#x6807;&#x68C0;&#x6D4B;&#x5E38;&#x7528;&#x8BC4;&#x6D4B;&#x96C6;&#xFF1A;Pascal-VOC-MS-COCO-Cityscapes/coco-size.png" alt="dist-2"> <em>COCO&#x6570;&#x636E;&#x96C6;&#x7269;&#x4F53;&#x5927;&#x5C0F;&#x5206;&#x5E03;</em></p>
+<p>&#x5982;&#x672C;&#x6587;&#x7B2C;&#x4E00;&#x8282;&#x6240;&#x8FF0;&#xFF0C;COCO&#x63D0;&#x4F9B;&#x7684;&#x8BC4;&#x6D4B;&#x6807;&#x51C6;&#x66F4;&#x4E3A;&#x7CBE;&#x7EC6;&#x5316;&#xFF0C;&#x63D0;&#x4F9B;&#x7684;<a href="https://github.com/cocodataset/cocoapi" target="_blank" rel="noopener">API</a>&#x4E0D;&#x4EC5;&#x5305;&#x542B;&#x4E86;&#x53EF;&#x89C6;&#x5316;&#x3001;&#x8BC4;&#x6D4B;&#x6570;&#x636E;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x8FD8;&#x6709;&#x5BF9;&#x6A21;&#x578B;&#x7684;&#x9519;&#x8BEF;&#x6765;&#x6E90;&#x5206;&#x6790;&#x811A;&#x672C;&#xFF0C;&#x80FD;&#x591F;&#x66F4;&#x6E05;&#x6670;&#x5730;&#x5C55;&#x73B0;&#x7B97;&#x6CD5;&#x7684;&#x4E0D;&#x8DB3;&#x4E4B;&#x5904;&#x3002;COCO&#x6240;&#x5EFA;&#x7ACB;&#x7684;&#x8FD9;&#x4E9B;&#x6807;&#x51C6;&#x4E5F;&#x9010;&#x6E10;&#x88AB;&#x5B66;&#x672F;&#x754C;&#x8BA4;&#x53EF;&#xFF0C;&#x6210;&#x4E3A;&#x901A;&#x7528;&#x7684;&#x8BC4;&#x6D4B;&#x6807;&#x51C6;&#x3002;&#x60A8;&#x53EF;&#x4EE5;&#x5728;<a href="http://cocodataset.org/#detections-leaderboard" target="_blank" rel="noopener">&#x8FD9;&#x91CC;</a>&#x627E;&#x5230;&#x76EE;&#x524D;&#x68C0;&#x6D4B;&#x4EFB;&#x52A1;&#x7684;LeaderBoard&#x3002;</p>
+<p><img src="/user-imgs/&#x76EE;&#x6807;&#x68C0;&#x6D4B;&#x5E38;&#x7528;&#x8BC4;&#x6D4B;&#x96C6;&#xFF1A;Pascal-VOC-MS-COCO-Cityscapes/coco-error-analysis.jpg" alt="coco-error-breakdown"> <em>&#x9519;&#x8BEF;&#x6765;&#x6E90;&#x5206;&#x89E3;&#xFF0C;&#x8BE6;&#x89C1;<a href="http://cocodataset.org/#detections-eval" target="_blank" rel="noopener">http://cocodataset.org/#detections-eval</a></em></p>
+<h3 id="Cityscapes"><a href="#Cityscapes" class="headerlink" title="Cityscapes"></a><a href="https://www.cityscapes-dataset.com/" target="_blank" rel="noopener">Cityscapes</a></h3><p><img src="/user-imgs/&#x76EE;&#x6807;&#x68C0;&#x6D4B;&#x5E38;&#x7528;&#x8BC4;&#x6D4B;&#x96C6;&#xFF1A;Pascal-VOC-MS-COCO-Cityscapes/cityscapes-example.png" alt="cityscapes"> <em>Cityscapes&#x6570;&#x636E;&#x793A;&#x4F8B;</em></p>
+<p>Cityscapes&#x6570;&#x636E;&#x96C6;&#x4E13;&#x6CE8;&#x4E8E;&#x73B0;&#x4EE3;&#x57CE;&#x5E02;&#x9053;&#x8DEF;&#x573A;&#x666F;&#x7684;&#x7406;&#x89E3;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;30&#x4E2A;&#x7C7B;&#x7684;&#x50CF;&#x7D20;&#x7EA7;&#x6807;&#x6CE8;&#xFF0C;&#x662F;&#x81EA;&#x52A8;&#x9A7E;&#x9A76;&#x65B9;&#x5411;&#x8F83;&#x4E3A;&#x6743;&#x5A01;&#x7684;&#x8BC4;&#x6D4B;&#x96C6;&#x3002;</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Deep-Learning/">#Deep Learning</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Object-Detection/">#Object Detection</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Computer-Vision/">#Computer Vision</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/ed30ba89/">Jekyll + GitHub Pages搭建博客笔记</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/13efca78/">目标检测任务表述与模型基本结构</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/7845fb62/';
+        this.page.identifier = 'posts/7845fb62/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

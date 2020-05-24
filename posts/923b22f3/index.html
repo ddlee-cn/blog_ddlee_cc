@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>The Devtools Way: devtools+RStudio快速R程序包开发 - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BB0;&amp;#x5F55;&amp;#x6211;&amp;#x7684;&amp;#x9996;&amp;#x4E2A;R&amp;#x7A0B;&amp;#x5E8F;&amp;#x5305;MCMI&amp;#x7684;&amp;#x5F00;&amp;#x53D1;&amp;#x8FC7;&amp;#x7A0B;&amp;#x3002;">
+<meta name="keywords" content="Programming,Tutorial,Data Science,R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Devtools Way: devtools+RStudio快速R程序包开发">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/923b22f3/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BB0;&amp;#x5F55;&amp;#x6211;&amp;#x7684;&amp;#x9996;&amp;#x4E2A;R&amp;#x7A0B;&amp;#x5E8F;&amp;#x5305;MCMI&amp;#x7684;&amp;#x5F00;&amp;#x53D1;&amp;#x8FC7;&amp;#x7A0B;&amp;#x3002;">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Devtools Way: devtools+RStudio快速R程序包开发">
+<meta name="twitter:description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BB0;&amp;#x5F55;&amp;#x6211;&amp;#x7684;&amp;#x9996;&amp;#x4E2A;R&amp;#x7A0B;&amp;#x5E8F;&amp;#x5305;MCMI&amp;#x7684;&amp;#x5F00;&amp;#x53D1;&amp;#x8FC7;&amp;#x7A0B;&amp;#x3002;">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            The Devtools Way: devtools+RStudio快速R程序包开发
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-03-31T05:50:13.000Z" itemprop="datePublished">3月 31 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Data-Science/">Data Science</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            6 分钟 读完 (约 888 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x8BB0;&#x5F55;&#x6211;&#x7684;&#x9996;&#x4E2A;R&#x7A0B;&#x5E8F;&#x5305;<a href="https://ddlee.cn/projects/mcmi.html" target="_blank" rel="noopener">MCMI</a>&#x7684;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x3002;<br><a id="more"></a></p>
+<h3 id="&#x53C2;&#x8003;&#x8D44;&#x6599;"><a href="#&#x53C2;&#x8003;&#x8D44;&#x6599;" class="headerlink" title="&#x53C2;&#x8003;&#x8D44;&#x6599;"></a>&#x53C2;&#x8003;&#x8D44;&#x6599;</h3><ol>
+<li>&#x4E24;&#x672C;Hadley Wickham&#x5199;&#x7684;&#x4E66;&#xFF1A;<a href="http://adv-r.had.co.nz/" target="_blank" rel="noopener">Advanced R</a>&#x548C;<a href="http://r-pkgs.had.co.nz/" target="_blank" rel="noopener">R Packages</a>&#x3002;</li>
+<li>Coursera&#x4E0A;&#x7684;&#x8BFE;&#x7A0B;<a href="https://www.coursera.org/specializations/r" target="_blank" rel="noopener">Mastering Software Development in R Specialization</a>&#x548C;&#x914D;&#x5957;&#x6559;&#x6750;<a href="https://bookdown.org/rdpeng/RProgDA/" target="_blank" rel="noopener">Mastering Software Development in R</a>&#x3002;</li>
+</ol>
+<p>&#x611F;&#x8C22;&#x5F00;&#x6E90;&#x793E;&#x533A;&#xFF0C;&#x4EE5;&#x4E0A;&#x7684;&#x8D44;&#x6599;&#x90FD;&#x53EF;&#x4EE5;&#x514D;&#x8D39;&#x83B7;&#x53D6;&#x5F97;&#x5230;&#xFF08;Coursera&#x8BFE;&#x7A0B;&#x53EF;&#x4EE5;&#x7533;&#x8BF7;&#x8865;&#x52A9;&#xFF09;&#x3002;</p>
+<h3 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h3><p>&#x5F00;&#x53D1;R&#x5305;&#x8FD8;&#x9700;&#x8981;&#x7CFB;&#x7EDF;&#x4E2D;&#x5B58;&#x5728;&#x7F16;&#x8BD1;&#x5DE5;&#x5177;&#xFF0C;&#x7F16;&#x8BD1;&#x6587;&#x6863;&#x9700;&#x8981;LaTeX&#x652F;&#x6301;&#x3002;</p>
+<ul>
+<li>Linux&#x7528;&#x6237;&#xFF1A;<code>sudo apt-get install r-base-dev texlive-full</code></li>
+<li>Windows&#x7528;&#x6237;&#xFF1A;1.<a href="https://cran.rstudio.com/bin/windows/Rtools/" target="_blank" rel="noopener">RTools</a>;2.<a href="http://miktex.org/download" target="_blank" rel="noopener">MikTeX</a></li>
+</ul>
+<p>&#x53E6;&#x5916;&#xFF0C;&#x8BF7;&#x786E;&#x4FDD;&#x4EE5;&#x4E0B;&#x4E24;&#x4E2A;&#x5305;&#x5DF2;&#x5B89;&#x88C5;&#x4E8E;&#x7CFB;&#x7EDF;&#x4E2D;&#xFF1A;<code>devtools</code>&#x548C;<code>roxygen2</code>&#x3002;&#x63A8;&#x8350;&#x4F7F;&#x7528;RStudio&#x3002;</p>
+<h3 id="Get-Started"><a href="#Get-Started" class="headerlink" title="Get Started"></a>Get Started</h3><p>&#x5728;RStudio&#x4E2D;&#x65B0;&#x5EFA;&#x9879;&#x76EE;&#xFF0C;&#x9009;&#x62E9;R&#x7A0B;&#x5E8F;&#x5305;&#x7C7B;&#x578B;&#x5373;&#x53EF;&#x3002;&#x5EFA;&#x8BAE;&#x540C;&#x65F6;&#x5EFA;&#x7ACB;Git&#x8DEF;&#x5F84;&#x4EE5;&#x76D1;&#x63A7;&#x5F00;&#x53D1;&#x6D41;&#x7A0B;&#x3002;</p>
+<p>&#x5728;&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x8981;&#x4FEE;&#x6539;DESCRIPTION&#x6587;&#x4EF6;&#xFF0C;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x51E0;&#x4E2A;&#x5730;&#x65B9;&#xFF1A;</p>
+<ol>
+<li>Package&#x7684;&#x547D;&#x540D;&#x8981;&#x5BB9;&#x6613;&#x8BB0;&#x5FC6;&#x548C;&#x67E5;&#x8BE2;</li>
+<li>Depends&#x6307;&#x4F60;&#x6240;&#x7528;&#x5F00;&#x53D1;&#x73AF;&#x5883;&#x7684;R&#x7248;&#x672C;</li>
+<li>&#x614E;&#x91CD;&#x9009;&#x62E9;License</li>
+<li>Imports&#x6307;&#x4F60;&#x6240;&#x8981;&#x8C03;&#x7528;&#x7684;&#x5176;&#x4ED6;&#x5305;&#xFF0C;&#x4F46;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x4E5F;&#x8981;&#x660E;&#x786E;&#x6307;&#x51FA;&#x51FD;&#x6570;&#x6240;&#x5904;&#x7684;&#x5305;&#xFF0C;&#x5982;<code>ggplot2::qplot()</code></li>
+</ol>
+<h3 id="Git-Workflow"><a href="#Git-Workflow" class="headerlink" title="Git Workflow"></a>Git Workflow</h3><p>&#x5EFA;&#x8BAE;&#x5728;GitHub&#x4E0A;&#x4E3A;&#x672C;&#x673A;&#x7533;&#x8BF7;SSH&#x5BC6;&#x94A5;&#xFF0C;&#x5E76;&#x5728;RStudo-&gt;Tools-&gt;Global Options-&gt;Git/SVN&#x914D;&#x7F6E;&#x597D;&#x8DEF;&#x5F84;&#xFF0C;&#x8FD9;&#x6837;&#x5728;&#x6267;&#x884C;<code>git push</code>&#x65F6;&#x4E0D;&#x7528;&#x518D;&#x6B21;&#x8F93;&#x5165;&#x51ED;&#x636E;&#x3002;&#x4E0B;&#x9762;&#x662F;&#x6709;&#x5173;Git&#x7684;&#x5DE5;&#x4F5C;&#x6D41;&#xFF1A;</p>
+<ol>
+<li>&#x4FEE;&#x6539;&#x4EE3;&#x7801;/&#x6587;&#x6863;</li>
+<li>&#x7F16;&#x8BD1;&#xFF0C;&#x6D4B;&#x8BD5;</li>
+<li>git commit</li>
+<li>git push</li>
+<li>&#x91CD;&#x590D;&#x4EE5;&#x4E0A;&#x5FAA;&#x73AF;</li>
+</ol>
+<p>RStudio&#x5BF9;Git&#x7684;&#x96C6;&#x6210;&#x5F88;&#x597D;&#xFF0C;&#x4EE5;&#x4E0A;&#x4E09;&#x56DB;&#x6B65;&#x64CD;&#x4F5C;&#x5747;&#x53EF;&#x5728;Git&#x7684;&#x64CD;&#x4F5C;&#x9762;&#x677F;&#x91CC;&#x5B8C;&#x6210;&#x3002;</p>
+<h3 id="Code-Workflow"><a href="#Code-Workflow" class="headerlink" title="Code Workflow"></a>Code Workflow</h3><ol>
+<li>&#x4FEE;&#x6539;&#x4EE3;&#x7801;</li>
+<li>Build&amp;Reload</li>
+<li>&#x7528;&#x547D;&#x4EE4;&#x884C;&#x6D4B;&#x8BD5;&#x529F;&#x80FD;</li>
+<li>&#x91CD;&#x590D;&#x4EE5;&#x4E0A;&#x5FAA;&#x73AF;</li>
+</ol>
+<p>&#x4E0A;&#x8FF0;&#x7B2C;&#x4E8C;&#x6B65;&#x53EF;&#x4EE5;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;<code>devtools::load_all()</code>&#x5B8C;&#x6210;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5FEB;&#x6377;&#x952E;&#x201D;Ctrl + Shift + L&#x201D;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;RStudio&#x7684;&#x5F00;&#x53D1;&#x9762;&#x677F;&#x4E2D;&#x6267;&#x884C;&#x201D;Build&amp;Reload&#x201D;&#x547D;&#x4EE4;&#x3002;&#x4E4B;&#x540E;&#xFF0C;&#x4FBF;&#x53EF;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x8C03;&#x7528;&#x7F16;&#x5199;&#x597D;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x9A8C;&#x8BC1;&#x5176;&#x529F;&#x80FD;&#x3002;</p>
+<h3 id="Documentation-Workflow"><a href="#Documentation-Workflow" class="headerlink" title="Documentation Workflow"></a>Documentation Workflow</h3><ol>
+<li>&#x5728;.R&#x6587;&#x4EF6;&#x4E2D;&#x6DFB;&#x52A0;roxygen&#x6CE8;&#x91CA;</li>
+<li>Document</li>
+<li>&#x4F7F;&#x7528;help&#x9762;&#x677F;&#x6216;?&#x547D;&#x4EE4;&#x9884;&#x89C8;&#x6587;&#x6863;</li>
+<li>&#x91CD;&#x590D;&#x4EE5;&#x4E0A;&#x5FAA;&#x73AF;</li>
+</ol>
+<p>&#x540C;&#x6837;&#x5730;&#xFF0C;&#x7B2C;&#x4E8C;&#x6B65;&#x6709;&#x4E09;&#x79CD;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;1.<code>devtools::document()</code>;2.&#x201D;Ctrl + Shift + D&#x201D;&#xFF1B;3. RStudio&#x5F00;&#x53D1;&#x9762;&#x677F;&#x4E2D;&#x7684;&#x201D;Document&#x201D;&#x547D;&#x4EE4;&#x3002;</p>
+<h3 id="Test-Workflow"><a href="#Test-Workflow" class="headerlink" title="Test Workflow"></a>Test Workflow</h3><p>&#x6D4B;&#x8BD5;&#x65B9;&#x9762;&#xFF0C;&#x9664;&#x4E86;&#x4E0A;&#x8FF0;Coding Workflow&#x4E2D;&#x63D0;&#x5230;&#x7684;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x5229;&#x7528;<code>testthat</code>&#x5305;&#x6765;&#x4F7F;&#x6D4B;&#x8BD5;&#x81EA;&#x52A8;&#x5316;&#x3002;</p>
+<p>&#x9996;&#x5148;&#x8981;&#x5B89;&#x88C5;<code>testthat</code>&#x5305;&#xFF0C;&#x518D;&#x4F7F;&#x7528;<code>devtools::ust_testthat()</code>&#x547D;&#x4EE4;&#x5EFA;&#x7ACB;<code>testthat</code>&#x8DEF;&#x5F84;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x662F;&#x81EA;&#x52A8;&#x5316;&#x6D4B;&#x8BD5;&#x7684;&#x5DE5;&#x4F5C;&#x6D41;&#xFF1A;</p>
+<ol>
+<li>&#x4FEE;&#x6539;&#x4EE3;&#x7801;</li>
+<li>&#x5728;<code>testthat</code>&#x8DEF;&#x5F84;&#x4E0B;&#x7F16;&#x5199;&#x76F8;&#x5E94;&#x7684;&#x6D4B;&#x8BD5;&#x8BED;&#x53E5;</li>
+<li>Build&amp;Reload</li>
+<li>Test</li>
+<li>&#x6392;&#x9664;Bug&#xFF0C;&#x91CD;&#x590D;&#x4E0A;&#x8FF0;&#x8FC7;&#x7A0B;</li>
+</ol>
+<p>&#x4EE5;&#x4E0A;&#x6D41;&#x7A0B;&#x7B2C;&#x56DB;&#x6B65;&#x540C;&#x6837;&#x6709;&#x4E09;&#x79CD;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;1.<code>devtools::test()</code>;2.&#x201D;Ctrl + Shift + T&#x201D;;3.RStudio&#x4E2D;&#x5F00;&#x53D1;&#x9762;&#x677F;&#x7684;&#x201C;Test&#x201D;&#x547D;&#x4EE4;&#x3002;</p>
+<h3 id="Release"><a href="#Release" class="headerlink" title="Release"></a>Release</h3><p>&#x6309;&#x7167;&#x4E0A;&#x8FF0;&#x8FC7;&#x7A0B;&#x5F00;&#x53D1;&#x7684;R&#x7A0B;&#x5E8F;&#x5305;&#xFF0C;&#x6BCF;&#x4E00;&#x6B21;<code>git push</code>&#x4E8B;&#x5B9E;&#x4E0A;&#x90FD;&#x662F;&#x4E00;&#x6B21;&#x53D1;&#x5E03;&#x3002;&#x4F7F;&#x7528;<code>devtools::install_github(&quot;git_repo_goest_here&quot;)</code>&#x547D;&#x4EE4;&#xFF0C;&#x53EF;&#x4EE5;&#x5F88;&#x65B9;&#x4FBF;&#x5730;&#x5B89;&#x88C5;R&#x7A0B;&#x5E8F;&#x5305;&#x3002;</p>
+<h3 id="Next-Step"><a href="#Next-Step" class="headerlink" title="Next Step"></a>Next Step</h3><p>&#x4F7F;&#x7528;<code>devtools</code>&#x914D;&#x5408;RStudio&#x548C;Git&#xFF0C;&#x5F00;&#x53D1;R&#x5305;&#x7684;&#x8FC7;&#x7A0B;&#x5DF2;&#x7ECF;&#x975E;&#x5E38;&#x4EB2;&#x6C11;&#x548C;&#x6D41;&#x6C34;&#x7EBF;&#x5316;&#x3002;&#x4F46;&#x8981;&#x5F00;&#x53D1;&#x9AD8;&#x8D28;&#x91CF;&#x7684;R&#x5305;&#xFF0C;&#x9700;&#x8981;&#x5BF9;R&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x548C;S3&#x7B49;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x6709;&#x66F4;&#x6DF1;&#x7684;&#x7406;&#x89E3;&#xFF0C;&#x800C;Advanced R&#x5219;&#x662F;&#x4F60;&#x901A;&#x5F80;&#x8FD9;&#x4E00;&#x65B9;&#x5411;&#x7684;&#x6700;&#x597D;&#x4F34;&#x4FA3;&#x3002;</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Programming/">#Programming</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Tutorial/">#Tutorial</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Data-Science/">#Data Science</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/R/">#R</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/c2808f2a/">网站迁移小记：腾讯云+Debian+Vestacp</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/8f1c0ee0/">Python与SQL Server的交互：pyODBC, pymssql, SQLAlchemy</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/923b22f3/';
+        this.page.identifier = 'posts/923b22f3/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

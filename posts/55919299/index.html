@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>Tensorflow最佳实践：试验管理 - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x672C;&amp;#x6587;&amp;#x4E3B;&amp;#x8981;&amp;#x8BB0;&amp;#x5F55;&amp;#x4F7F;&amp;#x7528;TensorFlow&amp;#x8BAD;&amp;#x7EC3;&amp;#x6A21;&amp;#x578B;&amp;#x4E2D;&amp;#x4E0E;&amp;#x8BD5;&amp;#x9A8C;&amp;#x7BA1;&amp;#x7406;&amp;#x76F8;&amp;#x5173;&amp;#x7684;&amp;#x6700;&amp;#x4F73;&amp;#x5B9">
+<meta name="keywords" content="AI,Deep Learning,Tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow最佳实践：试验管理">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/55919299/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x672C;&amp;#x6587;&amp;#x4E3B;&amp;#x8981;&amp;#x8BB0;&amp;#x5F55;&amp;#x4F7F;&amp;#x7528;TensorFlow&amp;#x8BAD;&amp;#x7EC3;&amp;#x6A21;&amp;#x578B;&amp;#x4E2D;&amp;#x4E0E;&amp;#x8BD5;&amp;#x9A8C;&amp;#x7BA1;&amp;#x7406;&amp;#x76F8;&amp;#x5173;&amp;#x7684;&amp;#x6700;&amp;#x4F73;&amp;#x5B9">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow最佳实践：试验管理">
+<meta name="twitter:description" content="&amp;#x672C;&amp;#x6587;&amp;#x4E3B;&amp;#x8981;&amp;#x8BB0;&amp;#x5F55;&amp;#x4F7F;&amp;#x7528;TensorFlow&amp;#x8BAD;&amp;#x7EC3;&amp;#x6A21;&amp;#x578B;&amp;#x4E2D;&amp;#x4E0E;&amp;#x8BD5;&amp;#x9A8C;&amp;#x7BA1;&amp;#x7406;&amp;#x76F8;&amp;#x5173;&amp;#x7684;&amp;#x6700;&amp;#x4F73;&amp;#x5B9">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Tensorflow最佳实践：试验管理
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-11T12:53:27.000Z" itemprop="datePublished">7月 11 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/AI/">AI</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            10 分钟 读完 (约 1477 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x8BB0;&#x5F55;&#x4F7F;&#x7528;TensorFlow&#x8BAD;&#x7EC3;&#x6A21;&#x578B;&#x4E2D;&#x4E0E;&#x8BD5;&#x9A8C;&#x7BA1;&#x7406;&#x76F8;&#x5173;&#x7684;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;&#xFF0C;&#x4E3B;&#x8981;&#x5305;&#x62EC;&#x6A21;&#x578B;&#x8BAD;&#x7EC3;&#x7684;&#x5927;&#x81F4;&#x4EE3;&#x7801;&#x6846;&#x67B6;&#x3001;&#x6A21;&#x578B;&#x7684;&#x4FDD;&#x5B58;&#x4E0E;&#x6062;&#x590D;&#x3001;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x7684;&#x76D1;&#x6D4B;&#x3001;&#x968F;&#x673A;&#x6027;&#x7684;&#x63A7;&#x5236;&#x7B49;&#x3002;&#x4E3B;&#x8981;&#x6750;&#x6599;&#x6765;&#x81EA;<a href="https://web.stanford.edu/class/cs20si/index.html" target="_blank" rel="noopener">CS 20SI: Tensorflow for Deep Learning Research</a>&#x3002;</p>
+<a id="more"></a>
+<h3 id="TensorFlow&#x4EE3;&#x7801;&#x6846;&#x67B6;"><a href="#TensorFlow&#x4EE3;&#x7801;&#x6846;&#x67B6;" class="headerlink" title="TensorFlow&#x4EE3;&#x7801;&#x6846;&#x67B6;"></a>TensorFlow&#x4EE3;&#x7801;&#x6846;&#x67B6;</h3><p>&#x4F7F;&#x7528;TensorFlow&#x6784;&#x5EFA;&#x6DF1;&#x5EA6;&#x7F51;&#x7EDC;&#x6A21;&#x578B;&#x5927;&#x81F4;&#x5305;&#x62EC;&#x6570;&#x636E;&#x9884;&#x5904;&#x7406;&#x3001;&#x56FE;&#x7684;&#x6784;&#x5EFA;&#x3001;&#x6A21;&#x578B;&#x8BAD;&#x7EC3;&#x3001;&#x6A21;&#x578B;&#x63A8;&#x65AD;&#x4E0E;&#x8BC4;&#x4F30;&#x7B49;&#x90E8;&#x5206;&#xFF0C;&#x5927;&#x81F4;&#x7684;&#x4EE3;&#x7801;&#x6846;&#x67B6;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="python">import tensorflow as tf
+import numpy as np
+
+# Data
+X = tf.placeholder(&quot;float&quot;, [None, n_input])
+Y = tf.placeholder(&quot;float&quot;, [None, n_output])
+
+# Parameters
+W = tf.Variable(tf.random_normal([n_input, n_output]))
+b = tf.Variable(tf.random_normal([n_output]))
+
+# Define model
+y = tf.matmul(x, W) + b
+y_pred = tf.nn.relu(y)
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_pred, y_true))
+optimizer = tf.train.GradientDescentOptimizer(0.05).minimize(cost)
+
+# Training
+with tf.Session() as sess:
+    tf.initialize_all_variables().run()
+    sess.run(optimizer, feed_dict={X: x_data, Y: y_data})
+
+# Prediction
+y_test = tf.nn.relu(tf.matmul(x_test, W) + b))
+</code></pre>
+<h3 id="&#x6A21;&#x578B;&#x7684;&#x4FDD;&#x5B58;&#x4E0E;&#x6062;&#x590D;"><a href="#&#x6A21;&#x578B;&#x7684;&#x4FDD;&#x5B58;&#x4E0E;&#x6062;&#x590D;" class="headerlink" title="&#x6A21;&#x578B;&#x7684;&#x4FDD;&#x5B58;&#x4E0E;&#x6062;&#x590D;"></a>&#x6A21;&#x578B;&#x7684;&#x4FDD;&#x5B58;&#x4E0E;&#x6062;&#x590D;</h3><p>&#x4E00;&#x4E2A;&#x5F88;&#x6DF1;&#x7684;&#x7F51;&#x7EDC;&#x8BAD;&#x7EC3;&#x6210;&#x672C;&#x662F;&#x6BD4;&#x8F83;&#x9AD8;&#x7684;&#xFF0C;&#x56E0;&#x800C;&#x5C06;&#x6A21;&#x578B;&#x5B9A;&#x671F;&#x4FDD;&#x5B58;&#xFF08;&#x5199;&#x5165;&#x786C;&#x76D8;&#xFF09;&#x5219;&#x6709;&#x5FC5;&#x8981;&#x3002;&#x8FD9;&#x91CC;&#x7684;&#x6A21;&#x578B;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x6709;&#x7EC4;&#x7EC7;&#x7684;&#x4E00;&#x6279;&#x6570;&#x636E;&#xFF0C;&#x5305;&#x62EC;&#x56FE;&#x7684;&#x7ED3;&#x6784;&#x63CF;&#x8FF0;&#x3001;&#x53C2;&#x6570;&#x5F53;&#x524D;&#x503C;&#x7B49;&#x3002;&#x56E0;&#x800C;&#x6211;&#x4EEC;&#x8981;&#x4FDD;&#x5B58;&#x7684;&#x4E0D;&#x4EC5;&#x662F;&#x6A21;&#x578B;&#xFF0C;&#x8FD8;&#x6709;&#x6A21;&#x578B;&#x5F53;&#x524D;&#x7684;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x6BCF;&#x4E00;&#x6B21;&#x4FDD;&#x5B58;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x8FD8;&#x539F;&#x70B9;&#x3002;</p>
+<h4 id="tf-train-Saver&#x7C7B;"><a href="#tf-train-Saver&#x7C7B;" class="headerlink" title="tf.train.Saver&#x7C7B;"></a>tf.train.Saver&#x7C7B;</h4><p>&#x4F7F;&#x7528;<code>tf.train.Saver</code>&#x7C7B;&#x9700;&#x4F20;&#x5165;&#x4EE5;&#x4E0B;&#x53C2;&#x6570;&#xFF1A;<code>tf.train.Saver.save(sess, save_path, global_step=step)</code>&#x3002;</p>
+<p>&#x9996;&#x5148;&#x5B9A;&#x4E49;&#x6B65;&#x6570;&#x53D8;&#x91CF;&#xFF1A;<code>self&#x200B;.&#x200B;global_step &#x200B;=&#x200B; tf&#x200B;.&#x200B;Variable&#x200B;(&#x200B;0&#x200B;,&#x200B; dtype&#x200B;=&#x200B;tf&#x200B;.&#x200B;int32&#x200B;,&#x200B; trainable&#x200B;=&#x200B;False&#x200B;,name&#x200B;=&#x200B;&apos;global_step&apos;)</code></p>
+<p>&#x5728;&#x6A21;&#x578B;&#x8BAD;&#x7EC3;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x63D2;&#x5165;&#x8FD8;&#x539F;&#x70B9;&#x7684;&#x4FDD;&#x5B58;&#xFF1A;</p>
+<pre><code class="python">self&#x200B;.&#x200B;optimizer &#x200B;=&#x200B; tf&#x200B;.&#x200B;train&#x200B;.&#x200B;GradientDescentOptimizer&#x200B;(&#x200B;self&#x200B;.&#x200B;lr&#x200B;).&#x200B;minimize&#x200B;(&#x200B;self&#x200B;.&#x200B;loss&#x200B;,global_step&#x200B;=&#x200B;self&#x200B;.&#x200B;global_step)
+saver &#x200B;=&#x200B; tf&#x200B;.&#x200B;train&#x200B;.&#x200B;Saver&#x200B;()&#x200B;&#x200B;
+&#x200B;with&#x200B; tf&#x200B;.&#x200B;Session&#x200B;()&#x200B;&#x200B;as&#x200B; sess:
+ sess&#x200B;.&#x200B;run&#x200B;(&#x200B;tf&#x200B;.&#x200B;global_variables_initializer&#x200B;())
+ average_loss &#x200B;=&#x200B;&#x200B;0.0
+ for&#x200B; index &#x200B;in&#x200B; range&#x200B;(&#x200B;num_train_steps&#x200B;):
+    batch &#x200B;=&#x200B; batch_gen&#x200B;.&#x200B;next&#x200B;()
+    loss_batch&#x200B;,&#x200B; _ &#x200B;=&#x200B; sess&#x200B;.&#x200B;run&#x200B;([&#x200B;model&#x200B;.&#x200B;loss&#x200B;,&#x200B; model&#x200B;.&#x200B;optimizer&#x200B;], feed_dict&#x200B;={...})
+    average_loss &#x200B;+=&#x200B; loss_batch
+    # Save model every 1000 steps
+    &#x200B;if&#x200B;&#x200B;(&#x200B;index &#x200B;+&#x200B;&#x200B;1&#x200B;)&#x200B;&#x200B;%&#x200B;&#x200B;1000&#x200B;&#x200B;==&#x200B;&#x200B;0:
+      saver&#x200B;.&#x200B;save&#x200B;(&#x200B;sess&#x200B;,&#x200B;&#x200B;&apos;checkpoints/model&apos;&#x200B;,&#x200B; global_step&#x200B;=&#x200B;model&#x200B;.&#x200B;global_step)
+</code></pre>
+<p>&#x5728;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5728;<code>checkpoints</code>&#x8DEF;&#x5F84;&#x4E0B;&#x4F1A;&#x5B58;&#x50A8;&#x4E00;&#x7CFB;&#x5217;&#x7684;&#x8FD8;&#x539F;&#x70B9;&#x6587;&#x4EF6;&#xFF0C;&#x8981;&#x6062;&#x590D;session&#x5230;&#x67D0;&#x4E2A;&#x8FD8;&#x539F;&#x70B9;&#xFF0C;&#x53EF;&#x4F7F;&#x7528;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;<code>saver.restore(sess, &apos;checkpoints/name_of_the_checkpoint&apos;)</code>&#x3002;</p>
+<h4 id="Keras&#x5C01;&#x88C5;&#xFF1A;keras-callbacks-ModelCheckpoint"><a href="#Keras&#x5C01;&#x88C5;&#xFF1A;keras-callbacks-ModelCheckpoint" class="headerlink" title="Keras&#x5C01;&#x88C5;&#xFF1A;keras.callbacks.ModelCheckpoint()"></a>Keras&#x5C01;&#x88C5;&#xFF1A;<code>keras.callbacks.ModelCheckpoint()</code></h4><p>Keras&#x5BF9;TensorFlow&#x8FDB;&#x884C;&#x4E86;&#x9AD8;&#x5C42;&#x7684;&#x5C01;&#x88C5;&#xFF0C;&#x4F7F;&#x7528;&#x4E00;&#x7CFB;&#x5217;&#x56DE;&#x8C03;&#x51FD;&#x6570;<code>keras.callbacks.Callback()</code>&#x6765;&#x8FDB;&#x884C;&#x8BD5;&#x9A8C;&#x7BA1;&#x7406;&#x3002;</p>
+<p>&#x6A21;&#x578B;&#x4FDD;&#x5B58;<code>ModelCheckpoint()</code>&#x9700;&#x8981;&#x4F20;&#x5165;&#x7684;&#x53C2;&#x6570;&#xFF1A;<br><code>keras.callbacks.ModelCheckpoint(filepath, monitor=&apos;val_loss&apos;, verbose=0, save_best_only=False, save_weights_only=False, mode=&apos;auto&apos;, period=1)</code></p>
+<p>&#x5B9E;&#x9645;&#x7684;&#x4F7F;&#x7528;&#x4E2D;&#xFF0C;&#x5C06;&#x4E0A;&#x8FF0;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7C7B;&#x4F20;&#x5165;<code>model.fit()</code>&#x8FC7;&#x7A0B;&#x5373;&#x53EF;&#xFF1A;</p>
+<pre><code class="python">from keras.callbacks import ModelCheckpoint
+
+model = Sequential()
+model.add(Dense(10, input_dim=784, kernel_initializer=&apos;uniform&apos;))
+model.add(Activation(&apos;softmax&apos;))
+model.compile(loss=&apos;categorical_crossentropy&apos;, optimizer=&apos;rmsprop&apos;)
+checkpointer = ModelCheckpoint(filepath=&apos;/checkpoints/weights.hdf5&apos;, verbose=1, save_best_only=True)
+model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[checkpointer])
+</code></pre>
+<h3 id="&#x6A21;&#x578B;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x7684;&#x76D1;&#x6D4B;"><a href="#&#x6A21;&#x578B;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x7684;&#x76D1;&#x6D4B;" class="headerlink" title="&#x6A21;&#x578B;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x7684;&#x76D1;&#x6D4B;"></a>&#x6A21;&#x578B;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x7684;&#x76D1;&#x6D4B;</h3><p>&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5E38;&#x5E38;&#x9700;&#x8981;&#x63D0;&#x53D6;&#x9636;&#x6BB5;&#x6027;&#x7684;&#x4FE1;&#x606F;&#x6765;&#x8BC4;&#x4F30;&#x6A21;&#x578B;&#x662F;&#x5426;&#x7B26;&#x5408;&#x9884;&#x671F;&#x6548;&#x679C;&#x3002;</p>
+<h4 id="tf-summary"><a href="#tf-summary" class="headerlink" title="tf.summary"></a><code>tf.summary</code></h4><p>&#x9996;&#x5148;&#x521B;&#x5EFA;&#x60F3;&#x8981;&#x89C2;&#x5BDF;&#x6307;&#x6807;&#x7684;<code>tf.summary</code>&#x5BF9;&#x8C61;&#xFF1A;</p>
+<pre><code class="python">with tf.name_scope(&quot;summaries&quot;):
+  tf.summary.scalar(&quot;loss&quot;, self.loss)
+  tf.summary.scalar(&quot;accuracy&quot;, self.accuracy)
+  tf.summary.histogram(&quot;histogram loss&quot;, self.loss)
+  # merge them all
+  self.summary_op = tf.summary.merge_all()
+</code></pre>
+<p><code>tf.summary</code>&#x662F;&#x4E00;&#x79CD;operation&#xFF0C;&#x56E0;&#x800C;&#x53EF;&#x4EE5;&#x968F;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x4E00;&#x540C;&#x8FD0;&#x884C;&#xFF1A;<br><code>loss_batch, _, summary = sess.run([model.loss, model.optimizer, model.summary_op], feed_dict=feed_dict)</code></p>
+<p>&#x6700;&#x540E;&#xFF0C;&#x5C06;summary&#x52A0;&#x5165;writer&#x4EE5;&#x5199;&#x5165;&#x6587;&#x4EF6;&#xFF1A;</p>
+<pre><code class="python">with tf.Session() as sess:
+  writer &#x200B;=&#x200B; tf&#x200B;.&#x200B;summary&#x200B;.&#x200B;FileWriter&#x200B;(&#x200B;&apos;./summary&apos;&#x200B;,&#x200B; sess&#x200B;.&#x200B;graph)
+  for&#x200B; index &#x200B;in&#x200B; range&#x200B;(&#x200B;num_train_steps&#x200B;):
+    writer.add_summary(summary, global_step=step)
+  writer.close()
+</code></pre>
+<p>&#x8FD9;&#x6837;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x7528;TensorBoard&#x76D1;&#x6D4B;&#x6211;&#x4EEC;&#x5173;&#x5FC3;&#x7684;&#x6307;&#x6807;&#x5728;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x53D8;&#x5316;&#x60C5;&#x51B5;&#x3002;</p>
+<h4 id="Keras&#x5C01;&#x88C5;&#xFF1A;keras-callbacks-TensorBoard"><a href="#Keras&#x5C01;&#x88C5;&#xFF1A;keras-callbacks-TensorBoard" class="headerlink" title="Keras&#x5C01;&#x88C5;&#xFF1A;keras.callbacks.TensorBoard()"></a>Keras&#x5C01;&#x88C5;&#xFF1A;<code>keras.callbacks.TensorBoard()</code></h4><p>Keras&#x540C;&#x6837;&#x5C06;TensorBoard&#x5C01;&#x88C5;&#x6210;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x5728;&#x6A21;&#x578B;&#x8BAD;&#x7EC3;&#x65F6;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#x5373;&#x53EF;&#xFF1A;</p>
+<pre><code class="python">from keras.callbacks import TensorBoard
+
+tensorboard = TensorBoard(log_dir=&quot;./logs&quot;)
+model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[tensorboard]
+</code></pre>
+<h3 id="&#x968F;&#x673A;&#x6027;&#x7684;&#x63A7;&#x5236;"><a href="#&#x968F;&#x673A;&#x6027;&#x7684;&#x63A7;&#x5236;" class="headerlink" title="&#x968F;&#x673A;&#x6027;&#x7684;&#x63A7;&#x5236;"></a>&#x968F;&#x673A;&#x6027;&#x7684;&#x63A7;&#x5236;</h3><p>TensorFlow&#x4E2D;&#x968F;&#x673A;&#x6027;&#x7684;&#x63A7;&#x5236;&#x5206;&#x4E3A;operation&#x548C;graph&#x4E24;&#x4E2A;&#x5C42;&#x9762;&#x3002;</p>
+<h4 id="Operation&#x5C42;&#x9762;"><a href="#Operation&#x5C42;&#x9762;" class="headerlink" title="Operation&#x5C42;&#x9762;"></a>Operation&#x5C42;&#x9762;</h4><p>&#x5728;Operation&#x5C42;&#x9762;&#x4E2D;&#xFF0C;&#x5EFA;&#x7ACB;&#x968F;&#x673A;seed&#x4E4B;&#x540E;&#xFF0C;&#x65B0;&#x5EFA;&#x7ACB;&#x7684;Session&#x6BCF;&#x4E00;&#x6B21;&#x8C03;&#x7528;<code>sess.run()</code>&#x90FD;&#x4F1A;&#x9075;&#x5FAA;&#x540C;&#x4E00;&#x968F;&#x673A;&#x72B6;&#x6001;&#xFF1A;</p>
+<pre><code class="python">c &#x200B;=&#x200B; tf&#x200B;.&#x200B;random_uniform&#x200B;([],&#x200B;&#x200B;-&#x200B;10&#x200B;,&#x200B;&#x200B;10&#x200B;,&#x200B; seed&#x200B;=&#x200B;2)
+
+with&#x200B; tf&#x200B;.&#x200B;Session&#x200B;()&#x200B;&#x200B;as&#x200B; sess:
+  print&#x200B; sess&#x200B;.&#x200B;run&#x200B;(&#x200B;c) # &gt;&gt; 3.57493
+
+with&#x200B; tf&#x200B;.&#x200B;Session&#x200B;()&#x200B;&#x200B;as&#x200B; sess:
+  print&#x200B; sess&#x200B;.&#x200B;run&#x200B;(&#x200B;c) # &gt;&gt; 3.57493
+</code></pre>
+<p>&#x800C;&#x4E14;&#xFF0C;&#x4E0D;&#x540C;&#x7684;operation&#x53EF;&#x4EE5;&#x4FDD;&#x5B58;&#x81EA;&#x5DF1;&#x7684;seed:</p>
+<pre><code class="python">c &#x200B;=&#x200B; tf&#x200B;.&#x200B;random_uniform&#x200B;([],&#x200B;&#x200B;-&#x200B;10&#x200B;,&#x200B;&#x200B;10&#x200B;,&#x200B; seed&#x200B;=&#x200B;1)
+d &#x200B;=&#x200B; tf&#x200B;.&#x200B;random_uniform&#x200B;([],&#x200B;&#x200B;-&#x200B;10&#x200B;,&#x200B;&#x200B;10&#x200B;,&#x200B; seed&#x200B;=&#x200B;2)
+with&#x200B; tf&#x200B;.&#x200B;Session&#x200B;() &#x200B;&#x200B;as&#x200B; sess:
+  sess&#x200B;.&#x200B;run&#x200B;(&#x200B;c)
+  sess&#x200B;.&#x200B;run&#x200B;(&#x200B;d)
+</code></pre>
+<h4 id="Graph&#x5C42;&#x9762;"><a href="#Graph&#x5C42;&#x9762;" class="headerlink" title="Graph&#x5C42;&#x9762;"></a>Graph&#x5C42;&#x9762;</h4><p>&#x5728;Graph&#x5C42;&#x9762;&#xFF0C;&#x6574;&#x5F20;&#x56FE;&#x516C;&#x7528;&#x4E00;&#x4E2A;&#x968F;&#x673A;&#x72B6;&#x6001;&#xFF0C;&#x591A;&#x6B21;&#x8FD0;&#x884C;&#x540C;&#x4E00;&#x56FE;&#x6A21;&#x578B;&#x7684;&#x8BA1;&#x7B97;&#xFF0C;&#x5176;&#x968F;&#x673A;&#x72B6;&#x6001;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#x3002;</p>
+<pre><code class="python">import&#x200B; tensorflow &#x200B;as&#x200B; tf
+
+tf&#x200B;.&#x200B;set_random_seed&#x200B;(&#x200B;2)
+
+c &#x200B;=&#x200B; tf&#x200B;.&#x200B;random_uniform&#x200B;([],&#x200B;&#x200B;-&#x200B;10&#x200B;,&#x200B;&#x200B;10)
+d &#x200B;=&#x200B; tf&#x200B;.&#x200B;random_uniform&#x200B;([],&#x200B;&#x200B;-&#x200B;10&#x200B;,&#x200B;&#x200B;10)
+with&#x200B; tf&#x200B;.&#x200B;Session&#x200B;()&#x200B;&#x200B; as&#x200B; sess:
+  sess&#x200B;.&#x200B;run&#x200B;(&#x200B;c)
+  sess&#x200B;.&#x200B;run&#x200B;(&#x200B;d)
+</code></pre>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="noopener">ddlee</a></p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/AI/">#AI</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Deep-Learning/">#Deep Learning</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Tensorflow/">#Tensorflow</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/4943e1b8/">[源码笔记]keras源码分析之Layer、Tensor和Node</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/9940b42/">[论文笔记]Accurate, Large Minibatch SGD: Training ImageNet in One Hour</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/55919299/';
+        this.page.identifier = 'posts/55919299/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

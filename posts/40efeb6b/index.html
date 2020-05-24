@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+<title>Pandas速度优化 - 萧爽楼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="我叫李家丞，现在在USTC念书。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+
+
+
+
+    <meta name="description" content="&amp;#x4ECB;&amp;#x7ECD;Python&amp;#x4F7F;&amp;#x7528;Pandas&amp;#x5E93;&amp;#x5904;&amp;#x7406;&amp;#x6570;&amp;#x636E;&amp;#x65F6;&amp;#x7684;&amp;#x901F;&amp;#x5EA6;&amp;#x4F18;&amp;#x5316;&amp;#x6280;&amp;#x5DE7;&amp;#x3002;">
+<meta name="keywords" content="Python,Programming,Data Science">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pandas速度优化">
+<meta property="og:url" content="https://blog.ddlee.cc/posts/40efeb6b/index.html">
+<meta property="og:site_name" content="萧爽楼">
+<meta property="og:description" content="&amp;#x4ECB;&amp;#x7ECD;Python&amp;#x4F7F;&amp;#x7528;Pandas&amp;#x5E93;&amp;#x5904;&amp;#x7406;&amp;#x6570;&amp;#x636E;&amp;#x65F6;&amp;#x7684;&amp;#x901F;&amp;#x5EA6;&amp;#x4F18;&amp;#x5316;&amp;#x6280;&amp;#x5DE7;&amp;#x3002;">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2020-05-16T04:12:20.289Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pandas速度优化">
+<meta name="twitter:description" content="&amp;#x4ECB;&amp;#x7ECD;Python&amp;#x4F7F;&amp;#x7528;Pandas&amp;#x5E93;&amp;#x5904;&amp;#x7406;&amp;#x6570;&amp;#x636E;&amp;#x65F6;&amp;#x7684;&amp;#x901F;&amp;#x5EA6;&amp;#x4F18;&amp;#x5316;&amp;#x6280;&amp;#x5DE7;&amp;#x3002;">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    萧爽楼
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+            <a class="navbar-item " href="/gallery">图库</a>
+            
+            <a class="navbar-item " href="/recommendation">推荐</a>
+            
+            <a class="navbar-item " href="/links">友链</a>
+            
+            <a class="navbar-item " href="/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="RSS" href="/atom.xml">
+                
+                RSS
+                
+            </a>
+               
+            <a class="navbar-item" title="ddlee.cc" href="https://ddlee.cc">
+                
+                ddlee.cc
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Pandas速度优化
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-05-28T12:06:14.000Z" itemprop="datePublished">5月 28 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Data-Science/">Data Science</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分钟 读完 (约 993 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x5185;&#x5BB9;&#x53D6;&#x81EA;Sofia Heisler&#x5728;PyCon 2017&#x4E0A;&#x7684;&#x6F14;&#x8BB2;<a href="https://www.youtube.com/watch?v=HN5d490_KKk" target="_blank" rel="noopener">No More Sad Pandas Optimizing Pandas Code for Speed and Efficiency</a>&#xFF0C;&#x8BB2;&#x7A3F;&#x4EE3;&#x7801;&#x548C;&#x5E7B;&#x706F;&#x7247;&#x89C1;<a href="https://github.com/sversh/pycon2017-optimizing-pandas" target="_blank" rel="noopener">GitHub</a>&#x3002;</p>
+<h2 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h2><h4 id="&#x793A;&#x4F8B;&#x6570;&#x636E;"><a href="#&#x793A;&#x4F8B;&#x6570;&#x636E;" class="headerlink" title="&#x793A;&#x4F8B;&#x6570;&#x636E;"></a>&#x793A;&#x4F8B;&#x6570;&#x636E;</h4><table>
+<thead>
+<tr>
+<th></th>
+<th>ean_hotel_id</th>
+<th>name</th>
+<th>address1</th>
+<th>city</th>
+<th>state_province</th>
+<th>postal_code</th>
+<th>latitude</th>
+<th>longitude</th>
+<th>star_rating</th>
+<th>high_rate</th>
+<th>low_rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>269955</td>
+<td>Hilton Garden Inn Albany/SUNY Area</td>
+<td>1389 Washington Ave</td>
+<td>Albany</td>
+<td>NY</td>
+<td>12206</td>
+<td>42.68751</td>
+<td>-73.81643</td>
+<td>3.0</td>
+<td>154.0272</td>
+<td>124.0216</td>
+</tr>
+<tr>
+<td>1</td>
+<td>113431</td>
+<td>Courtyard by Marriott Albany Thruway</td>
+<td>1455 Washington Avenue</td>
+<td>Albany</td>
+<td>NY</td>
+<td>12206</td>
+<td>42.68971</td>
+<td>-73.82021</td>
+<td>3.0</td>
+<td>179.0100</td>
+<td>134.0000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>108151</td>
+<td>Radisson Hotel Albany</td>
+<td>205 Wolf Rd</td>
+<td>Albany</td>
+<td>NY</td>
+<td>12205</td>
+<td>42.72410</td>
+<td>-73.79822</td>
+<td>3.0</td>
+<td>134.1700</td>
+<td>84.1600</td>
+</tr>
+</tbody>
+</table>
+<h4 id="&#x793A;&#x4F8B;&#x51FD;&#x6570;&#xFF1A;Haversine-Distance"><a href="#&#x793A;&#x4F8B;&#x51FD;&#x6570;&#xFF1A;Haversine-Distance" class="headerlink" title="&#x793A;&#x4F8B;&#x51FD;&#x6570;&#xFF1A;Haversine Distance"></a>&#x793A;&#x4F8B;&#x51FD;&#x6570;&#xFF1A;Haversine Distance</h4><pre><code class="Python">def haversine(lat1, lon1, lat2, lon2):
+    miles_constant = 3959
+    lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+    c = 2 * np.arcsin(np.sqrt(a))
+    mi = miles_constant * c
+    return mi
+</code></pre>
+<h2 id="&#x4F18;&#x5316;&#x5B83;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6D4B;&#x91CF;&#x5B83;"><a href="#&#x4F18;&#x5316;&#x5B83;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6D4B;&#x91CF;&#x5B83;" class="headerlink" title="&#x4F18;&#x5316;&#x5B83;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6D4B;&#x91CF;&#x5B83;"></a>&#x4F18;&#x5316;&#x5B83;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6D4B;&#x91CF;&#x5B83;</h2><h4 id="IPython-Notebook&#x7684;Magic-Command-timeit"><a href="#IPython-Notebook&#x7684;Magic-Command-timeit" class="headerlink" title="IPython Notebook&#x7684;Magic Command: %timeit"></a>IPython Notebook&#x7684;Magic Command: <code>%timeit</code></h4><p>&#x65E2;&#x53EF;&#x4EE5;&#x6D4B;&#x91CF;&#x67D0;&#x4E00;&#x884C;&#x4EE3;&#x7801;&#x7684;&#x6267;&#x884C;&#x65F6;&#x95F4;&#xFF0C;&#x53C8;&#x53EF;&#x4EE5;&#x6D4B;&#x91CF;&#x6574;&#x4E2A;&#x5355;&#x5143;&#x683C;&#x91CC;&#x4EE3;&#x7801;&#x5FEB;&#x7684;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x3002;</p>
+<h4 id="Package-line-profiler"><a href="#Package-line-profiler" class="headerlink" title="Package: line_profiler"></a>Package: line_profiler</h4><p>&#x8BB0;&#x5F55;&#x6BCF;&#x884C;&#x4EE3;&#x7801;&#x7684;&#x6267;&#x884C;&#x6B21;&#x6570;&#x548C;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x3002;</p>
+<p>&#x5728;IPython Notebook&#x4E2D;&#x4F7F;&#x7528;&#x65F6;&#xFF0C;&#x5148;&#x8FD0;&#x884C;<code>%load_ext line_profiler</code>&#xFF0C; &#x4E4B;&#x540E;&#x53EF;&#x4EE5;&#x7528;<code>%lprun -f [function name]</code>&#x547D;&#x4EE4;&#x8BB0;&#x5F55;&#x6307;&#x5B9A;&#x51FD;&#x6570;&#x7684;&#x6267;&#x884C;&#x60C5;&#x51B5;&#x3002;</p>
+<h2 id="&#x5B9E;&#x9A8C;"><a href="#&#x5B9E;&#x9A8C;" class="headerlink" title="&#x5B9E;&#x9A8C;"></a>&#x5B9E;&#x9A8C;</h2><h4 id="&#x5BF9;&#x884C;&#x505A;&#x5FAA;&#x73AF;-Baseline"><a href="#&#x5BF9;&#x884C;&#x505A;&#x5FAA;&#x73AF;-Baseline" class="headerlink" title="&#x5BF9;&#x884C;&#x505A;&#x5FAA;&#x73AF;(Baseline)"></a>&#x5BF9;&#x884C;&#x505A;&#x5FAA;&#x73AF;(Baseline)</h4><pre><code class="python">%%timeit
+haversine_series = []
+for index, row in df.iterrows():
+    haversine_series.append(haversine(40.671, -73.985,\
+                                      row[&apos;latitude&apos;], row[&apos;longitude&apos;]))
+df[&apos;distance&apos;] = haversine_series
+</code></pre>
+<p>Output:</p>
+<pre><code>197 ms &#xB1; 6.65 ms per loop (mean &#xB1; std. dev. of 7 runs, 1 loop each)
+</code></pre><h4 id="pd-DataFrame-apply-&#x65B9;&#x6CD5;"><a href="#pd-DataFrame-apply-&#x65B9;&#x6CD5;" class="headerlink" title="pd.DataFrame.apply()&#x65B9;&#x6CD5;"></a>pd.DataFrame.apply()&#x65B9;&#x6CD5;</h4><pre><code class="python">%lprun -f haversine \
+df.apply(lambda row: haversine(40.671, -73.985,\
+                               row[&apos;latitude&apos;], row[&apos;longitude&apos;]), axis=1)
+</code></pre>
+<p>Output:</p>
+<pre><code>90.6 ms &#xB1; 7.55 ms per loop (mean &#xB1; std. dev. of 7 runs, 10 loops each)
+</code></pre><pre><code>Timer unit: 1e-06 s
+
+Total time: 0.049982 s
+File: &lt;ipython-input-3-19c704a927b7&gt;
+Function: haversine at line 1
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     1                                           def haversine(lat1, lon1, lat2, lon2):
+     2      1631         1535      0.9      3.1      miles_constant = 3959
+     3      1631        16602     10.2     33.2      lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+     4      1631         2019      1.2      4.0      dlat = lat2 - lat1
+     5      1631         1143      0.7      2.3      dlon = lon2 - lon1
+     6      1631        18128     11.1     36.3      a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+     7      1631         7857      4.8     15.7      c = 2 * np.arcsin(np.sqrt(a))
+     8      1631         1708      1.0      3.4      mi = miles_constant * c
+     9      1631          990      0.6      2.0      return mi
+</code></pre><p>&#x89C2;&#x5BDF;Hits&#x8FD9;&#x4E00;&#x5217;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;<code>apply()</code>&#x65B9;&#x6CD5;&#x8FD8;&#x662F;&#x5C06;&#x51FD;&#x6570;&#x4E00;&#x884C;&#x884C;&#x5730;&#x5E94;&#x7528;&#x4E8E;&#x6BCF;&#x884C;&#x3002;</p>
+<h4 id="&#x5411;&#x91CF;&#x5316;&#xFF1A;&#x5C06;pd-Series&#x4F20;&#x5165;&#x51FD;&#x6570;"><a href="#&#x5411;&#x91CF;&#x5316;&#xFF1A;&#x5C06;pd-Series&#x4F20;&#x5165;&#x51FD;&#x6570;" class="headerlink" title="&#x5411;&#x91CF;&#x5316;&#xFF1A;&#x5C06;pd.Series&#x4F20;&#x5165;&#x51FD;&#x6570;"></a>&#x5411;&#x91CF;&#x5316;&#xFF1A;&#x5C06;pd.Series&#x4F20;&#x5165;&#x51FD;&#x6570;</h4><pre><code>%lprun -f haversine haversine(40.671, -73.985,\
+                              df[&apos;latitude&apos;], df[&apos;longitude&apos;])
+</code></pre><p>Output:</p>
+<pre><code>2.21 ms &#xB1; 230 &#xB5;s per loop (mean &#xB1; std. dev. of 7 runs, 100 loops each)
+</code></pre><pre><code>Timer unit: 1e-06 s
+
+Total time: 0.008601 s
+File: &lt;ipython-input-3-19c704a927b7&gt;
+Function: haversine at line 1
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     1                                           def haversine(lat1, lon1, lat2, lon2):
+     2         1            3      3.0      0.0      miles_constant = 3959
+     3         1          838    838.0      9.7      lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+     4         1          597    597.0      6.9      dlat = lat2 - lat1
+     5         1          572    572.0      6.7      dlon = lon2 - lon1
+     6         1         5033   5033.0     58.5      a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+     7         1         1060   1060.0     12.3      c = 2 * np.arcsin(np.sqrt(a))
+     8         1          496    496.0      5.8      mi = miles_constant * c
+     9         1            2      2.0      0.0      return mi
+</code></pre><p>&#x5411;&#x91CF;&#x5316;&#x4E4B;&#x540E;&#xFF0C;&#x51FD;&#x6570;&#x5185;&#x7684;&#x6BCF;&#x884C;&#x64CD;&#x4F5C;&#x53EA;&#x88AB;&#x8BBF;&#x95EE;&#x4E00;&#x6B21;&#xFF0C;&#x8FBE;&#x5230;&#x4E86;&#x884C;&#x7ED3;&#x6784;&#x4E0A;&#x7684;&#x5E76;&#x884C;&#x3002;</p>
+<h3 id="&#x5411;&#x91CF;&#x5316;&#xFF1A;&#x5C06;np-array&#x4F20;&#x5165;&#x51FD;&#x6570;"><a href="#&#x5411;&#x91CF;&#x5316;&#xFF1A;&#x5C06;np-array&#x4F20;&#x5165;&#x51FD;&#x6570;" class="headerlink" title="&#x5411;&#x91CF;&#x5316;&#xFF1A;&#x5C06;np.array&#x4F20;&#x5165;&#x51FD;&#x6570;"></a>&#x5411;&#x91CF;&#x5316;&#xFF1A;&#x5C06;np.array&#x4F20;&#x5165;&#x51FD;&#x6570;</h3><pre><code class="python">%lprun -f haversine df[&apos;distance&apos;] = haversine(40.671, -73.985,\
+                        df[&apos;latitude&apos;].values, df[&apos;longitude&apos;].values)
+</code></pre>
+<p>Output&#xFF1A;</p>
+<pre><code>370 &#xB5;s &#xB1; 18 &#xB5;s per loop (mean &#xB1; std. dev. of 7 runs, 1000 loops each)
+</code></pre><pre><code>Timer unit: 1e-06 s
+
+Total time: 0.001382 s
+File: &lt;ipython-input-3-19c704a927b7&gt;
+Function: haversine at line 1
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     1                                           def haversine(lat1, lon1, lat2, lon2):
+     2         1            3      3.0      0.2      miles_constant = 3959
+     3         1          292    292.0     21.1      lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+     4         1           40     40.0      2.9      dlat = lat2 - lat1
+     5         1           29     29.0      2.1      dlon = lon2 - lon1
+     6         1          815    815.0     59.0      a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+     7         1          183    183.0     13.2      c = 2 * np.arcsin(np.sqrt(a))
+     8         1           18     18.0      1.3      mi = miles_constant * c
+     9         1            2      2.0      0.1      return mi
+</code></pre><p>&#x76F8;&#x6BD4;<code>pd.Series</code>&#xFF0C;<code>np.array</code>&#x4E0D;&#x542B;&#x7D22;&#x5F15;&#x7B49;&#x989D;&#x5916;&#x4FE1;&#x606F;&#xFF0C;&#x56E0;&#x800C;&#x66F4;&#x52A0;&#x9AD8;&#x6548;&#x3002;</p>
+<h2 id="&#x5C0F;&#x7ED3;"><a href="#&#x5C0F;&#x7ED3;" class="headerlink" title="&#x5C0F;&#x7ED3;"></a>&#x5C0F;&#x7ED3;</h2><table>
+<thead>
+<tr>
+<th>Methodology</th>
+<th>Avg.    single    run    time</th>
+<th>Marginal    performance    improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Looping    with    iterrows</td>
+<td>184.00</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>Looping    with    apply</td>
+<td>78.10</td>
+<td>2.4x</td>
+</tr>
+<tr>
+<td>Vectorization    with    Pandas    series</td>
+<td>1.79</td>
+<td>43.6x</td>
+</tr>
+<tr>
+<td>Vectorization    with    NumPy    arrays</td>
+<td>0.37</td>
+<td>4.8x</td>
+</tr>
+</tbody>
+</table>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x5BF9;&#x6BD4;&#xFF0C;&#x6211;&#x4EEC;&#x6BD4;&#x6700;&#x521D;&#x7684;baseline&#x5FEB;&#x4E86;&#x8FD1;500&#x500D;&#x3002;&#x6700;&#x5927;&#x7684;&#x63D0;&#x5347;&#x6765;&#x81EA;&#x4E8E;&#x5411;&#x91CF;&#x5316;&#x3002;&#x56E0;&#x800C;&#xFF0C;&#x5B9E;&#x73B0;&#x7684;&#x51FD;&#x6570;&#x80FD;&#x591F;&#x5F88;&#x65B9;&#x4FBF;&#x5730;&#x5411;&#x91CF;&#x5316;&#x662F;&#x9AD8;&#x6548;&#x5904;&#x7406;&#x7684;&#x5173;&#x952E;&#x3002;</p>
+<h2 id="&#x7528;Cython&#x4F18;&#x5316;"><a href="#&#x7528;Cython&#x4F18;&#x5316;" class="headerlink" title="&#x7528;Cython&#x4F18;&#x5316;"></a>&#x7528;<code>Cython</code>&#x4F18;&#x5316;</h2><p><code>Cython</code>&#x53EF;&#x4EE5;&#x5C06;<code>python</code>&#x4EE3;&#x7801;&#x8F6C;&#x5316;&#x4E3A;<code>C</code>&#x4EE3;&#x7801;&#x6765;&#x6267;&#x884C;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x5982;&#x4E0B;&#x4F18;&#x5316;&#xFF08;&#x9759;&#x6001;&#x5316;&#x53D8;&#x91CF;&#x7C7B;&#x578B;&#xFF0C;&#x8C03;&#x7528;C&#x51FD;&#x6570;&#x5E93;&#xFF09;</p>
+<pre><code class="python">%load_ext cython
+
+%%cython -a
+# Haversine cythonized
+from libc.math cimport sin, cos, acos, asin, sqrt
+
+cdef deg2rad_cy(float deg):
+    cdef float rad
+    rad = 0.01745329252*deg
+    return rad
+
+cpdef haversine_cy_dtyped(float lat1, float lon1, float lat2, float lon2):
+    cdef:
+        float dlon
+        float dlat
+        float a
+        float c
+        float mi
+
+    lat1, lon1, lat2, lon2 = map(deg2rad_cy, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a))
+    mi = 3959 * c
+    return mi
+</code></pre>
+<p>&#x5D4C;&#x5957;&#x4E8E;&#x5FAA;&#x574F;&#x4E2D;&#xFF1A;</p>
+<pre><code class="python">%timeit df[&apos;distance&apos;] =\
+df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
+                              row[&apos;latitude&apos;], row[&apos;longitude&apos;]), axis=1)
+</code></pre>
+<p>Output:</p>
+<pre><code>10 loops, best of 3: 68.4 ms per loop
+</code></pre><p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;<code>Cython</code>&#x786E;&#x5B9E;&#x5E26;&#x6765;&#x901F;&#x5EA6;&#x4E0A;&#x7684;&#x63D0;&#x5347;&#xFF0C;&#x4F46;&#x6548;&#x679C;&#x4E0D;&#x53CA;&#x5411;&#x91CF;&#x5316;&#xFF08;&#x5E76;&#x884C;&#x5316;&#xFF09;&#x3002;</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Python/">#Python</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Programming/">#Programming</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Data-Science/">#Data Science</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/posts/7b4533bb/">LSTM:Pytorch实现</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/posts/d80d5b04/">Python可视化工具指引</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://blog.ddlee.cc/posts/40efeb6b/';
+        this.page.identifier = 'posts/40efeb6b/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ddlee&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ddlee-cn">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                    
+                <a class="column is-narrow has-text-black" title="Telegram" href="https://t.me/ddleecn">
+                    
+                    <i class="fab fa-telegram-plane"></i>
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>
