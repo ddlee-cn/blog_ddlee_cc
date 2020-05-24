@@ -24,7 +24,7 @@
 <meta property="og:site_name" content="萧爽楼">
 <meta property="og:description" content="&amp;#x672C;&amp;#x7BC7;&amp;#x7EE7;&amp;#x7EED;&amp;#x8BA8;&amp;#x8BBA;keras&amp;#x7684;&amp;#x6E90;&amp;#x7801;&amp;#x7ED3;&amp;#x6784;&amp;#x3002; &amp;#x7B2C;&amp;#x4E00;&amp;#x7BC7;&amp;#x6E90;&amp;#x7801;&amp;#x7B14;&amp;#x8BB0;&amp;#x4E2D;&amp;#x6211;&amp;#x4EEC;&amp;#x89C2;&amp;#x5BDF;&amp;#">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2020-05-16T04:12:20.294Z">
+<meta property="og:updated_time" content="2020-05-24T07:36:41.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[源码笔记]keras源码分析之Container">
 <meta name="twitter:description" content="&amp;#x672C;&amp;#x7BC7;&amp;#x7EE7;&amp;#x7EED;&amp;#x8BA8;&amp;#x8BBA;keras&amp;#x7684;&amp;#x6E90;&amp;#x7801;&amp;#x7ED3;&amp;#x6784;&amp;#x3002; &amp;#x7B2C;&amp;#x4E00;&amp;#x7BC7;&amp;#x6E90;&amp;#x7801;&amp;#x7B14;&amp;#x8BB0;&amp;#x4E2D;&amp;#x6211;&amp;#x4EEC;&amp;#x89C2;&amp;#x5BDF;&amp;#">
@@ -89,8 +89,6 @@
             
             <a class="navbar-item " href="/archives">归档</a>
             
-            <a class="navbar-item " href="/gallery">图库</a>
-            
             <a class="navbar-item " href="/recommendation">推荐</a>
             
             <a class="navbar-item " href="/links">友链</a>
@@ -153,7 +151,7 @@
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x7BC7;&#x7EE7;&#x7EED;&#x8BA8;&#x8BBA;keras&#x7684;&#x6E90;&#x7801;&#x7ED3;&#x6784;&#x3002;</p>
-<p><a href="https://blog.ddlee.cn/posts/4943e1b8/" target="_blank" rel="noopener">&#x7B2C;&#x4E00;&#x7BC7;&#x6E90;&#x7801;&#x7B14;&#x8BB0;</a>&#x4E2D;&#x6211;&#x4EEC;&#x89C2;&#x5BDF;&#x4E86;<code>Layer</code>, <code>Tensor</code>&#x548C;<code>Node</code>&#x662F;&#x5982;&#x4F55;&#x8026;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x7684;&#xFF0C;&#x800C;&#x672C;&#x7BC7;&#x7684;&#x91CD;&#x70B9;&#x662F;&#x89C2;&#x5BDF;&#x591A;&#x5C42;&#x7F51;&#x7EDC;&#x6784;&#x6210;&#x7684;&#x6709;&#x5411;&#x65E0;&#x73AF;&#x56FE;&#xFF08;DAG&#xFF09;&#x3002;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x7684;&#x6587;&#x4EF6;&#x4E3A;<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="noopener">keras/engine/topology.py</a>&#xFF0C; &#x8981;&#x89C2;&#x5BDF;&#x7684;&#x7C7B;&#x662F;<code>Container</code>&#x3002;<br><a id="more"></a></p>
+<p><a href="https://blog.ddlee.cc/posts/4943e1b8/">&#x7B2C;&#x4E00;&#x7BC7;&#x6E90;&#x7801;&#x7B14;&#x8BB0;</a>&#x4E2D;&#x6211;&#x4EEC;&#x89C2;&#x5BDF;&#x4E86;<code>Layer</code>, <code>Tensor</code>&#x548C;<code>Node</code>&#x662F;&#x5982;&#x4F55;&#x8026;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x7684;&#xFF0C;&#x800C;&#x672C;&#x7BC7;&#x7684;&#x91CD;&#x70B9;&#x662F;&#x89C2;&#x5BDF;&#x591A;&#x5C42;&#x7F51;&#x7EDC;&#x6784;&#x6210;&#x7684;&#x6709;&#x5411;&#x65E0;&#x73AF;&#x56FE;&#xFF08;DAG&#xFF09;&#x3002;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x7684;&#x6587;&#x4EF6;&#x4E3A;<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="noopener">keras/engine/topology.py</a>&#xFF0C; &#x8981;&#x89C2;&#x5BDF;&#x7684;&#x7C7B;&#x662F;<code>Container</code>&#x3002;<br><a id="more"></a></p>
 <h3 id="Container&#x5BF9;&#x8C61;&#xFF1A;DAG&#x7684;&#x62D3;&#x6251;&#x539F;&#x578B;"><a href="#Container&#x5BF9;&#x8C61;&#xFF1A;DAG&#x7684;&#x62D3;&#x6251;&#x539F;&#x578B;" class="headerlink" title="Container&#x5BF9;&#x8C61;&#xFF1A;DAG&#x7684;&#x62D3;&#x6251;&#x539F;&#x578B;"></a><code>Container</code>&#x5BF9;&#x8C61;&#xFF1A;DAG&#x7684;&#x62D3;&#x6251;&#x539F;&#x578B;</h3><p>&#x5728;&#x7B2C;&#x4E00;&#x7BC7;&#x4E2D;&#x6211;&#x4EEC;&#x63D0;&#x5230;&#xFF0C;Keras Tensor&#x4E2D;&#x589E;&#x5F3A;&#x7684;<code>\_keras_history</code>&#x5C5E;&#x6027;&#x4F7F;&#x5F97;&#x6211;&#x4EEC;&#x4EC5;&#x901A;&#x8FC7;&#x8F93;&#x5165;&#x548C;&#x8F93;&#x51FA;&#x7684;Tensor&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x6784;&#x5EFA;&#x51FA;&#x6574;&#x5F20;&#x8BA1;&#x7B97;&#x56FE;&#x3002;&#x800C;<code>Container</code>&#x5BF9;&#x8C61;&#x6B63;&#x662F;&#x5B9E;&#x73B0;&#x4E86;&#x8FD9;&#x6837;&#x7684;&#x8FC7;&#x7A0B;&#x3002;</p>
 <h4 id="&#x8BA1;&#x7B97;&#x56FE;&#x7684;&#x6784;&#x5EFA;"><a href="#&#x8BA1;&#x7B97;&#x56FE;&#x7684;&#x6784;&#x5EFA;" class="headerlink" title="&#x8BA1;&#x7B97;&#x56FE;&#x7684;&#x6784;&#x5EFA;"></a>&#x8BA1;&#x7B97;&#x56FE;&#x7684;&#x6784;&#x5EFA;</h4><p>DAG&#x8BA1;&#x7B97;&#x56FE;&#x7684;&#x6784;&#x5EFA;&#x5728;<code>Container</code>&#x5BF9;&#x8C61;&#x5B9E;&#x4F8B;&#x5316;&#x65F6;&#x5B8C;&#x6210;&#xFF0C;&#x4E3B;&#x8981;&#x5305;&#x62EC;&#x5982;&#x4E0B;&#x51E0;&#x4E2A;&#x64CD;&#x4F5C;&#xFF1A;</p>
 <p>1&#xFF09; &#x8BB0;&#x5F55;<code>Container</code>&#x7684;&#x9996;&#x5C3E;&#x8FDE;&#x63A5;&#x4FE1;&#x606F;</p>
@@ -271,8 +269,8 @@
        return output_tensors, output_masks
 </code></pre>
 <p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8BA1;&#x7B97;&#x662F;&#x4F9D;&#x636E;&#x6DF1;&#x5EA6;&#x8FDB;&#x884C;&#x7684;&#xFF0C;&#x5E76;&#x901A;&#x8FC7;&#x66F4;&#x65B0;<code>computed_data</code>&#x548C;<code>output_tensor</code>&#x7B49;&#x53D8;&#x91CF;&#x5B8C;&#x6210;&#x6574;&#x5F20;&#x56FE;&#x7684;&#x904D;&#x5386;&#x8BA1;&#x7B97;&#x3002;</p>
-<p>&#x7EE7;&#x7EED;&#x9605;&#x8BFB;&#x7CFB;&#x5217;&#x7B2C;&#x4E09;&#x7BC7;&#xFF1A;<a href="https://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/" target="_blank" rel="noopener">&#x3010;&#x6E90;&#x7801;&#x7B14;&#x8BB0;&#x3011;keras&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;Model</a></p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="noopener">ddlee</a></p>
+<p>&#x7EE7;&#x7EED;&#x9605;&#x8BFB;&#x7CFB;&#x5217;&#x7B2C;&#x4E09;&#x7BC7;&#xFF1A;<a href="https://blog.ddlee.cc/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/">&#x3010;&#x6E90;&#x7801;&#x7B14;&#x8BB0;&#x3011;keras&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;Model</a></p>
+<p>@<a href="https://ddlee.cc" target="_blank" rel="noopener">ddlee</a></p>
 
     
     </div>
@@ -307,31 +305,6 @@
 
 
 
-
-<div class="comments">
-    <h3 class="title is-4">评论</h3>
-    
-<script>
-    var disqus_config = function () {
-        this.page.url = 'https://blog.ddlee.cc/posts/ba61101c/';
-        this.page.identifier = 'posts/ba61101c/';
-        
-        this.language = 'zh';
-        
-    };
-    (function() {
-        var d = document, s = d.createElement('script');  
-        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-
-<div id="disqus_thread">
-    
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-</div>
 
     </div>
 </section>

@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/seg.png">
 <meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/ablation.png">
 <meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/distribution.png">
-<meta property="og:updated_time" content="2020-05-16T04:12:20.298Z">
+<meta property="og:updated_time" content="2020-05-24T07:35:54.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation">
 <meta name="twitter:description" content="&amp;#x672C;&amp;#x6587;&amp;#x662F;MobileNets&amp;#x7684;&amp;#x7B2C;&amp;#x4E8C;&amp;#x7248;&amp;#x3002;&amp;#x7B2C;&amp;#x4E00;&amp;#x7248;&amp;#x4E2D;&amp;#xFF0C;MobileNets&amp;#x5168;&amp;#x9762;&amp;#x5E94;&amp;#x7528;&amp;#x4E86;Depth-wise Seperable Convolution&amp;#x5">
@@ -101,8 +101,6 @@
             
             <a class="navbar-item " href="/archives">归档</a>
             
-            <a class="navbar-item " href="/gallery">图库</a>
-            
             <a class="navbar-item " href="/recommendation">推荐</a>
             
             <a class="navbar-item " href="/links">友链</a>
@@ -164,9 +162,9 @@
     </div>
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x662F;MobileNets&#x7684;&#x7B2C;&#x4E8C;&#x7248;&#x3002;<a href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/" target="_blank" rel="noopener">&#x7B2C;&#x4E00;&#x7248;</a>&#x4E2D;&#xFF0C;MobileNets&#x5168;&#x9762;&#x5E94;&#x7528;&#x4E86;Depth-wise Seperable Convolution&#x5E76;&#x63D0;&#x51FA;&#x4E24;&#x4E2A;&#x8D85;&#x53C2;&#x6765;&#x63A7;&#x5236;&#x7F51;&#x7EDC;&#x5BB9;&#x91CF;&#xFF0C;&#x5728;&#x4FDD;&#x6301;&#x79FB;&#x52A8;&#x7AEF;&#x53EF;&#x63A5;&#x53D7;&#x7684;&#x6A21;&#x578B;&#x590D;&#x6742;&#x6027;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x8FBE;&#x5230;&#x4E86;&#x76F8;&#x5F53;&#x7684;&#x7CBE;&#x5EA6;&#x3002;&#x800C;&#x7B2C;&#x4E8C;&#x7248;&#x4E2D;&#xFF0C;MobileNets&#x5E94;&#x7528;&#x4E86;&#x65B0;&#x7684;&#x5355;&#x5143;&#xFF1A;Inverted residual with linear bottleneck&#xFF0C;&#x4E3B;&#x8981;&#x7684;&#x6539;&#x52A8;&#x662F;&#x6DFB;&#x52A0;&#x4E86;&#x7EBF;&#x6027;Bottleneck&#x548C;&#x5C06;skip-connection&#x8F6C;&#x79FB;&#x5230;&#x4F4E;&#x7EF4;bottleneck&#x5C42;&#x3002;<br><a id="more"></a></p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x662F;MobileNets&#x7684;&#x7B2C;&#x4E8C;&#x7248;&#x3002;<a href="https://blog.ddlee.cc/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/">&#x7B2C;&#x4E00;&#x7248;</a>&#x4E2D;&#xFF0C;MobileNets&#x5168;&#x9762;&#x5E94;&#x7528;&#x4E86;Depth-wise Seperable Convolution&#x5E76;&#x63D0;&#x51FA;&#x4E24;&#x4E2A;&#x8D85;&#x53C2;&#x6765;&#x63A7;&#x5236;&#x7F51;&#x7EDC;&#x5BB9;&#x91CF;&#xFF0C;&#x5728;&#x4FDD;&#x6301;&#x79FB;&#x52A8;&#x7AEF;&#x53EF;&#x63A5;&#x53D7;&#x7684;&#x6A21;&#x578B;&#x590D;&#x6742;&#x6027;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x8FBE;&#x5230;&#x4E86;&#x76F8;&#x5F53;&#x7684;&#x7CBE;&#x5EA6;&#x3002;&#x800C;&#x7B2C;&#x4E8C;&#x7248;&#x4E2D;&#xFF0C;MobileNets&#x5E94;&#x7528;&#x4E86;&#x65B0;&#x7684;&#x5355;&#x5143;&#xFF1A;Inverted residual with linear bottleneck&#xFF0C;&#x4E3B;&#x8981;&#x7684;&#x6539;&#x52A8;&#x662F;&#x6DFB;&#x52A0;&#x4E86;&#x7EBF;&#x6027;Bottleneck&#x548C;&#x5C06;skip-connection&#x8F6C;&#x79FB;&#x5230;&#x4F4E;&#x7EF4;bottleneck&#x5C42;&#x3002;<br><a id="more"></a></p>
 <h3 id="Intuition"><a href="#Intuition" class="headerlink" title="Intuition"></a>Intuition</h3><p>&#x672C;&#x7BC7;&#x6BD4;&#x8F83;&#x4E30;&#x5BCC;&#x7684;&#x5730;&#x65B9;&#x662F;&#x5BF9;&#x7F51;&#x7EDC;&#x4E2D;bottleneck&#x7ED3;&#x6784;&#x7684;&#x63A2;&#x8BA8;&#x3002;</p>
-<p>&#x5728;&#x6700;&#x65E9;&#x7684;Network in Network&#x5DE5;&#x4F5C;&#x4E2D;&#xFF0C;1x1&#x5377;&#x79EF;&#x88AB;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x964D;&#x7EF4;&#x7684;&#x64CD;&#x4F5C;&#x800C;&#x5F15;&#x5165;&#xFF0C;&#x540E;&#x6765;&#x9010;&#x6E10;&#x53D1;&#x5C55;&#x4E3A;Depth-wise Seperable Convolution&#xFF08;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#xFF09;&#x5E76;&#x88AB;&#x5E7F;&#x6CDB;&#x5E94;&#x7528;&#xFF0C;&#x582A;&#x79F0;&#x8DDF;skip-connection&#x540C;&#x6837;&#x5177;&#x6709;&#x5F71;&#x54CD;&#x529B;&#x7684;&#x7F51;&#x7EDC;&#x90E8;&#x4EF6;&#x3002;&#x5728;<a href="https://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/" target="_blank" rel="noopener">Inception&#x5355;&#x5143;</a>&#x6700;&#x521D;&#x63D0;&#x51FA;&#x4E4B;&#x65F6;&#xFF0C;&#x5177;&#x6709;&#x8F83;&#x591A;channel&#x7684;feature map&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x53EF;&#x4F9B;&#x538B;&#x7F29;&#x7684;&#xFF0C;&#x4F5C;&#x8005;&#x5F15;&#x5165;1x1&#x5377;&#x79EF;&#x5C06;&#x5B83;&#x4EEC;&#x6620;&#x5C04;&#x5230;&#x4F4E;&#x7EF4;&#xFF08;&#x8F83;&#x5C11;channel&#x6570;&#xFF09;&#x7A7A;&#x95F4;&#x4E0A;&#x5E76;&#x6DFB;&#x52A0;&#x591A;&#x8DEF;&#x5F84;&#x5904;&#x7406;&#x7684;&#x8303;&#x5F0F;&#x3002;&#x4E4B;&#x540E;&#x7684;<a href="https://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/" target="_blank" rel="noopener">Xception</a>&#x3001;MobileNets&#x7B49;&#x5DE5;&#x4F5C;&#x5219;&#x5C06;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#x5E94;&#x7528;&#x5230;&#x6781;&#x81F4;&#xFF1A;&#x524D;&#x8005;&#x6307;&#x51FA;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#x80CC;&#x540E;&#x7684;&#x5047;&#x8BBE;&#x662F;&#x8DE8;channel&#x76F8;&#x5173;&#x6027;&#x548C;&#x8DE8;spatial&#x76F8;&#x5173;&#x6027;&#x7684;&#x89E3;&#x8026;&#xFF0C;&#x540E;&#x8005;&#x5219;&#x5229;&#x7528;&#x53EF;&#x63A7;&#x7684;&#x4E24;&#x4E2A;&#x8D85;&#x53C2;&#x6765;&#x83B7;&#x5F97;&#x5728;&#x6548;&#x7387;&#x548C;&#x7CBE;&#x5EA6;&#x4E0A;&#x53D6;&#x5F97;&#x8F83;&#x597D;&#x5E73;&#x8861;&#x7684;&#x7F51;&#x7EDC;&#x3002;</p>
+<p>&#x5728;&#x6700;&#x65E9;&#x7684;Network in Network&#x5DE5;&#x4F5C;&#x4E2D;&#xFF0C;1x1&#x5377;&#x79EF;&#x88AB;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x964D;&#x7EF4;&#x7684;&#x64CD;&#x4F5C;&#x800C;&#x5F15;&#x5165;&#xFF0C;&#x540E;&#x6765;&#x9010;&#x6E10;&#x53D1;&#x5C55;&#x4E3A;Depth-wise Seperable Convolution&#xFF08;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#xFF09;&#x5E76;&#x88AB;&#x5E7F;&#x6CDB;&#x5E94;&#x7528;&#xFF0C;&#x582A;&#x79F0;&#x8DDF;skip-connection&#x540C;&#x6837;&#x5177;&#x6709;&#x5F71;&#x54CD;&#x529B;&#x7684;&#x7F51;&#x7EDC;&#x90E8;&#x4EF6;&#x3002;&#x5728;<a href="https://blog.ddlee.cc/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/">Inception&#x5355;&#x5143;</a>&#x6700;&#x521D;&#x63D0;&#x51FA;&#x4E4B;&#x65F6;&#xFF0C;&#x5177;&#x6709;&#x8F83;&#x591A;channel&#x7684;feature map&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x53EF;&#x4F9B;&#x538B;&#x7F29;&#x7684;&#xFF0C;&#x4F5C;&#x8005;&#x5F15;&#x5165;1x1&#x5377;&#x79EF;&#x5C06;&#x5B83;&#x4EEC;&#x6620;&#x5C04;&#x5230;&#x4F4E;&#x7EF4;&#xFF08;&#x8F83;&#x5C11;channel&#x6570;&#xFF09;&#x7A7A;&#x95F4;&#x4E0A;&#x5E76;&#x6DFB;&#x52A0;&#x591A;&#x8DEF;&#x5F84;&#x5904;&#x7406;&#x7684;&#x8303;&#x5F0F;&#x3002;&#x4E4B;&#x540E;&#x7684;<a href="https://blog.ddlee.cc/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/">Xception</a>&#x3001;MobileNets&#x7B49;&#x5DE5;&#x4F5C;&#x5219;&#x5C06;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#x5E94;&#x7528;&#x5230;&#x6781;&#x81F4;&#xFF1A;&#x524D;&#x8005;&#x6307;&#x51FA;&#x53EF;&#x5206;&#x79BB;&#x5377;&#x79EF;&#x80CC;&#x540E;&#x7684;&#x5047;&#x8BBE;&#x662F;&#x8DE8;channel&#x76F8;&#x5173;&#x6027;&#x548C;&#x8DE8;spatial&#x76F8;&#x5173;&#x6027;&#x7684;&#x89E3;&#x8026;&#xFF0C;&#x540E;&#x8005;&#x5219;&#x5229;&#x7528;&#x53EF;&#x63A7;&#x7684;&#x4E24;&#x4E2A;&#x8D85;&#x53C2;&#x6765;&#x83B7;&#x5F97;&#x5728;&#x6548;&#x7387;&#x548C;&#x7CBE;&#x5EA6;&#x4E0A;&#x53D6;&#x5F97;&#x8F83;&#x597D;&#x5E73;&#x8861;&#x7684;&#x7F51;&#x7EDC;&#x3002;</p>
 <p>&#x6587;&#x4E2D;&#xFF0C;&#x7ECF;&#x8FC7;&#x6FC0;&#x6D3B;&#x5C42;&#x540E;&#x7684;&#x5F20;&#x91CF;&#x88AB;&#x79F0;&#x4E3A;&#x5174;&#x8DA3;&#x6D41;&#x5F62;&#xFF0C;&#x5177;&#x6709;&#x7EF4;HxWxD&#xFF0C;&#x5176;&#x4E2D;D&#x5373;&#x4E3A;&#x901A;&#x5E38;&#x610F;&#x4E49;&#x7684;channel&#x6570;&#xFF0C;&#x90E8;&#x5206;&#x6587;&#x7AE0;&#x4E5F;&#x5C06;&#x5176;&#x79F0;&#x4E3A;&#x7F51;&#x7EDC;&#x7684;&#x5BBD;&#x5EA6;&#xFF08;width&#xFF09;&#x3002;</p>
 <p>&#x6839;&#x636E;&#x4E4B;&#x524D;&#x7684;&#x7814;&#x7A76;&#xFF0C;&#x5174;&#x8DA3;&#x6D41;&#x5F62;&#x53EF;&#x80FD;&#x4EC5;&#x5206;&#x5E03;&#x5728;&#x6FC0;&#x6D3B;&#x7A7A;&#x95F4;&#x7684;&#x4E00;&#x4E2A;&#x4F4E;&#x7EF4;&#x5B50;&#x7A7A;&#x95F4;&#x91CC;&#xFF0C;&#x5229;&#x7528;&#x8FD9;&#x4E00;&#x70B9;&#x5F88;&#x5BB9;&#x6613;&#x4F7F;&#x7528;1x1&#x5377;&#x79EF;&#x5C06;&#x5F20;&#x91CF;&#x964D;&#x7EF4;&#xFF08;&#x5373;MobileNet V1&#x7684;&#x5DE5;&#x4F5C;&#xFF09;&#xFF0C;&#x4F46;&#x7531;&#x4E8E;ReLU&#x7684;&#x5B58;&#x5728;&#xFF0C;&#x8FD9;&#x79CD;&#x964D;&#x7EF4;&#x5B9E;&#x9645;&#x4E0A;&#x4F1A;&#x635F;&#x5931;&#x8F83;&#x591A;&#x7684;&#x4FE1;&#x606F;&#x3002;&#x4E0B;&#x56FE;&#x662F;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x3002;</p>
 <p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/collapse.png" alt="envolve"></p>
@@ -235,31 +233,6 @@
 
 
 
-
-<div class="comments">
-    <h3 class="title is-4">评论</h3>
-    
-<script>
-    var disqus_config = function () {
-        this.page.url = 'https://blog.ddlee.cc/posts/c9816b0a/';
-        this.page.identifier = 'posts/c9816b0a/';
-        
-        this.language = 'zh';
-        
-    };
-    (function() {
-        var d = document, s = d.createElement('script');  
-        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-
-<div id="disqus_thread">
-    
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-</div>
 
     </div>
 </section>

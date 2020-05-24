@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/cgbn.png">
 <meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/results.png">
 <meta property="og:image" content="https://blog.ddlee.cc/user-imgs/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/byepoch.png">
-<meta property="og:updated_time" content="2020-05-16T04:12:20.299Z">
+<meta property="og:updated_time" content="2020-05-24T07:36:41.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[论文笔记]MegDet: A Large Mini-Batch Object Detector">
 <meta name="twitter:description" content="&amp;#x672C;&amp;#x7BC7;&amp;#x8BBA;&amp;#x6587;&amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;&amp;#x65F7;&amp;#x89C6;&amp;#x53D6;&amp;#x5F97;2017 MS COCO Detection chanllenge&amp;#x7B2C;&amp;#x4E00;&amp;#x540D;&amp;#x7684;&amp;#x6A21;&amp;#x578B;&amp;#x3002;&amp;#x63D0;&amp;#x51FA;&amp;#x5927">
@@ -92,8 +92,6 @@
         <div class="navbar-menu navbar-start">
             
             <a class="navbar-item " href="/archives">归档</a>
-            
-            <a class="navbar-item " href="/gallery">图库</a>
             
             <a class="navbar-item " href="/recommendation">推荐</a>
             
@@ -171,7 +169,7 @@
 <li>Cross GPU Batch Normalization(CGBN)</li>
 </ul>
 <h2 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h2><h3 id="Variance-Equivalence-explanation-for-Linear-Scaling-Rule"><a href="#Variance-Equivalence-explanation-for-Linear-Scaling-Rule" class="headerlink" title="Variance Equivalence explanation for Linear Scaling Rule"></a>Variance Equivalence explanation for Linear Scaling Rule</h3><p>linear scaling rule &#x6765;&#x81EA;&#x66F4;&#x6539;batch size &#x65F6;&#xFF0C;&#x540C;&#x65F6;&#x653E;&#x7F29;learning rate&#xFF0C;&#x4F7F;&#x5F97;&#x66F4;&#x6539;&#x540E;&#x7684;weight update&#x76F8;&#x6BD4;&#x4E4B;&#x524D;&#x5C0F;batch size&#xFF0C; &#x591A;&#x6B65;&#x7684;weight update&#x7C7B;&#x4F3C;&#x3002;&#x800C;&#x672C;&#x6587;&#x7528;&#x4FDD;&#x6301;loss gradient&#x7684;&#x65B9;&#x5DEE;&#x4E0D;&#x53D8;&#x91CD;&#x65B0;&#x89E3;&#x91CA;&#x4E86;linear scaling rule&#xFF0C;&#x5E76;&#x6307;&#x51FA;&#x8FD9;&#x4E00;&#x5047;&#x5B9A;&#x4EC5;&#x8981;&#x6C42;loss gradient&#x662F;i.i.d&#xFF0C;&#x76F8;&#x6BD4;&#x4FDD;&#x6301;weight update&#x6240;&#x5047;&#x8BBE;&#x7684;&#x4E0D;&#x540C;batch size&#x95F4;loss gradient&#x76F8;&#x4F3C;&#x66F4;&#x5F31;&#x3002;</p>
-<p>&#x53C2;&#x89C1;<a href="https://blog.ddlee.cn/posts/9940b42/#Motivation" target="_blank" rel="noopener">Accurate Large Minibatch SGD: Training ImageNet in One Hour</a>&#xFF0C;&#x8FD1;&#x4F3C;&#x65F6;&#x5047;&#x8BBE;&#x4E86;&#x6C42;&#x548C;&#x9879;&#x53D8;&#x5316;&#x4E0D;&#x5927;&#xFF0C;&#x8FD9;&#x4E00;&#x6761;&#x4EF6;&#x5728;Object Detection&#x4E2D;&#x53EF;&#x80FD;&#x4E0D;&#x6210;&#x7ACB;&#xFF0C;&#x4E0D;&#x540C;&#x56FE;&#x7247;&#x7684;&#x6807;&#x6CE8;&#x6846;&#xFF08;&#x5927;&#x5C0F;&#x3001;&#x4E2A;&#x6570;&#xFF09;&#x5DEE;&#x522B;&#x5F88;&#x5927;&#x3002;</p>
+<p>&#x53C2;&#x89C1;<a href="https://blog.ddlee.cc/posts/9940b42/#Motivation">Accurate Large Minibatch SGD: Training ImageNet in One Hour</a>&#xFF0C;&#x8FD1;&#x4F3C;&#x65F6;&#x5047;&#x8BBE;&#x4E86;&#x6C42;&#x548C;&#x9879;&#x53D8;&#x5316;&#x4E0D;&#x5927;&#xFF0C;&#x8FD9;&#x4E00;&#x6761;&#x4EF6;&#x5728;Object Detection&#x4E2D;&#x53EF;&#x80FD;&#x4E0D;&#x6210;&#x7ACB;&#xFF0C;&#x4E0D;&#x540C;&#x56FE;&#x7247;&#x7684;&#x6807;&#x6CE8;&#x6846;&#xFF08;&#x5927;&#x5C0F;&#x3001;&#x4E2A;&#x6570;&#xFF09;&#x5DEE;&#x522B;&#x5F88;&#x5927;&#x3002;</p>
 <h3 id="WarmUp-Strategy"><a href="#WarmUp-Strategy" class="headerlink" title="WarmUp Strategy"></a>WarmUp Strategy</h3><p>&#x5728;&#x8BAD;&#x7EC3;&#x521D;&#x671F;&#xFF0C;weight&#x6296;&#x52A8;&#x660E;&#x663E;&#xFF0C;&#x5F15;&#x5165;warmup&#x673A;&#x5236;&#x6765;&#x4F7F;&#x7528;&#x8F83;&#x5C0F;&#x7684;&#x5B66;&#x4E60;&#x7387;&#xFF0C;&#x518D;&#x9010;&#x6E10;&#x589E;&#x5927;&#x5230;Linear scaling rule&#x8981;&#x6C42;&#x7684;&#x5B66;&#x4E60;&#x7387;&#x3002;</p>
 <h3 id="Cross-GPU-Batch-Normalization"><a href="#Cross-GPU-Batch-Normalization" class="headerlink" title="Cross-GPU Batch Normalization"></a>Cross-GPU Batch Normalization</h3><p>BN&#x662F;&#x4F7F;&#x6DF1;&#x5EA6;&#x7F51;&#x7EDC;&#x5F97;&#x4EE5;&#x8BAD;&#x7EC3;&#x548C;&#x6536;&#x655B;&#x7684;&#x5173;&#x952E;&#x6280;&#x672F;&#x4E4B;&#x4E00;&#xFF0C;&#x4F46;&#x5728;&#x68C0;&#x6D4B;&#x4EFB;&#x52A1;&#x4E2D;&#xFF0C;fine-tuning&#x9636;&#x6BB5;&#x5E38;&#x5E38;&#x56FA;&#x5B9A;&#x4E86;SOTA&#x5206;&#x7C7B;&#x7F51;&#x7EDC;&#x7684;BN&#x90E8;&#x5206;&#x53C2;&#x6570;&#xFF0C;&#x4E0D;&#x8FDB;&#x884C;&#x66F4;&#x65B0;&#x3002;</p>
 <p>&#x68C0;&#x6D4B;&#x4E2D;&#x5E38;&#x5E38;&#x9700;&#x8981;&#x8F83;&#x5927;&#x5206;&#x8FA8;&#x7387;&#x7684;&#x56FE;&#x7247;&#xFF0C;&#x800C;GPU&#x5185;&#x5B58;&#x9650;&#x5236;&#x4E86;&#x5355;&#x5361;&#x4E0A;&#x7684;&#x56FE;&#x7247;&#x4E2A;&#x6570;&#xFF0C;&#x63D0;&#x9AD8;batch size&#x610F;&#x5473;&#x7740;BN&#x8981;&#x5728;&#x591A;&#x5361;&#xFF08;Cross-GPU&#xFF09;&#x4E0A;&#x8FDB;&#x884C;&#x3002;</p>
@@ -184,7 +182,7 @@
 <p>&#x6309;epoch&#xFF0C;&#x7CBE;&#x5EA6;&#x7684;&#x53D8;&#x5316;&#x5982;&#x4E0B;&#x56FE;&#xFF0C;&#x5C0F;batch&#xFF08;16&#xFF09;&#x5728;&#x6700;&#x521D;&#x7684;&#x51E0;&#x4E2A;epoch&#x8868;&#x73B0;&#x6BD4;&#x5927;batch&#xFF08;32&#xFF09;&#x8981;&#x597D;&#x3002;</p>
 <p><img src="/user-imgs/&#x8BBA;&#x6587;&#x7B14;&#x8BB0;-MegDet-A-Large-Mini-Batch-Object-Detector/byepoch.png" alt="accuracy-by-epoch"></p>
 <h2 id="&#x5C0F;&#x7ED3;"><a href="#&#x5C0F;&#x7ED3;" class="headerlink" title="&#x5C0F;&#x7ED3;"></a>&#x5C0F;&#x7ED3;</h2><p>&#x8FD9;&#x7BC7;&#x8BBA;&#x6587;&#x8BFB;&#x8D77;&#x6765;&#x603B;&#x611F;&#x89C9;&#x5C11;&#x4E86;&#x4E9B;&#x4E1C;&#x897F;&#x3002;&#x5BF9;Linear scale rule&#x7684;&#x89E3;&#x91CA;&#x56FA;&#x7136;&#x65B0;&#x9896;&#xFF0C;&#x4F46;&#x6CA1;&#x6709;&#x5F15;&#x5165;&#x65B0;&#x7684;trick&#xFF08;&#x53EA;&#x662F;&#x786E;&#x8BA4;&#x4E86;&#x68C0;&#x6D4B;&#x4ECD;&#x662F;&#x9700;&#x8981;Linear scale rule&#x7684;&#xFF09;&#x3002;&#x591A;&#x5361;&#x7684;BN&#x786E;&#x5B9E;&#x662F;&#x975E;&#x5E38;&#x5389;&#x5BB3;&#x7684;&#x5DE5;&#x7A0B;&#x5B9E;&#x73B0;&#xFF08;&#x9AD8;&#x6548;&#x6027;&#xFF09;&#xFF0C;&#x4F46;&#x5B9E;&#x9A8C;&#x7684;&#x7ED3;&#x679C;&#x5E76;&#x6CA1;&#x6709;&#x652F;&#x6301;&#x5230;&#x8F83;&#x5927;&#x7684;batch size&#xFF08;128,256&#xFF09;&#x6BD4;&#x5C0F;batch&#x7CBE;&#x5EA6;&#x66F4;&#x597D;&#x7684;&#x671F;&#x671B;&#xFF0C;&#x800C;&#x6700;&#x540E;&#x7684;COCO&#x593A;&#x51A0;&#x6A21;&#x578B;&#x6574;&#x5408;&#x4E86;&#x591A;&#x79CD;trick&#xFF0C;&#x6CA1;&#x6709;&#x66F4;&#x8FDB;&#x4E00;&#x6B65;&#x7684;&#x9519;&#x8BEF;&#x5206;&#x6790;&#xFF0C;&#x5F88;&#x96BE;&#x652F;&#x6491;&#x8BF4;&#x660E;CGBN&#x5E26;&#x6765;&#x7684;&#x5173;&#x952E;&#x4F5C;&#x7528;&#x3002;</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="noopener">ddlee</a></p>
+<p>@<a href="https://ddlee.cc" target="_blank" rel="noopener">ddlee</a></p>
 
     
     </div>
@@ -217,31 +215,6 @@
 
 
 
-
-<div class="comments">
-    <h3 class="title is-4">评论</h3>
-    
-<script>
-    var disqus_config = function () {
-        this.page.url = 'https://blog.ddlee.cc/posts/e9b3289c/';
-        this.page.identifier = 'posts/e9b3289c/';
-        
-        this.language = 'zh';
-        
-    };
-    (function() {
-        var d = document, s = d.createElement('script');  
-        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-
-<div id="disqus_thread">
-    
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-</div>
 
     </div>
 </section>

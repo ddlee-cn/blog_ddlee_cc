@@ -17,14 +17,14 @@
 
 
     <meta name="description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BB0;&amp;#x5F55;&amp;#x6211;&amp;#x7684;&amp;#x9996;&amp;#x4E2A;R&amp;#x7A0B;&amp;#x5E8F;&amp;#x5305;MCMI&amp;#x7684;&amp;#x5F00;&amp;#x53D1;&amp;#x8FC7;&amp;#x7A0B;&amp;#x3002;">
-<meta name="keywords" content="Programming,Tutorial,Data Science,R">
+<meta name="keywords" content="Programming,Tutorial,R,Data Science">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The Devtools Way: devtools+RStudio快速R程序包开发">
 <meta property="og:url" content="https://blog.ddlee.cc/posts/923b22f3/index.html">
 <meta property="og:site_name" content="萧爽楼">
 <meta property="og:description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BB0;&amp;#x5F55;&amp;#x6211;&amp;#x7684;&amp;#x9996;&amp;#x4E2A;R&amp;#x7A0B;&amp;#x5E8F;&amp;#x5305;MCMI&amp;#x7684;&amp;#x5F00;&amp;#x53D1;&amp;#x8FC7;&amp;#x7A0B;&amp;#x3002;">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2020-05-16T04:12:20.290Z">
+<meta property="og:updated_time" content="2020-05-24T07:36:41.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The Devtools Way: devtools+RStudio快速R程序包开发">
 <meta name="twitter:description" content="&amp;#x672C;&amp;#x6587;&amp;#x8BB0;&amp;#x5F55;&amp;#x6211;&amp;#x7684;&amp;#x9996;&amp;#x4E2A;R&amp;#x7A0B;&amp;#x5E8F;&amp;#x5305;MCMI&amp;#x7684;&amp;#x5F00;&amp;#x53D1;&amp;#x8FC7;&amp;#x7A0B;&amp;#x3002;">
@@ -89,8 +89,6 @@
             
             <a class="navbar-item " href="/archives">归档</a>
             
-            <a class="navbar-item " href="/gallery">图库</a>
-            
             <a class="navbar-item " href="/recommendation">推荐</a>
             
             <a class="navbar-item " href="/links">友链</a>
@@ -152,7 +150,7 @@
     </div>
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x8BB0;&#x5F55;&#x6211;&#x7684;&#x9996;&#x4E2A;R&#x7A0B;&#x5E8F;&#x5305;<a href="https://ddlee.cn/projects/mcmi.html" target="_blank" rel="noopener">MCMI</a>&#x7684;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x3002;<br><a id="more"></a></p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>&#x672C;&#x6587;&#x8BB0;&#x5F55;&#x6211;&#x7684;&#x9996;&#x4E2A;R&#x7A0B;&#x5E8F;&#x5305;<a href="https://ddlee.cc/projects/mcmi.html" target="_blank" rel="noopener">MCMI</a>&#x7684;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x3002;<br><a id="more"></a></p>
 <h3 id="&#x53C2;&#x8003;&#x8D44;&#x6599;"><a href="#&#x53C2;&#x8003;&#x8D44;&#x6599;" class="headerlink" title="&#x53C2;&#x8003;&#x8D44;&#x6599;"></a>&#x53C2;&#x8003;&#x8D44;&#x6599;</h3><ol>
 <li>&#x4E24;&#x672C;Hadley Wickham&#x5199;&#x7684;&#x4E66;&#xFF1A;<a href="http://adv-r.had.co.nz/" target="_blank" rel="noopener">Advanced R</a>&#x548C;<a href="http://r-pkgs.had.co.nz/" target="_blank" rel="noopener">R Packages</a>&#x3002;</li>
 <li>Coursera&#x4E0A;&#x7684;&#x8BFE;&#x7A0B;<a href="https://www.coursera.org/specializations/r" target="_blank" rel="noopener">Mastering Software Development in R Specialization</a>&#x548C;&#x914D;&#x5957;&#x6559;&#x6750;<a href="https://bookdown.org/rdpeng/RProgDA/" target="_blank" rel="noopener">Mastering Software Development in R</a>&#x3002;</li>
@@ -218,9 +216,9 @@
     
         <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Tutorial/">#Tutorial</a></span>
     
-        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Data-Science/">#Data Science</a></span>
-    
         <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/R/">#R</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Data-Science/">#Data Science</a></span>
     
     </div>
     
@@ -242,31 +240,6 @@
 
 
 
-
-<div class="comments">
-    <h3 class="title is-4">评论</h3>
-    
-<script>
-    var disqus_config = function () {
-        this.page.url = 'https://blog.ddlee.cc/posts/923b22f3/';
-        this.page.identifier = 'posts/923b22f3/';
-        
-        this.language = 'zh';
-        
-    };
-    (function() {
-        var d = document, s = d.createElement('script');  
-        s.src = '//' + 'ddlee96' + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-
-<div id="disqus_thread">
-    
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-</div>
 
     </div>
 </section>
